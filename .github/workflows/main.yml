@@ -2,6 +2,8 @@ name: build
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 jobs:
   # Here you define the name of your workflow in this case "build"
   build:
@@ -37,8 +39,20 @@ jobs:
       - name: Run npm install
         run: npm i
 
+      - name: Linting code
+        run: npm run lint
+
+      - name: Check code style
+        run: npm run format:check:ci
+
       - name: Run npm build
         run: npm run build
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          slug: tdittmann/dahenfeld
 
       - name: Publish
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

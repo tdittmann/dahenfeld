@@ -27,7 +27,10 @@ const squareBackgroundColor = computed<string>(() => {
 </script>
 
 <template>
-  <IonCard class="square square__background-red-light" :class="squareBackgroundColor">
+  <IonCard
+    class="square square__background-red-light"
+    :class="squareBackgroundColor"
+  >
     <div v-if="props.icon" class="square__icon">
       <IonIcon style="font-size: 64px" :icon="props.icon"></IonIcon>
     </div>
@@ -46,9 +49,9 @@ const squareBackgroundColor = computed<string>(() => {
   border-radius: 16px;
   cursor: pointer;
   background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(255, 255, 255, 0) 100%
+    0deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(255, 255, 255, 0) 100%
   );
   color: #fff;
 

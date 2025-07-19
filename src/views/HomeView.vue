@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import {
   earthOutline,
+  flowerOutline,
   footballOutline,
   newspaperOutline,
-  flowerOutline,
 } from "ionicons/icons";
 import SquareCardComponent from "@/components/SquareCardComponent.vue";
-import { IonContent, IonHeader, IonTitle, IonToolbar } from "@ionic/vue";
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  type ScrollDetail,
+} from "@ionic/vue";
 import { computed, ref } from "vue";
+import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 
 const currentDate = new Date().toLocaleDateString("de-DE", {
   day: "2-digit",
@@ -17,7 +24,7 @@ const currentDate = new Date().toLocaleDateString("de-DE", {
 });
 
 const showToolbar = ref<boolean>(false);
-const handleScroll = (evt: any) => {
+const handleScroll = (evt: IonContentCustomEvent<ScrollDetail>) => {
   const scrollTop = evt.detail.scrollTop;
   showToolbar.value = scrollTop > 25;
 };

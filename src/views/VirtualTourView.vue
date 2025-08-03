@@ -8,7 +8,7 @@ import { IonHeader, IonTitle, IonToolbar } from "@ionic/vue";
 const zoom = ref(2.5);
 const maxZoom = ref(5);
 const size = ref([2599, 2124]);
-const center = ref([size.value[0]/2, size.value[1]/2]);
+const center = ref([size.value[0] / 2, size.value[1] / 2]);
 const extent = ref([0, 0, ...size.value]);
 const projection = reactive({
   code: "xkcd-image",

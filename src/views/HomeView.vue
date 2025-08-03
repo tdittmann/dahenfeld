@@ -15,6 +15,9 @@ import {
 } from "@ionic/vue";
 import { computed, ref } from "vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const currentDate = new Date().toLocaleDateString("de-DE", {
   day: "2-digit",
@@ -35,6 +38,10 @@ const toolbarBackgroundColor = computed<string>(() => {
   }
   return "none";
 });
+
+const openPage = (url: string) => {
+  router.push(url);
+};
 </script>
 
 <template>
@@ -60,6 +67,7 @@ const toolbarBackgroundColor = computed<string>(() => {
           title="Virtueller Rundgang"
           background-color="red-dark"
           :icon="earthOutline"
+          @click="openPage('/virtual-tour')"
         />
         <SquareCardComponent
           title="s'Gelwe Blättle"

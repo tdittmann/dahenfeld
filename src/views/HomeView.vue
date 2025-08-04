@@ -70,9 +70,10 @@ const openPage = (url: string) => {
           @click="openPage('/virtual-tour')"
         />
         <SquareCardComponent
-          title="s'Gelwe Blättle"
+          title="'s Gelwe Blättle"
           background-color="yellow-dark"
           :icon="newspaperOutline"
+          @click="openPage('/gelwe-blaettle')"
         />
         <SquareCardComponent
           title="Vereine"

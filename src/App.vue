@@ -10,5 +10,3 @@ import { IonApp, IonPage } from "@ionic/vue";
     </IonPage>
   </IonApp>
 </template>
-
-<style scoped></style>

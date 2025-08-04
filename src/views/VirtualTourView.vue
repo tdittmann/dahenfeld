@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Layers, Map, MapControls, Sources } from "vue3-openlayers";
-import { IonHeader, IonTitle, IonToolbar } from "@ionic/vue";
+import {
+  IonBackButton,
+  IonButtons,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/vue";
 import { Projection } from "ol/proj";
 
 // If we need clustering: https://openlayers.org/en/latest/examples/cluster.html
@@ -30,7 +36,10 @@ const closeDialog = () => {
 <template>
   <IonHeader>
     <IonToolbar>
-      <IonTitle class="toolbar-title">Virtuelle Tour</IonTitle>
+      <IonButtons slot="start">
+        <IonBackButton defaultHref="/"></IonBackButton>
+      </IonButtons>
+      <IonTitle>Virtuelle Tour</IonTitle>
     </IonToolbar>
   </IonHeader>
 

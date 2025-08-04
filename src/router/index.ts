@@ -10,14 +10,14 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/about",
-      name: "about",
-      component: () => import("../views/AboutView.vue"),
-    },
-    {
       path: "/virtual-tour",
       name: "virtual-tour",
       component: () => import("../views/VirtualTourView.vue"),
+    },
+    {
+      path: "/gelwe-blaettle",
+      name: "gelwe-blaettle",
+      component: () => import("../views/GelweBlaettleView.vue"),
     },
   ],
 });

@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { Layers, Map, MapControls, Sources } from "vue3-openlayers";
 import { IonHeader, IonTitle, IonToolbar } from "@ionic/vue";
+import { Projection } from "ol/proj";
 
 // If we need clustering: https://openlayers.org/en/latest/examples/cluster.html
 
-const zoom = ref(2.5);
-const maxZoom = ref(5);
-const size = ref([2599, 2124]);
-const center = ref([size.value[0] / 2, size.value[1] / 2]);
-const extent = ref([0, 0, ...size.value]);
-const projection = reactive({
+const zoom = ref<number>(2.5);
+const maxZoom = ref<number>(5);
+const size = ref<number[]>([2599, 2124]);
+const center = ref<number[]>([size.value[0] / 2, size.value[1] / 2]);
+const extent = ref<number[]>([0, 0, ...size.value]);
+const projection = new Projection({
   code: "xkcd-image",
   units: "pixels",
-  extent: extent,
+  extent: extent.value,
 });
-const imgUrl = ref("/imgs/virtual-tour/LuftaufnahmeDahenfeld.png");
+const imgUrl = ref<string>("/imgs/virtual-tour/LuftaufnahmeDahenfeld.png");
 
 const dialogOpen = ref<boolean>(false);
 const openDialog = () => {

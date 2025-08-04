@@ -55,10 +55,8 @@ const openPage = (url: string) => {
     <div class="container-top-background">
       <div class="container-top-background__gradient-bottom"></div>
 
-      <div class="container">
-        <div class="current-date">
-          {{ currentDate }}
-        </div>
+      <div class="container current-date">
+        {{ currentDate }}
       </div>
     </div>
     <div class="ion-padding container">
@@ -133,9 +131,12 @@ ion-toolbar::part(background) {
 .current-date {
   color: #fff;
   font-weight: bold;
-  bottom: 8px;
-  right: 8px;
-  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: relative;
+  height: 100%;
+  padding-bottom: 8px;
 }
 
 .grid {

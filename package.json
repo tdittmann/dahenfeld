@@ -21,9 +21,13 @@
   "dependencies": {
     "@ionic/vue": "^8.6.5",
     "@ionic/vue-router": "^8.6.5",
+    "ol": "^10.6.1",
+    "ol-contextmenu": "^5.5.0",
+    "ol-ext": "^4.0.33",
     "pinia": "^3.0.3",
     "vue": "^3.5.17",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vue3-openlayers": "^11.6.2"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",

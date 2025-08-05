@@ -39,7 +39,7 @@ const closeDialog = () => {
       <IonButtons slot="start">
         <IonBackButton defaultHref="/"></IonBackButton>
       </IonButtons>
-      <IonTitle>Virtuelle Tour</IonTitle>
+      <IonTitle>Virtueller Rundgang</IonTitle>
     </IonToolbar>
   </IonHeader>
 
@@ -104,7 +104,7 @@ const closeDialog = () => {
   </template>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .overlay-content {
   height: 50px;
   width: 50px;

@@ -13,7 +13,7 @@ const props = defineProps<Props>();
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .loading-container {
   text-align: center;
   font-size: 1.25em;

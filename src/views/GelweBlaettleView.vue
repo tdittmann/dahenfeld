@@ -1,16 +1,11 @@
 <script setup lang="ts">
 import {
-  IonBackButton,
-  IonButtons,
   IonContent,
-  IonHeader,
   IonItem,
   IonItemDivider,
   IonItemGroup,
   IonLabel,
   IonList,
-  IonTitle,
-  IonToolbar,
 } from "@ionic/vue";
 import { onMounted, ref } from "vue";
 import {
@@ -18,6 +13,7 @@ import {
   GelweBlaettleService,
 } from "@/services/GelweBlaettleService.ts";
 import LoadingComponent from "@/components/LoadingComponent.vue";
+import HeaderComponent from "@/components/HeaderComponent.vue";
 
 const loading = ref<boolean>(true);
 const gelweBlaettleMap = ref<Map<number, GelweBlaettle[]>>(new Map());
@@ -51,14 +47,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <IonHeader>
-    <IonToolbar>
-      <IonButtons slot="start">
-        <IonBackButton defaultHref="/"></IonBackButton>
-      </IonButtons>
-      <IonTitle>'s Gelwe Blättle</IonTitle>
-    </IonToolbar>
-  </IonHeader>
+  <HeaderComponent title="'s Gelwe Blättle" />
 
   <IonContent>
     <LoadingComponent :loading="loading" />

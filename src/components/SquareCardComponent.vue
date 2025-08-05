@@ -91,7 +91,7 @@ const squareBackgroundColor = computed<string>(() => {
     position: absolute;
     bottom: 10px;
     left: 10px;
-    font-size: 1.25rem;
+    font-size: 1rem;
     line-height: normal;
   }
 

@@ -55,12 +55,17 @@ const openPage = (url: string) => {
     <div class="container-top-background">
       <div class="container-top-background__gradient-bottom"></div>
 
-      <div class="container">
-        <div class="current-date">
+      <div class="container info-container">
+        <div class="info-container__title">
+          <h1>Dahenfeld</h1>
+          <h2>Eine starke Dorfgemeinschaft</h2>
+        </div>
+        <div class="info-container__current-date">
           {{ currentDate }}
         </div>
       </div>
     </div>
+
     <div class="ion-padding container">
       <div class="grid">
         <SquareCardComponent
@@ -111,7 +116,7 @@ ion-toolbar::part(background) {
 }
 
 .container-top-background {
-  background-image: url("/imgs/background2.jpg");
+  background-image: url("/imgs/background8.jpg");
   background-size: cover;
   background-position: center;
   height: 250px;
@@ -127,15 +132,38 @@ ion-toolbar::part(background) {
     );
     position: absolute;
     bottom: 0;
+    z-index: 1;
   }
 }
 
-.current-date {
-  color: #fff;
-  font-weight: bold;
-  bottom: 8px;
-  right: 8px;
-  position: absolute;
+.info-container {
+  z-index: 2;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+
+  &__title {
+    h1 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+      padding-top: 16px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+
+  &__current-date {
+    color: #fff;
+    text-align: right;
+    padding-bottom: 8px;
+    font-size: 12px;
+  }
 }
 
 .grid {

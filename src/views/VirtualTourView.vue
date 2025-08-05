@@ -1,14 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Layers, Map, MapControls, Sources } from "vue3-openlayers";
-import {
-  IonBackButton,
-  IonButtons,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/vue";
 import { Projection } from "ol/proj";
+import HeaderComponent from "@/components/HeaderComponent.vue";
 
 // If we need clustering: https://openlayers.org/en/latest/examples/cluster.html
 
@@ -34,14 +28,7 @@ const closeDialog = () => {
 </script>
 
 <template>
-  <IonHeader>
-    <IonToolbar>
-      <IonButtons slot="start">
-        <IonBackButton defaultHref="/"></IonBackButton>
-      </IonButtons>
-      <IonTitle>Virtuelle Tour</IonTitle>
-    </IonToolbar>
-  </IonHeader>
+  <HeaderComponent title="Virtueller Rundgang" />
 
   <Map.OlMap
     :loadTilesWhileAnimating="true"
@@ -104,7 +91,7 @@ const closeDialog = () => {
   </template>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .overlay-content {
   height: 50px;
   width: 50px;

@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { IonBackButton, IonButtons, IonHeader, IonTitle, IonToolbar } from "@ionic/vue";
+import {
+  IonBackButton,
+  IonButtons,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/vue";
 
 type Props = {
   title: string;
@@ -13,7 +19,7 @@ const props = defineProps<Props>();
       <IonButtons slot="start">
         <IonBackButton defaultHref="/"></IonBackButton>
       </IonButtons>
-      <IonTitle>{{ props.title}}</IonTitle>
+      <IonTitle>{{ props.title }}</IonTitle>
     </IonToolbar>
   </IonHeader>
 </template>

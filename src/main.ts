@@ -1,5 +1,3 @@
-import "./assets/main.css";
-
 import "@ionic/vue/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
@@ -14,6 +12,8 @@ import "@ionic/vue/css/text-alignment.css";
 import "@ionic/vue/css/text-transformation.css";
 import "@ionic/vue/css/flex-utils.css";
 import "@ionic/vue/css/display.css";
+
+import "./assets/main.css";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";

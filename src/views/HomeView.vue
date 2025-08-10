@@ -84,6 +84,7 @@ const openPage = (url: string) => {
           title="Vereine"
           background-color="blue-dark"
           :icon="footballOutline"
+          @click="openPage('/vereine')"
         />
         <SquareCardComponent
           title="Freizeit"

@@ -8,7 +8,7 @@ import {
 } from "@ionic/vue";
 
 type Props = {
-  title: string;
+  title?: string;
 };
 const props = defineProps<Props>();
 </script>
@@ -19,14 +19,14 @@ const props = defineProps<Props>();
       <IonButtons slot="start">
         <IonBackButton defaultHref="/"></IonBackButton>
       </IonButtons>
-      <IonTitle>{{ props.title }}</IonTitle>
+      <IonTitle v-if="props.title">{{ props.title }}</IonTitle>
     </IonToolbar>
   </IonHeader>
 </template>
 
 <style scoped lang="scss">
 ion-toolbar {
-  --background: #003220;
+  --background: var(--ion-color-primary);
   --color: #fff;
 }
 </style>

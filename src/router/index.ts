@@ -19,6 +19,11 @@ const router = createRouter({
       name: "gelwe-blaettle",
       component: () => import("../views/GelweBlaettleView.vue"),
     },
+    {
+      path: "/vereine",
+      name: "vereine",
+      component: () => import("../views/AssociationsListView.vue"),
+    },
   ],
 });
 

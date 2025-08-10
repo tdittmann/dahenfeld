@@ -1,5 +1,26 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
+  --ion-color-primary: #003220;
+  --ion-color-primary-rgb: 0, 50, 32;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #002c1c;
+  --ion-color-primary-tint: #1a4736;
+
+  --ion-color-secondary: #01744a;
+  --ion-color-secondary-rgb: 1, 116, 74;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #016641;
+  --ion-color-secondary-tint: #1a825c;
+
+  --ion-color-tertiary: #21ba82;
+  --ion-color-tertiary-rgb: 33, 186, 130;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast-rgb: 0, 0, 0;
+  --ion-color-tertiary-shade: #1da472;
+  --ion-color-tertiary-tint: #37c18f;
+
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
@@ -19,10 +40,7 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
-}
 
-/* semantic color variables for this project */
-:root {
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);

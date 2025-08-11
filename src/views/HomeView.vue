@@ -1,21 +1,16 @@
 <script setup lang="ts">
 import {
   earthOutline,
-  flowerOutline,
   footballOutline,
   newspaperOutline,
 } from "ionicons/icons";
 import SquareCardComponent from "@/components/SquareCardComponent.vue";
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  type ScrollDetail,
-} from "@ionic/vue";
-import { computed, ref } from "vue";
+import { IonContent, type ScrollDetail } from "@ionic/vue";
+import { ref } from "vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import { useRouter } from "vue-router";
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import HeaderBannerComponent from "@/components/HeaderBannerComponent.vue";
 
 const router = useRouter();
 
@@ -32,29 +27,21 @@ const handleScroll = (evt: IonContentCustomEvent<ScrollDetail>) => {
   showToolbar.value = scrollTop > 25;
 };
 
-const toolbarBackgroundColor = computed<string>(() => {
-  if (showToolbar.value) {
-    return "#003220";
-  }
-  return "none";
-});
-
 const openPage = (url: string) => {
   router.push(url);
 };
 </script>
 
 <template>
-  <IonHeader class="header" :class="{ 'header-no-shadow': !showToolbar }">
-    <IonToolbar>
-      <IonTitle class="toolbar-title" v-if="showToolbar">Dahenfeld</IonTitle>
-    </IonToolbar>
-  </IonHeader>
+  <HeaderComponent
+    class="header"
+    title="Dahenfeld"
+    :hidden="!showToolbar"
+    :hideBackButton="true"
+  />
 
   <IonContent @ionScroll="handleScroll" :scrollEvents="true">
-    <div class="container-top-background">
-      <div class="container-top-background__gradient-bottom"></div>
-
+    <HeaderBannerComponent backgroundImageUrl="/imgs/background8.jpg">
       <div class="container info-container">
         <div class="info-container__title">
           <h1>Dahenfeld</h1>
@@ -64,7 +51,7 @@ const openPage = (url: string) => {
           {{ currentDate }}
         </div>
       </div>
-    </div>
+    </HeaderBannerComponent>
 
     <div class="ion-padding container">
       <div class="grid">
@@ -86,11 +73,6 @@ const openPage = (url: string) => {
           :icon="footballOutline"
           @click="openPage('/vereine')"
         />
-        <SquareCardComponent
-          title="Freizeit"
-          background-color="green-dark"
-          :icon="flowerOutline"
-        />
       </div>
     </div>
   </IonContent>
@@ -99,42 +81,6 @@ const openPage = (url: string) => {
 <style lang="scss" scoped>
 .header {
   position: fixed;
-}
-
-.header-no-shadow {
-  box-shadow: none;
-}
-
-ion-toolbar {
-  --background: v-bind("toolbarBackgroundColor");
-  --color: #fff;
-}
-
-.header-no-shadow,
-.toolbar-title,
-ion-toolbar::part(background) {
-  transition: background-color 1s ease;
-}
-
-.container-top-background {
-  background-image: url("/imgs/background8.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 250px;
-  position: relative;
-
-  &__gradient-bottom {
-    width: 100%;
-    height: 50%;
-    background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    position: absolute;
-    bottom: 0;
-    z-index: 1;
-  }
 }
 
 .info-container {

@@ -20,7 +20,15 @@ import {
   type Association,
   AssociationsService,
 } from "@/services/AssociationsService.ts";
-import { linkOutline, logoFacebook, logoInstagram } from "ionicons/icons";
+import {
+  linkOutline,
+  logoWhatsapp,
+  logoFacebook,
+  logoInstagram,
+} from "ionicons/icons";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const loading = ref<boolean>(true);
 const associations = ref<Association[]>([]);
@@ -39,6 +47,10 @@ const loadAssociations = () => {
 
 const openLink = (link: string) => {
   window.open(link, "_blank");
+};
+
+const openAssociationDetail = (id: number) => {
+  router.push(`/vereine/${id}`);
 };
 
 onMounted(() => {
@@ -62,7 +74,10 @@ onMounted(() => {
         <ion-row>
           <template v-for="association of associations" :key="association.name">
             <ion-col size="12" sizeMd="6" sizeLg="4">
-              <ion-card class="card">
+              <ion-card
+                class="card"
+                @click="openAssociationDetail(association.id)"
+              >
                 <ion-card-header class="card__header">
                   <ion-avatar v-if="association.logo">
                     <img :alt="association.name" :src="association.logo" />
@@ -98,6 +113,14 @@ onMounted(() => {
 
                     <div class="card__footer__right">
                       <ion-button
+                        v-if="association.whatsapp"
+                        fill="clear"
+                        @click="openLink(association.whatsapp)"
+                      >
+                        <ion-icon :icon="logoWhatsapp"></ion-icon>
+                      </ion-button>
+
+                      <ion-button
                         v-if="association.facebook"
                         fill="clear"
                         @click="openLink(association.facebook)"
@@ -125,12 +148,6 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-ion-grid,
-ion-col {
-  padding-left: 0;
-  padding-right: 0;
-}
-
 .card {
   cursor: pointer;
 

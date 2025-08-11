@@ -8,6 +8,7 @@ export interface AssociationJson {
   logo: string;
   image: string;
   homepage: string;
+  whatsapp: string;
   facebook: string;
   instagram: string;
 }
@@ -20,6 +21,7 @@ export interface Association {
   logo: string;
   image: string;
   homepage: string;
+  whatsapp: string;
   facebook: string;
   instagram: string;
 }
@@ -33,6 +35,7 @@ const toAssociation = (json: AssociationJson): Association => {
     logo: json.logo,
     image: json.image,
     homepage: json.homepage,
+    whatsapp: json.whatsapp,
     facebook: json.facebook,
     instagram: json.instagram,
   };
@@ -57,6 +60,26 @@ const loadAssociations = (): Promise<Association[]> => {
     });
 };
 
+const loadAssociationById = (id: number): Promise<Association | undefined> => {
+  return fetch(`${environment.backendUrl}/associations?id=${id}`, {
+    headers: new Headers({
+      Authorization:
+        "Basic " +
+        btoa(
+          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+        ),
+    }),
+  })
+    .then((response) => response.json())
+    .then((value) => {
+      if (value) {
+        return toAssociation(value);
+      }
+      return value;
+    });
+};
+
 export const AssociationsService = {
   loadAssociations,
+  loadAssociationById,
 };

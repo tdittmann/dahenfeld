@@ -21,8 +21,13 @@ const router = createRouter({
     },
     {
       path: "/vereine",
-      name: "vereine",
+      name: "verein-list",
       component: () => import("../views/AssociationsListView.vue"),
+    },
+    {
+      path: "/vereine/:id",
+      name: "verein-detail",
+      component: () => import("../views/AssociationsDetailView.vue"),
     },
   ],
 });

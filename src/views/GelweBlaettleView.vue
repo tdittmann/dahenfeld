@@ -99,4 +99,8 @@ ion-label strong {
 ion-label ion-note {
   font-size: 0.9rem;
 }
+
+.container {
+  margin-bottom: 32px;
+}
 </style>

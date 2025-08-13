@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import("../views/VirtualTourView.vue"),
     },
     {
+      path: "/virtual-tour/:id",
+      name: "virtual-tour-detail",
+      component: () => import("../views/VirtualTourDetailView.vue"),
+    },
+    {
       path: "/gelwe-blaettle",
       name: "gelwe-blaettle",
       component: () => import("../views/GelweBlaettleView.vue"),

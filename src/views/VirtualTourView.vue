@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { Layers, Map, MapControls, Sources } from "vue3-openlayers";
 import { Projection } from "ol/proj";
 import HeaderComponent from "@/components/HeaderComponent.vue";
+import {
+  VirtualTourService,
+  type VirtualTourStation,
+} from "@/services/VirtualTourService.ts";
+import { IonButton, IonIcon } from "@ionic/vue";
+import { closeOutline } from "ionicons/icons";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 // If we need clustering: https://openlayers.org/en/latest/examples/cluster.html
-
 const zoom = ref<number>(2.5);
 const maxZoom = ref<number>(5);
 const size = ref<number[]>([2599, 2124]);
@@ -18,13 +26,36 @@ const projection = new Projection({
 });
 const imgUrl = ref<string>("/imgs/virtual-tour/LuftaufnahmeDahenfeld.png");
 
-const dialogOpen = ref<boolean>(false);
-const openDialog = () => {
-  dialogOpen.value = true;
+const selectedStation = ref<VirtualTourStation | undefined>(undefined);
+const openDialog = (station: VirtualTourStation) => {
+  selectedStation.value = station;
 };
 const closeDialog = () => {
-  dialogOpen.value = false;
+  selectedStation.value = undefined;
 };
+
+const loading = ref<boolean>(true);
+const virtualTourStations = ref<VirtualTourStation[]>([]);
+const loadVirtualTourStations = () => {
+  loading.value = true;
+  virtualTourStations.value = [];
+
+  VirtualTourService.loadStations()
+    .then((stations: VirtualTourStation[]) => {
+      virtualTourStations.value = stations;
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+};
+
+const openStationDetail = (id: number) => {
+  router.push(`/virtual-tour/${id}`);
+};
+
+onMounted(() => {
+  loadVirtualTourStations();
+});
 </script>
 
 <template>
@@ -54,34 +85,29 @@ const closeDialog = () => {
       ></Sources.OlSourceImageStatic>
     </Layers.OlImageLayer>
 
-    <Map.OlOverlay :position="[1100, 1100]">
-      <div class="overlay-content" @click="openDialog">Test</div>
-    </Map.OlOverlay>
-
-    <Map.OlOverlay :position="[900, 1100]">
-      <div class="overlay-content" @click="openDialog">Test</div>
-    </Map.OlOverlay>
-
-    <Map.OlOverlay :position="[1100, 1300]">
-      <div class="overlay-content" @click="openDialog">Test</div>
-    </Map.OlOverlay>
-
-    <Map.OlOverlay :position="[750, 600]">
-      <div class="overlay-content" @click="openDialog">SCD</div>
-    </Map.OlOverlay>
-
-    <Map.OlOverlay :position="[1700, 2000]">
-      <div class="overlay-content" @click="openDialog">Test</div>
-    </Map.OlOverlay>
+    <template v-for="station of virtualTourStations" :key="station.id">
+      <Map.OlOverlay :position="[station.positionX, station.positionY]">
+        <div class="overlay-content" @click="openDialog(station)">Test</div>
+      </Map.OlOverlay>
+    </template>
   </Map.OlMap>
 
-  <template v-if="dialogOpen">
-    <div class="speech-bubble" @click="closeDialog">
+  <template v-if="selectedStation">
+    <div class="speech-bubble">
       <div class="speech-bubble__content">
-        <h2>Hey! Schön, dich zu sehen!</h2>
-        <p>Ich bin hier unten links – klick mich an, um mehr zu erfahren.</p>
+        <h2>{{ selectedStation.title }}</h2>
+        <h3>{{ selectedStation.subTitle }}</h3>
+
+        <div class="speech-bubble__read-more">
+          <ion-button @click="openStationDetail(selectedStation.id)"
+            >Mehr erfahren</ion-button
+          >
+        </div>
       </div>
 
+      <div class="speech-bubble__close">
+        <IonIcon :icon="closeOutline" @click="closeDialog"></IonIcon>
+      </div>
       <div class="speech-bubble__arrow"></div>
     </div>
 
@@ -108,9 +134,7 @@ const closeDialog = () => {
   position: absolute;
   bottom: 170px;
   left: 50px;
-  top: 75px;
-  width: calc(100% - 100px);
-  height: calc(100% - 250px);
+  max-width: 750px;
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -119,20 +143,46 @@ const closeDialog = () => {
   &__content {
     position: relative;
     z-index: 2;
-  }
-}
+    margin-top: 32px;
 
-.speech-bubble__arrow {
-  position: absolute;
-  bottom: -19px;
-  left: 50px;
-  width: 0;
-  height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-top: 20px solid white;
-  z-index: 1;
-  filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
+    h2 {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    h3 {
+      margin: 0;
+      font-weight: normal;
+      font-size: 1rem;
+    }
+  }
+
+  &__read-more {
+    margin-top: 32px;
+    text-align: right;
+  }
+
+  &__arrow {
+    position: absolute;
+    bottom: -19px;
+    left: 50px;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid white;
+    z-index: 1;
+    filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
+  }
+
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 24px;
+    cursor: pointer;
+  }
 }
 
 .remichele {

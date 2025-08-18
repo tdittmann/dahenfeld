@@ -87,7 +87,9 @@ onMounted(() => {
 
     <template v-for="station of virtualTourStations" :key="station.id">
       <Map.OlOverlay :position="[station.positionX, station.positionY]">
-        <div class="overlay-content" @click="openDialog(station)">Test</div>
+        <div class="overlay-content" @click="openDialog(station)">
+          {{ station.id }}
+        </div>
       </Map.OlOverlay>
     </template>
   </Map.OlMap>
@@ -119,11 +121,12 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .overlay-content {
-  height: 50px;
-  width: 50px;
-  border-radius: 50px;
-  background: red;
-  border: 1px solid yellow;
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  background: #18875d;
+  color: #fff;
+  border: 1px solid #0a6040;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -13,7 +13,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-// If we need clustering: https://openlayers.org/en/latest/examples/cluster.html
 const zoom = ref<number>(2.5);
 const maxZoom = ref<number>(5);
 const size = ref<number[]>([2599, 2124]);
@@ -87,7 +86,11 @@ onMounted(() => {
 
     <template v-for="station of virtualTourStations" :key="station.id">
       <Map.OlOverlay :position="[station.positionX, station.positionY]">
-        <div class="overlay-content" @click="openDialog(station)">
+        <div
+          class="overlay-content"
+          :class="[`overlay-content__${station.category}`]"
+          @click="openDialog(station)"
+        >
           {{ station.id }}
         </div>
       </Map.OlOverlay>
@@ -124,18 +127,27 @@ onMounted(() => {
   height: 30px;
   width: 30px;
   border-radius: 30px;
-  background: #18875d;
-  color: #fff;
-  border: 1px solid #0a6040;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  &__historic {
+    background: #874618;
+    color: #fff;
+    border: 1px solid #6a340d;
+  }
+
+  &__virtual {
+    background: #871885;
+    color: #fff;
+    border: 1px solid #6a0d69;
+  }
 }
 
 .speech-bubble {
   position: absolute;
-  bottom: 170px;
+  bottom: 210px;
   left: 50px;
   max-width: 750px;
   background: white;
@@ -190,7 +202,7 @@ onMounted(() => {
 
 .remichele {
   position: fixed;
-  bottom: 20px;
+  bottom: 60px;
   left: 20px;
   z-index: 3;
 }

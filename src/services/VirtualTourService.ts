@@ -4,6 +4,8 @@ export interface VirtualTourStationJson {
   id: number;
   position_x: number;
   position_y: number;
+  latitude: string;
+  longitude: string;
   title: string;
   subTitle: string;
   category: string;
@@ -15,6 +17,8 @@ export interface VirtualTourStation {
   id: number;
   positionX: number;
   positionY: number;
+  latitude: number;
+  longitude: number;
   title: string;
   subTitle: string;
   category: string;
@@ -29,6 +33,8 @@ const toVirtualTourStation = (
     id: json.id,
     positionX: json.position_x,
     positionY: json.position_y,
+    latitude: Number(json.latitude),
+    longitude: Number(json.longitude),
     title: json.title,
     subTitle: json.subTitle,
     category: json.category,

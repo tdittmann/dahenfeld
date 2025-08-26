@@ -56,10 +56,16 @@ const openPage = (url: string) => {
     <div class="ion-padding container">
       <div class="grid">
         <SquareCardComponent
-          title="Virtueller Rundgang"
+          title="Virtueller Rundgang #1"
           background-color="red-dark"
           :icon="earthOutline"
           @click="openPage('/virtual-tour')"
+        />
+        <SquareCardComponent
+          title="Virtueller Rundgang #2"
+          background-color="red-dark"
+          :icon="earthOutline"
+          @click="openPage('/virtual-tour-1')"
         />
         <SquareCardComponent
           title="'s Gelwe Blättle"

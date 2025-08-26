@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { Layers, Map, MapControls, Sources } from "vue3-openlayers";
-import { Projection } from "ol/proj";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import {
   VirtualTourService,
@@ -10,20 +8,22 @@ import {
 import { IonButton, IonIcon } from "@ionic/vue";
 import { closeOutline } from "ionicons/icons";
 import { useRouter } from "vue-router";
+import { AdvancedMarker, GoogleMap } from "vue3-google-map";
+import { environment } from "@/environment/environment.ts";
 
 const router = useRouter();
 
-const zoom = ref<number>(2.5);
-const maxZoom = ref<number>(6);
-const size = ref<number[]>([6384, 3696]);
-const center = ref<number[]>([size.value[0] / 2, size.value[1] / 2]);
-const extent = ref<number[]>([0, 0, ...size.value]);
-const projection = new Projection({
-  code: "xkcd-image",
-  units: "pixels",
-  extent: extent.value,
-});
-const imgUrl = ref<string>("/imgs/virtual-tour/LuftaufnahmeDahenfeld.jpg");
+const minZoom = 15;
+const center = { lat: 49.20994971350856, lng: 9.29993450078172 };
+const restriction = {
+  latLngBounds: {
+    north: 49.22117681150429,
+    south: 49.200704794187565,
+    east: 9.323163405773387,
+    west: 9.27348953273025,
+  },
+  strictBounds: false,
+};
 
 const selectedStation = ref<VirtualTourStation | undefined>(undefined);
 const openDialog = (station: VirtualTourStation) => {
@@ -60,42 +60,37 @@ onMounted(() => {
 <template>
   <HeaderComponent title="Virtueller Rundgang" />
 
-  <Map.OlMap
-    :loadTilesWhileAnimating="true"
-    :loadTilesWhileInteracting="true"
-    style="height: 100%; width: 100%"
+  <GoogleMap
+    :api-key="environment.virtualTour.apiKey"
+    :mapId="environment.virtualTour.mapId"
+    style="width: 100%; height: 100%"
+    :center="center"
+    :zoom="minZoom"
+    :disable-default-ui="true"
+    mapTypeId="satellite"
+    :min-zoom="minZoom"
+    :restriction="restriction"
   >
-    <Map.OlView
-      :center="center"
-      :zoom="zoom"
-      :minZoom="zoom"
-      :max-zoom="maxZoom"
-      :projection="projection"
-      :extent="extent"
-    />
-
-    <MapControls.OlZoomControl />
-
-    <Layers.OlImageLayer id="xkcd">
-      <Sources.OlSourceImageStatic
-        :url="imgUrl"
-        :imageSize="size"
-        :imageExtent="extent"
-      ></Sources.OlSourceImageStatic>
-    </Layers.OlImageLayer>
-
     <template v-for="station of virtualTourStations" :key="station.id">
-      <Map.OlOverlay :position="[station.positionX, station.positionY]">
-        <div
-          class="overlay-content"
-          :class="[`overlay-content__${station.category}`]"
-          @click="openDialog(station)"
-        >
-          {{ station.id }}
-        </div>
-      </Map.OlOverlay>
+      <AdvancedMarker
+        :options="{
+          position: { lat: station.latitude, lng: station.longitude },
+          title: station.title,
+        }"
+        @click="openDialog(station)"
+      >
+        <template #content>
+          <div
+            class="overlay-content"
+            :class="[`overlay-content__${station.category}`]"
+            @click="openDialog(station)"
+          >
+            {{ station.id }}
+          </div>
+        </template>
+      </AdvancedMarker>
     </template>
-  </Map.OlMap>
+  </GoogleMap>
 
   <template v-if="selectedStation">
     <div class="speech-bubble">

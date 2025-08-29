@@ -39,6 +39,11 @@ const router = createRouter({
       name: "verein-detail",
       component: () => import("../views/AssociationsDetailView.vue"),
     },
+    {
+      path: "/muelltermine",
+      name: "muelltermine",
+      component: () => import("../views/WasteCollectionDatesView.vue"),
+    },
   ],
 });
 

@@ -3,6 +3,7 @@ import {
   earthOutline,
   footballOutline,
   newspaperOutline,
+  trashBinOutline,
 } from "ionicons/icons";
 import SquareCardComponent from "@/components/SquareCardComponent.vue";
 import { IonContent, type ScrollDetail } from "@ionic/vue";
@@ -78,6 +79,12 @@ const openPage = (url: string) => {
           background-color="blue-dark"
           :icon="footballOutline"
           @click="openPage('/vereine')"
+        />
+        <SquareCardComponent
+          title="Mülltermine"
+          background-color="green-dark"
+          :icon="trashBinOutline"
+          @click="openPage('/muelltermine')"
         />
       </div>
     </div>

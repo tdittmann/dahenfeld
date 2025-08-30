@@ -162,4 +162,8 @@ onMounted(() => {
 .waste_type_icon_pollutants {
   color: #f59103;
 }
+
+.container {
+  margin-bottom: 32px;
+}
 </style>

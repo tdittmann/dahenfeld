@@ -3,7 +3,10 @@ import { onMounted, ref } from "vue";
 import { Layers, Map, MapControls, Sources } from "vue3-openlayers";
 import { Projection } from "ol/proj";
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import { VirtualTourService, type VirtualTourStation } from "@/services/VirtualTourService.ts";
+import {
+  VirtualTourService,
+  type VirtualTourStation,
+} from "@/services/VirtualTourService.ts";
 import { IonButton, IonIcon } from "@ionic/vue";
 import { closeOutline } from "ionicons/icons";
 import { useRouter } from "vue-router";

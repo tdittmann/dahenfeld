@@ -12,7 +12,9 @@ export const useNavigationStore = defineStore("navigation", () => {
 
   const route = useRoute();
   const currentItem = computed(() => {
-    return navigationItems.value.find((item) => route.path.startsWith(item.path));
+    return navigationItems.value.find((item) =>
+      route.path.startsWith(item.path),
+    );
   });
 
   return {

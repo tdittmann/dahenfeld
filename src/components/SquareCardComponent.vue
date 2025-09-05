@@ -5,16 +5,7 @@ import { computed } from "vue";
 type Props = {
   title: string;
   icon?: string;
-  backgroundColor:
-    | undefined
-    | "red-light"
-    | "red-dark"
-    | "blue-light"
-    | "blue-dark"
-    | "green-light"
-    | "green-dark"
-    | "yellow-light"
-    | "yellow-dark";
+  backgroundColor: undefined | string;
 };
 const props = defineProps<Props>();
 

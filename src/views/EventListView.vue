@@ -12,6 +12,9 @@ import {
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import { type Event, EventService } from "@/services/EventsService.ts";
 import { locationOutline } from "ionicons/icons";
+import { useNavigationStore } from "@/stores/navigation.ts";
+
+const navigationStore = useNavigationStore();
 
 const loading = ref<boolean>(true);
 const eventsByMonth = ref<Map<string, Event[]>>(new Map());
@@ -71,17 +74,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- TODO tdit: Move to backend (navigation)! -->
-  <HeaderComponent title="Veranstaltungen" />
+  <HeaderComponent :title="navigationStore.currentItem?.title" />
 
   <IonContent>
     <LoadingComponent :loading="loading" />
 
     <div class="container" v-if="!loading">
-      <p style="margin-top: 16px; margin-bottom: 16px">
-        <!-- TODO tdit: Move to backend (navigation)! -->
-        Hier erhalten Sie einen schnellen Überblick über alle anstehenden
-        Veranstaltungen in Dahenfeld.
+      <p
+        v-if="navigationStore.currentItem?.description"
+        style="margin-top: 16px; margin-bottom: 16px"
+      >
+        {{ navigationStore.currentItem?.description }}
       </p>
 
       <template v-for="[key, values] of eventsByMonth" :key="key">

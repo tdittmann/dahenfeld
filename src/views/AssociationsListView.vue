@@ -22,13 +22,15 @@ import {
 } from "@/services/AssociationsService.ts";
 import {
   linkOutline,
-  logoWhatsapp,
   logoFacebook,
   logoInstagram,
+  logoWhatsapp,
 } from "ionicons/icons";
 import { useRouter } from "vue-router";
+import { useNavigationStore } from "@/stores/navigation.ts";
 
 const router = useRouter();
+const navigationStore = useNavigationStore();
 
 const loading = ref<boolean>(true);
 const associations = ref<Association[]>([]);
@@ -59,17 +61,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- TODO tdit: Move to backend (navigation)! -->
-  <HeaderComponent title="Vereine" />
+  <HeaderComponent :title="navigationStore.currentItem?.title" />
 
   <IonContent>
     <LoadingComponent :loading="loading" />
 
     <div class="container" v-if="!loading">
-      <p style="margin-top: 16px; margin-bottom: 16px">
-        <!-- TODO tdit: Move to backend (navigation)! -->
-        Die Dahenfelder Vereine bestechen durch eine familiäre Atmosphäre und
-        Freundlichkeit. Bei uns findet jeder seine Passion.
+      <p
+        v-if="navigationStore.currentItem?.description"
+        style="margin-top: 16px; margin-bottom: 16px"
+      >
+        {{ navigationStore.currentItem?.description }}
       </p>
 
       <ion-grid>

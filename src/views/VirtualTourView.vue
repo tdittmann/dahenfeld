@@ -10,8 +10,10 @@ import {
 import { IonButton, IonIcon } from "@ionic/vue";
 import { closeOutline } from "ionicons/icons";
 import { useRouter } from "vue-router";
+import { useNavigationStore } from "@/stores/navigation.ts";
 
 const router = useRouter();
+const navigationStore = useNavigationStore();
 
 const zoom = ref<number>(2.5);
 const maxZoom = ref<number>(6);
@@ -58,8 +60,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- TODO tdit: Move to backend (navigation)! -->
-  <HeaderComponent title="Virtueller Rundgang" />
+  <HeaderComponent :title="navigationStore.currentItem?.title" />
 
   <Map.OlMap
     :loadTilesWhileAnimating="true"

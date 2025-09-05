@@ -14,6 +14,9 @@ import {
 } from "@/services/GelweBlaettleService.ts";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
+import { useNavigationStore } from "@/stores/navigation.ts";
+
+const navigationStore = useNavigationStore();
 
 const loading = ref<boolean>(true);
 const gelweBlaettleMap = ref<Map<number, GelweBlaettle[]>>(new Map());
@@ -47,17 +50,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- TODO tdit: Move to backend (navigation)! -->
-  <HeaderComponent title="'s Gelwe Blättle" />
+  <HeaderComponent :title="navigationStore.currentItem?.title" />
 
   <IonContent>
     <LoadingComponent :loading="loading" />
 
     <div class="container" v-if="!loading">
-      <p style="margin-top: 16px; margin-bottom: 16px">
-        <!-- TODO tdit: Move to backend (navigation)! -->
-        Hier finden Sie die aktuelle, sowie bereits erschienene Ausgaben des
-        Gelwen Blättle.
+      <p
+        v-if="navigationStore.currentItem?.description"
+        style="margin-top: 16px; margin-bottom: 16px"
+      >
+        {{ navigationStore.currentItem?.description }}
       </p>
 
       <template v-for="[key, values] of gelweBlaettleMap" :key="key">

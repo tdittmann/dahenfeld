@@ -1,11 +1,4 @@
 <script setup lang="ts">
-import {
-  earthOutline,
-  footballOutline,
-  newspaperOutline,
-  trashBinOutline,
-  calendarOutline,
-} from "ionicons/icons";
 import SquareCardComponent from "@/components/SquareCardComponent.vue";
 import { IonContent, type ScrollDetail } from "@ionic/vue";
 import { ref } from "vue";
@@ -13,8 +6,17 @@ import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import { useRouter } from "vue-router";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import HeaderBannerComponent from "@/components/HeaderBannerComponent.vue";
+import { useNavigationStore } from "@/stores/navigation.ts";
+import {
+  calendarOutline,
+  earthOutline,
+  footballOutline,
+  newspaperOutline,
+  trashBinOutline,
+} from "ionicons/icons";
 
 const router = useRouter();
+const navigationStore = useNavigationStore();
 
 const currentDate = new Date().toLocaleDateString("de-DE", {
   day: "2-digit",
@@ -31,6 +33,14 @@ const handleScroll = (evt: IonContentCustomEvent<ScrollDetail>) => {
 
 const openPage = (url: string) => {
   router.push(url);
+};
+
+const iconMapping: Record<string, any> = {
+  earthOutline,
+  newspaperOutline,
+  footballOutline,
+  trashBinOutline,
+  calendarOutline,
 };
 </script>
 
@@ -57,42 +67,12 @@ const openPage = (url: string) => {
 
     <div class="ion-padding container">
       <div class="grid">
-        <!-- TODO tdit: Move to backend! -->
         <SquareCardComponent
-          title="Virtueller Rundgang #1"
-          background-color="red-dark"
-          :icon="earthOutline"
-          @click="openPage('/virtual-tour')"
-        />
-        <SquareCardComponent
-          title="Virtueller Rundgang #2"
-          background-color="red-dark"
-          :icon="earthOutline"
-          @click="openPage('/virtual-tour-1')"
-        />
-        <SquareCardComponent
-          title="'s Gelwe Blättle"
-          background-color="yellow-dark"
-          :icon="newspaperOutline"
-          @click="openPage('/gelwe-blaettle')"
-        />
-        <SquareCardComponent
-          title="Vereine"
-          background-color="blue-dark"
-          :icon="footballOutline"
-          @click="openPage('/vereine')"
-        />
-        <SquareCardComponent
-          title="Mülltermine"
-          background-color="green-dark"
-          :icon="trashBinOutline"
-          @click="openPage('/muelltermine')"
-        />
-        <SquareCardComponent
-          title="Veranstaltungen"
-          background-color="blue-dark"
-          :icon="calendarOutline"
-          @click="openPage('/veranstaltungen')"
+          v-for="item of navigationStore.navigationItems"
+          :title="item.title"
+          :backgroundColor="item.backgroundColor"
+          :icon="iconMapping[item.icon]"
+          @click="openPage(item.path)"
         />
       </div>
     </div>

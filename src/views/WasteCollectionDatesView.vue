@@ -8,6 +8,9 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
 import { IonContent, IonIcon, IonItem, IonLabel, IonList } from "@ionic/vue";
 import { trashBin, trashSharp } from "ionicons/icons";
 import LoadingComponent from "@/components/LoadingComponent.vue";
+import { useNavigationStore } from "@/stores/navigation.ts";
+
+const navigationStore = useNavigationStore();
 
 const loading = ref<boolean>(true);
 const wasteCollectionDatesByMonth = ref<Map<string, WasteCollectionDate[]>>(
@@ -89,17 +92,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- TODO tdit: Move to backend (navigation)! -->
-  <HeaderComponent title="Mülltermine" />
+  <HeaderComponent :title="navigationStore.currentItem?.title" />
 
   <IonContent>
     <LoadingComponent :loading="loading" />
 
     <div class="container" v-if="!loading">
-      <p style="margin-top: 16px; margin-bottom: 16px">
-        <!-- TODO tdit: Move to backend (navigation)! -->
-        Hier finden Sie eine kompakte Übersicht aller Müllabfuhrtermine, damit
-        Sie Ihre Abfallentsorgung stets im Blick behalten.
+      <p
+        v-if="navigationStore.currentItem?.description"
+        style="margin-top: 16px; margin-bottom: 16px"
+      >
+        {{ navigationStore.currentItem?.description }}
       </p>
 
       <template v-for="[key, values] of wasteCollectionDatesByMonth" :key="key">

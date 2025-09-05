@@ -10,8 +10,10 @@ import { closeOutline } from "ionicons/icons";
 import { useRouter } from "vue-router";
 import { AdvancedMarker, GoogleMap } from "vue3-google-map";
 import { environment } from "@/environment/environment.ts";
+import { useNavigationStore } from "@/stores/navigation.ts";
 
 const router = useRouter();
+const navigationStore = useNavigationStore();
 
 const minZoom = 15;
 const center = { lat: 49.20994971350856, lng: 9.29993450078172 };
@@ -58,8 +60,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- TODO tdit: Move to backend (navigation)! -->
-  <HeaderComponent title="Virtueller Rundgang" />
+  <HeaderComponent :title="navigationStore.currentItem?.title" />
 
   <GoogleMap
     :api-key="environment.virtualTour.apiKey"

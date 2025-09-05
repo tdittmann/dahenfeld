@@ -58,6 +58,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- TODO tdit: Move to backend (navigation)! -->
   <HeaderComponent title="Virtueller Rundgang" />
 
   <Map.OlMap
@@ -104,9 +105,9 @@ onMounted(() => {
         <h3>{{ selectedStation.subTitle }}</h3>
 
         <div class="speech-bubble__read-more">
-          <ion-button @click="openStationDetail(selectedStation.id)"
-            >Mehr erfahren</ion-button
-          >
+          <ion-button @click="openStationDetail(selectedStation.id)">
+            Mehr erfahren
+          </ion-button>
         </div>
       </div>
 

@@ -59,6 +59,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- TODO tdit: Move to backend (navigation)! -->
   <HeaderComponent title="Vereine" />
 
   <IonContent>
@@ -66,6 +67,7 @@ onMounted(() => {
 
     <div class="container" v-if="!loading">
       <p style="margin-top: 16px; margin-bottom: 16px">
+        <!-- TODO tdit: Move to backend (navigation)! -->
         Die Dahenfelder Vereine bestechen durch eine familiäre Atmosphäre und
         Freundlichkeit. Bei uns findet jeder seine Passion.
       </p>

@@ -32,7 +32,7 @@ const toWasteCollectionDate = (
 };
 
 const loadWasteCollectionDates = (): Promise<WasteCollectionDate[]> => {
-  return fetch(`${environment.backendUrl}/waste_collection_dates`, {
+  return fetch(`${environment.backendUrl}/waste-collection-dates`, {
     headers: new Headers({
       Authorization:
         "Basic " +

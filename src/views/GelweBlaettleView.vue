@@ -47,6 +47,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- TODO tdit: Move to backend (navigation)! -->
   <HeaderComponent title="'s Gelwe Blättle" />
 
   <IonContent>
@@ -54,6 +55,7 @@ onMounted(() => {
 
     <div class="container" v-if="!loading">
       <p style="margin-top: 16px; margin-bottom: 16px">
+        <!-- TODO tdit: Move to backend (navigation)! -->
         Hier finden Sie die aktuelle, sowie bereits erschienene Ausgaben des
         Gelwen Blättle.
       </p>

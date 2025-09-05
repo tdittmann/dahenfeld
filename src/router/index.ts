@@ -44,6 +44,11 @@ const router = createRouter({
       name: "muelltermine",
       component: () => import("../views/WasteCollectionDatesView.vue"),
     },
+    {
+      path: "/veranstaltungen",
+      name: "veranstaltungen",
+      component: () => import("../views/EventListView.vue"),
+    },
   ],
 });
 

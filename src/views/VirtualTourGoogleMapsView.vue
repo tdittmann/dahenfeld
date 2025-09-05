@@ -58,6 +58,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- TODO tdit: Move to backend (navigation)! -->
   <HeaderComponent title="Virtueller Rundgang" />
 
   <GoogleMap

@@ -20,10 +20,6 @@ const loadWasteCollectionDates = () => {
   WasteCollectionDateService.loadWasteCollectionDates()
     .then((dates: WasteCollectionDate[]) => {
       for (const date of dates) {
-        if (isInPast(date)) {
-          continue;
-        }
-
         const key = formatMonthHeading(date.collectionDate);
         if (wasteCollectionDatesByMonth.value.has(key)) {
           wasteCollectionDatesByMonth.value.get(key)?.push(date);
@@ -35,11 +31,6 @@ const loadWasteCollectionDates = () => {
     .finally(() => {
       loading.value = false;
     });
-};
-
-const isInPast = (collectionDate: WasteCollectionDate) => {
-  const today = new Date();
-  return collectionDate.collectionDate < today;
 };
 
 const formatMonthHeading = (date: Date) => {
@@ -98,6 +89,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- TODO tdit: Move to backend (navigation)! -->
   <HeaderComponent title="Mülltermine" />
 
   <IonContent>
@@ -105,6 +97,7 @@ onMounted(() => {
 
     <div class="container" v-if="!loading">
       <p style="margin-top: 16px; margin-bottom: 16px">
+        <!-- TODO tdit: Move to backend (navigation)! -->
         Hier finden Sie eine kompakte Übersicht aller Müllabfuhrtermine, damit
         Sie Ihre Abfallentsorgung stets im Blick behalten.
       </p>

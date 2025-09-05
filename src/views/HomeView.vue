@@ -4,6 +4,7 @@ import {
   footballOutline,
   newspaperOutline,
   trashBinOutline,
+  calendarOutline,
 } from "ionicons/icons";
 import SquareCardComponent from "@/components/SquareCardComponent.vue";
 import { IonContent, type ScrollDetail } from "@ionic/vue";
@@ -56,6 +57,7 @@ const openPage = (url: string) => {
 
     <div class="ion-padding container">
       <div class="grid">
+        <!-- TODO tdit: Move to backend! -->
         <SquareCardComponent
           title="Virtueller Rundgang #1"
           background-color="red-dark"
@@ -85,6 +87,12 @@ const openPage = (url: string) => {
           background-color="green-dark"
           :icon="trashBinOutline"
           @click="openPage('/muelltermine')"
+        />
+        <SquareCardComponent
+          title="Veranstaltungen"
+          background-color="blue-dark"
+          :icon="calendarOutline"
+          @click="openPage('/veranstaltungen')"
         />
       </div>
     </div>

@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@ionic/vue": "^8.7.2",
-    "@ionic/vue-router": "^8.7.2",
+    "@ionic/vue-router": "^8.7.3",
     "ol": "^10.6.1",
     "ol-contextmenu": "^5.5.0",
     "ol-ext": "^4.0.33",

@@ -25,7 +25,7 @@
     "ol-contextmenu": "^5.5.0",
     "ol-ext": "^4.0.33",
     "pinia": "^3.0.3",
-    "vue": "^3.5.18",
+    "vue": "^3.5.19",
     "vue-router": "^4.5.1",
     "vue3-google-map": "^0.23.1",
     "vue3-openlayers": "^11.6.2"

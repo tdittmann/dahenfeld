@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SquareCardComponent from "@/components/SquareCardComponent.vue";
-import { IonContent, type ScrollDetail } from "@ionic/vue";
+import { IonContent, IonIcon, type ScrollDetail } from "@ionic/vue";
 import { ref } from "vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import { useRouter } from "vue-router";
@@ -12,6 +12,7 @@ import {
   earthOutline,
   footballOutline,
   newspaperOutline,
+  settingsOutline,
   trashBinOutline,
 } from "ionicons/icons";
 
@@ -52,6 +53,13 @@ const iconMapping: Record<string, any> = {
     :hideBackButton="true"
   />
 
+  <IonIcon
+    :icon="settingsOutline"
+    class="settings"
+    :class="{ settings__white: showToolbar }"
+    @click="openPage('/einstellungen')"
+  />
+
   <IonContent @ionScroll="handleScroll" :scrollEvents="true">
     <HeaderBannerComponent backgroundImageUrl="/imgs/background8.jpg">
       <div class="container info-container">
@@ -83,6 +91,19 @@ const iconMapping: Record<string, any> = {
 <style lang="scss" scoped>
 .header {
   position: fixed;
+}
+
+.settings {
+  font-size: 32px;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 999;
+  color: #000;
+
+  &__white {
+    color: #fff;
+  }
 }
 
 .info-container {

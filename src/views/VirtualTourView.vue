@@ -18,7 +18,7 @@ const navigationStore = useNavigationStore();
 const zoom = ref<number>(2.5);
 const maxZoom = ref<number>(6);
 const size = ref<number[]>([6384, 3696]);
-const center = ref<number[]>([size.value[0] / 2, size.value[1] / 2]);
+const center = ref<number[]>([<number>size.value[0] / 2, <number>size.value[1] / 2]);
 const extent = ref<number[]>([0, 0, ...size.value]);
 const projection = new Projection({
   code: "xkcd-image",

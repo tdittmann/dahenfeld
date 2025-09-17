@@ -1,5 +1,10 @@
 @import "./base.css";
 
+.item-divider-padding {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 .container {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;

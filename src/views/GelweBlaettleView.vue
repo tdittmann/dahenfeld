@@ -65,7 +65,7 @@ onMounted(() => {
 
       <template v-for="[key, values] of gelweBlaettleMap" :key="key">
         <IonItemGroup mode="ios" style="margin-top: 32px">
-          <IonItemDivider>
+          <IonItemDivider class="item-divider-padding">
             <IonLabel>{{ key }}</IonLabel>
           </IonItemDivider>
 

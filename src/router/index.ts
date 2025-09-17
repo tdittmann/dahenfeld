@@ -49,6 +49,11 @@ const router = createRouter({
       name: "veranstaltungen",
       component: () => import("../views/EventListView.vue"),
     },
+    {
+      path: "/einstellungen",
+      name: "einstellungen",
+      component: () => import("../views/SettingsView.vue"),
+    },
   ],
 });
 

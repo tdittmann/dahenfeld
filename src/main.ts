@@ -25,5 +25,12 @@ import { IonicVue } from "@ionic/vue";
 const app = createApp(App).use(createPinia()).use(router).use(IonicVue);
 
 router.isReady().then(() => {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register(
+      new URL("./serviceworker/firebase-messaging-sw.ts", import.meta.url),
+      { type: "module" },
+    );
+  }
+
   app.mount("#app");
 });

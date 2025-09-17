@@ -26,9 +26,10 @@ const toolbarBackgroundColor = computed<string>(() => {
 
 <template>
   <IonHeader
+    mode="md"
     :class="{ 'header-no-shadow': props.hidden || props.transparentBackground }"
   >
-    <IonToolbar>
+    <IonToolbar mode="md">
       <IonButtons slot="start" v-if="!props.hideBackButton">
         <IonBackButton defaultHref="/"></IonBackButton>
       </IonButtons>

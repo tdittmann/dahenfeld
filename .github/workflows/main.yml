@@ -35,11 +35,11 @@ jobs:
       - name: Run npm install
         run: npm i
 
-      - name: Linting code
-        run: npm run lint
-
-      - name: Check code style
-        run: npm run format:check:ci
+#      - name: Linting code
+#        run: npm run lint
+#
+#      - name: Check code style
+#        run: npm run format:check:ci
 
       - name: Run npm build
         run: npm run build

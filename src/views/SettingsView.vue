@@ -125,13 +125,16 @@ const askForNotificationPermission = async () => {
   if (permission === "granted") {
     webNotificationState.value = WebNotificationState.GRANTED;
     await loadWebNotificationToken();
-    NotificationService.createNotificationSettings(notificationSettings.value)
-      .then((value) => {
-        console.log("Successfully created notification setting: ", value);
-      })
-      .catch((error) => {
-        console.error("Could not create notification settings: ", error);
-      });
+
+    if (notificationSettings.value.os && notificationSettings.value.registration_id) {
+      NotificationService.createNotificationSettings(notificationSettings.value)
+        .then((value) => {
+          console.log("Successfully created notification setting: ", value);
+        })
+        .catch((error) => {
+          console.error("Could not create notification settings: ", error);
+        });
+    }
   } else if (permission === "denied") {
     webNotificationState.value = WebNotificationState.DENIED;
   }
@@ -142,6 +145,7 @@ const loadWebNotificationToken = async () => {
     notificationSettings.value.registration_id = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
     });
+    console.log(notificationSettings.value.registration_id);
   } catch (err) {
     console.error("Could not fetch web notification token:", err);
   }

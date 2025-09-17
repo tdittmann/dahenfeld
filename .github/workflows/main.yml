@@ -1,7 +1,7 @@
 name: deployment
 on:
   push:
-    branches: [ main ]
+    branches: [ main, improvements ]
 jobs:
   # Here you define the name of your workflow in this case "build"
   build:

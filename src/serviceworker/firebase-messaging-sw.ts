@@ -1,8 +1,10 @@
+/// <reference lib="webworker" />
 import { initializeApp } from "firebase/app";
-import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
-import { environment } from "@/environment/environment.ts";
+import { environment } from "../environment/environment.ts";
 
-const app = initializeApp({
+declare const self: ServiceWorkerGlobalScope;
+
+initializeApp({
   apiKey: environment.firebase.apiKey,
   authDomain: environment.firebase.authDomain,
   projectId: environment.firebase.projectId,
@@ -12,14 +14,13 @@ const app = initializeApp({
   measurementId: environment.firebase.measurementId,
 });
 
-const messaging = getMessaging(app);
-
-onBackgroundMessage(messaging, (payload) => {
-  const notificationTitle = payload.notification?.title ?? "";
-  const notificationOptions = {
-    body: payload.notification?.body ?? "",
+self.addEventListener("push", (event: PushEvent) => {
+  const payload = event.data?.json();
+  const title = payload?.notification?.title ?? "Neue Benachrichtigung";
+  const options = {
+    body: payload?.notification?.body ?? "",
     icon: "/icon.png",
   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  event.waitUntil(self.registration.showNotification(title, options));
 });

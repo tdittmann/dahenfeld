@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "WebWorker"],
+    "module": "ESNext",
+    "target": "ESNext"
+  },
+  "include": ["src/serviceworker/**/*.ts"]
+}

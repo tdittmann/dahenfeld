@@ -1,7 +1,7 @@
 name: deployment
 on:
   push:
-    branches: [ main, improvements ]
+    branches: [ main ]
 jobs:
   # Here you define the name of your workflow in this case "build"
   build:
@@ -38,11 +38,11 @@ jobs:
       - name: Replace Firebase env vars
         run: node ./scripts/firebase-replace-env.js
 
-#      - name: Linting code
-#        run: npm run lint
-#
-#      - name: Check code style
-#        run: npm run format:check:ci
+      - name: Linting code
+        run: npm run lint
+
+      - name: Check code style
+        run: npm run format:check:ci
 
       - name: Run npm build
         run: npm run build

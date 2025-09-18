@@ -18,7 +18,7 @@ import {
   NotificationService,
 } from "@/services/NotificationService.ts";
 import { Capacitor } from "@capacitor/core";
-import { messaging } from "@/plugins/firebase";
+import { messaging } from "@/plugins/Firebase";
 import { getToken } from "firebase/messaging";
 
 /***********************************/
@@ -64,6 +64,16 @@ const handleNotificationToggle = <K extends keyof Notification>(
   notificationSettings.value[notificationType] = event.target
     .checked as Notification[K];
   updateNotificationSettings();
+};
+
+const createNotificationSettings = () => {
+  NotificationService.createNotificationSettings(notificationSettings.value)
+    .then(() => {
+      console.log("Successfully created notification setting");
+    })
+    .catch((error) => {
+      console.error("Could not create notification settings: ", error);
+    });
 };
 
 const updateNotificationSettings = () => {
@@ -113,7 +123,8 @@ const loadSettings = async () => {
       notificationSettings.value = setting;
     }
   } catch (error) {
-    console.log(error);
+    console.error("Could not load settings: ", error);
+    createNotificationSettings();
   } finally {
     loading.value = false;
   }
@@ -125,13 +136,13 @@ const askForNotificationPermission = async () => {
   if (permission === "granted") {
     webNotificationState.value = WebNotificationState.GRANTED;
     await loadWebNotificationToken();
-    NotificationService.createNotificationSettings(notificationSettings.value)
-      .then((value) => {
-        console.log("Successfully created notification setting: ", value);
-      })
-      .catch((error) => {
-        console.error("Could not create notification settings: ", error);
-      });
+
+    if (
+      notificationSettings.value.os &&
+      notificationSettings.value.registration_id
+    ) {
+      createNotificationSettings();
+    }
   } else if (permission === "denied") {
     webNotificationState.value = WebNotificationState.DENIED;
   }

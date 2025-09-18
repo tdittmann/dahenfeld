@@ -35,6 +35,9 @@ jobs:
       - name: Run npm install
         run: npm i
 
+      - name: Replace Firebase env vars
+        run: node ./scripts/firebase-replace-env.js
+
       - name: Linting code
         run: npm run lint
 

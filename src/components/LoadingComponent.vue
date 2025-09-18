@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { IonSpinner } from "@ionic/vue";
+
 type Props = {
   loading: boolean;
 };

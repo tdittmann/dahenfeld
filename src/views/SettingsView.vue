@@ -123,6 +123,7 @@ const loadSettings = async () => {
       notificationSettings.value = setting;
     }
   } catch (error) {
+    console.error("Could not load settings: ", error);
     createNotificationSettings();
   } finally {
     loading.value = false;
@@ -136,7 +137,10 @@ const askForNotificationPermission = async () => {
     webNotificationState.value = WebNotificationState.GRANTED;
     await loadWebNotificationToken();
 
-    if (notificationSettings.value.os && notificationSettings.value.registration_id) {
+    if (
+      notificationSettings.value.os &&
+      notificationSettings.value.registration_id
+    ) {
       createNotificationSettings();
     }
   } else if (permission === "denied") {

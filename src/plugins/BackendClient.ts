@@ -31,7 +31,7 @@ const fetchData = async <RESPONSE>(
   }
 };
 
-const fetchDataAndIgnoreResponse = async(
+const fetchDataAndIgnoreResponse = async (
   url: string,
   method: string = "GET",
   body?: any,

@@ -55,8 +55,8 @@ const fromNotification = (notification: Notification): NotificationJson => {
 
 const createNotificationSettings = (
   createNotificationRequest: CreateNotification,
-): Promise<Response> => {
-  return BackendClient.fetchData(
+): Promise<void> => {
+  return BackendClient.fetchDataAndIgnoreResponse(
     "/notifications",
     "POST",
     createNotificationRequest,
@@ -65,8 +65,8 @@ const createNotificationSettings = (
 
 const updateNotificationSettings = (
   notification: Notification,
-): Promise<Response> => {
-  return BackendClient.fetchData(
+): Promise<void> => {
+  return BackendClient.fetchDataAndIgnoreResponse(
     "/notifications",
     "PUT",
     fromNotification(notification),

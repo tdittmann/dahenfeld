@@ -66,6 +66,16 @@ const handleNotificationToggle = <K extends keyof Notification>(
   updateNotificationSettings();
 };
 
+const createNotificationSettings = () => {
+  NotificationService.createNotificationSettings(notificationSettings.value)
+    .then((value) => {
+      console.log("Successfully created notification setting: ", value);
+    })
+    .catch((error) => {
+      console.error("Could not create notification settings: ", error);
+    });
+};
+
 const updateNotificationSettings = () => {
   NotificationService.updateNotificationSettings(notificationSettings.value);
 };
@@ -113,7 +123,7 @@ const loadSettings = async () => {
       notificationSettings.value = setting;
     }
   } catch (error) {
-    console.log(error);
+    createNotificationSettings();
   } finally {
     loading.value = false;
   }
@@ -127,13 +137,7 @@ const askForNotificationPermission = async () => {
     await loadWebNotificationToken();
 
     if (notificationSettings.value.os && notificationSettings.value.registration_id) {
-      NotificationService.createNotificationSettings(notificationSettings.value)
-        .then((value) => {
-          console.log("Successfully created notification setting: ", value);
-        })
-        .catch((error) => {
-          console.error("Could not create notification settings: ", error);
-        });
+      createNotificationSettings();
     }
   } else if (permission === "denied") {
     webNotificationState.value = WebNotificationState.DENIED;

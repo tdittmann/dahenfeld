@@ -1,5 +1,3 @@
-import { environment } from "@/environment/environment.ts";
-
 export interface VirtualTourStationJson {
   id: number;
   position_x: number;
@@ -44,12 +42,12 @@ const toVirtualTourStation = (
 };
 
 const loadStations = (): Promise<VirtualTourStation[]> => {
-  return fetch(`${environment.backendUrl}/virtual-tour`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/virtual-tour`, {
     headers: new Headers({
       Authorization:
         "Basic " +
         btoa(
-          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
         ),
     }),
   })
@@ -65,12 +63,12 @@ const loadStations = (): Promise<VirtualTourStation[]> => {
 const loadStationById = (
   id: number,
 ): Promise<VirtualTourStation | undefined> => {
-  return fetch(`${environment.backendUrl}/virtual-tour?id=${id}`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/virtual-tour?id=${id}`, {
     headers: new Headers({
       Authorization:
         "Basic " +
         btoa(
-          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
         ),
     }),
   })

@@ -1,5 +1,3 @@
-import { environment } from "@/environment/environment.ts";
-
 export interface NotificationJson {
   os: string;
   registration_id: string;
@@ -56,14 +54,14 @@ const fromNotification = (notification: Notification): NotificationJson => {
 const createNotificationSettings = (
   createNotificationRequest: CreateNotification,
 ): Promise<Response> => {
-  return fetch(`${environment.backendUrl}/notifications`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/notifications`, {
     method: "POST",
     headers: new Headers({
       "Content-Type": "application/json",
       Authorization:
         "Basic " +
         btoa(
-          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
         ),
     }),
     body: JSON.stringify(createNotificationRequest),
@@ -73,14 +71,14 @@ const createNotificationSettings = (
 const updateNotificationSettings = (
   notification: Notification,
 ): Promise<Response> => {
-  return fetch(`${environment.backendUrl}/notifications`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/notifications`, {
     method: "PUT",
     headers: new Headers({
       "Content-Type": "application/json",
       Authorization:
         "Basic " +
         btoa(
-          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
         ),
     }),
     body: JSON.stringify(fromNotification(notification)),
@@ -91,13 +89,13 @@ const loadNotificationSettings = (
   registrationId: string,
 ): Promise<Notification | undefined> => {
   return fetch(
-    `${environment.backendUrl}/notifications?registration_id=${registrationId}`,
+    `${import.meta.env.VITE_BACKEND_URL}/notifications?registration_id=${registrationId}`,
     {
       headers: new Headers({
         Authorization:
           "Basic " +
           btoa(
-            `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+            `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
           ),
       }),
     },

@@ -1,3 +1,5 @@
+import { BackendClient } from "@/plugins/BackendClient.ts";
+
 export interface WasteCollectionDateJson {
   id: number;
   type: "Restmüll" | "Bioabfall" | "Papiertonne" | "Schadstoffe";
@@ -30,22 +32,11 @@ const toWasteCollectionDate = (
 };
 
 const loadWasteCollectionDates = (): Promise<WasteCollectionDate[]> => {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/waste-collection-dates`, {
-    headers: new Headers({
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-  })
-    .then((response) => response.json())
-    .then((value) => {
-      if (value) {
-        return value.map(toWasteCollectionDate);
-      }
-      return value;
-    });
+  return BackendClient.fetchData<WasteCollectionDateJson[]>(
+    "/waste-collection-dates",
+  ).then((value) => {
+    return value.map(toWasteCollectionDate);
+  });
 };
 
 export const WasteCollectionDateService = {

@@ -1,3 +1,5 @@
+import { BackendClient } from "@/plugins/BackendClient.ts";
+
 export interface AssociationJson {
   id: number;
   name: string;
@@ -40,41 +42,19 @@ const toAssociation = (json: AssociationJson): Association => {
 };
 
 const loadAssociations = (): Promise<Association[]> => {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/associations`, {
-    headers: new Headers({
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-  })
-    .then((response) => response.json())
-    .then((value) => {
-      if (value) {
-        return value.map(toAssociation);
-      }
-      return value;
-    });
+  return BackendClient.fetchData<AssociationJson[]>("/associations").then(
+    (value) => {
+      return value.map(toAssociation);
+    },
+  );
 };
 
 const loadAssociationById = (id: number): Promise<Association | undefined> => {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/associations?id=${id}`, {
-    headers: new Headers({
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-  })
-    .then((response) => response.json())
-    .then((value) => {
-      if (value) {
-        return toAssociation(value);
-      }
-      return value;
-    });
+  return BackendClient.fetchData<AssociationJson>(
+    `/associations?id=${id}`,
+  ).then((value) => {
+    return toAssociation(value);
+  });
 };
 
 export const AssociationsService = {

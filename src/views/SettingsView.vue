@@ -68,8 +68,8 @@ const handleNotificationToggle = <K extends keyof Notification>(
 
 const createNotificationSettings = () => {
   NotificationService.createNotificationSettings(notificationSettings.value)
-    .then((value) => {
-      console.log("Successfully created notification setting: ", value);
+    .then(() => {
+      console.log("Successfully created notification setting");
     })
     .catch((error) => {
       console.error("Could not create notification settings: ", error);

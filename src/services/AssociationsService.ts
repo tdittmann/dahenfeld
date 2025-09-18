@@ -1,5 +1,3 @@
-import { environment } from "@/environment/environment.ts";
-
 export interface AssociationJson {
   id: number;
   name: string;
@@ -42,12 +40,12 @@ const toAssociation = (json: AssociationJson): Association => {
 };
 
 const loadAssociations = (): Promise<Association[]> => {
-  return fetch(`${environment.backendUrl}/associations`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/associations`, {
     headers: new Headers({
       Authorization:
         "Basic " +
         btoa(
-          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
         ),
     }),
   })
@@ -61,12 +59,12 @@ const loadAssociations = (): Promise<Association[]> => {
 };
 
 const loadAssociationById = (id: number): Promise<Association | undefined> => {
-  return fetch(`${environment.backendUrl}/associations?id=${id}`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/associations?id=${id}`, {
     headers: new Headers({
       Authorization:
         "Basic " +
         btoa(
-          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
         ),
     }),
   })

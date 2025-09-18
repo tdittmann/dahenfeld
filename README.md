@@ -62,13 +62,25 @@ npm run lint
 
 ### Environment file
 
-You need to configure your own environment file which contains some mandatory data. It should be
-placed in `src/environment/` folder.
+You need to configure your own environment file (`/.env`) which contains some mandatory data.
 
 ```
-export const environment = {
-  backendUrl: "https://api.backend.de",
-  backendAuthUser: "user",
-  backendAuthPassword: "test",
-};
+# Backend
+VITE_BACKEND_URL=""
+VITE_BACKEND_AUTH_USER=""
+VITE_BACKEND_AUTH_PASSWORD=""
+
+# Virtual Tour
+VITE_VIRTUAL_TOUR_API_KEY=""
+VITE_VIRTUAL_TOUR_MAP_ID=""
+
+# Firebase
+VITE_FIREBASE_API_KEY=""
+VITE_FIREBASE_AUTH_DOMAIN=""
+VITE_FIREBASE_PROJECT_ID=""
+VITE_FIREBASE_STORAGE_BUCKET=""
+VITE_FIREBASE_MESSAGING_SENDER_ID=""
+VITE_FIREBASE_APP_ID=""
+VITE_FIREBASE_MEASUREMENT_ID=""
+VITE_FIREBASE_VAPID_KEY=""
 ```

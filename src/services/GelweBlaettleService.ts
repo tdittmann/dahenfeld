@@ -1,5 +1,3 @@
-import { environment } from "@/environment/environment.ts";
-
 export interface GelweBlaettleJson {
   name: string;
   publish_date: string;
@@ -21,12 +19,12 @@ const toGelweBlaettle = (json: GelweBlaettleJson): GelweBlaettle => {
 };
 
 const loadGelweBlaettle = (): Promise<GelweBlaettle[]> => {
-  return fetch(`${environment.backendUrl}/gelwe-blaettle`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/gelwe-blaettle`, {
     headers: new Headers({
       Authorization:
         "Basic " +
         btoa(
-          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
         ),
     }),
   })

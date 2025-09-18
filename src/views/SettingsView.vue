@@ -20,7 +20,6 @@ import {
 import { Capacitor } from "@capacitor/core";
 import { messaging } from "@/plugins/firebase";
 import { getToken } from "firebase/messaging";
-import { environment } from "@/environment/environment.ts";
 
 /***********************************/
 /* General logic                   */
@@ -141,7 +140,7 @@ const askForNotificationPermission = async () => {
 const loadWebNotificationToken = async () => {
   try {
     notificationSettings.value.registration_id = await getToken(messaging, {
-      vapidKey: environment.firebase.vapidKey,
+      vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
     });
   } catch (err) {
     console.error("Could not fetch web notification token:", err);

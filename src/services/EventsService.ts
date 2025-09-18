@@ -1,5 +1,3 @@
-import { environment } from "@/environment/environment.ts";
-
 export interface EventJson {
   id: number;
   title: string;
@@ -33,12 +31,12 @@ const toEvent = (json: EventJson): Event => {
 };
 
 const loadEvents = (): Promise<Event[]> => {
-  return fetch(`${environment.backendUrl}/events`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/events`, {
     headers: new Headers({
       Authorization:
         "Basic " +
         btoa(
-          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
         ),
     }),
   })

@@ -1,4 +1,3 @@
-import { environment } from "@/environment/environment.ts";
 import { useNavigationStore } from "@/stores/navigation.ts";
 
 export interface NavigationJson {
@@ -33,12 +32,12 @@ const toNavigation = (json: NavigationJson): Navigation => {
 const loadNavigation = (): Promise<Navigation[]> => {
   const navigationStore = useNavigationStore();
 
-  return fetch(`${environment.backendUrl}/navigation`, {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}/navigation`, {
     headers: new Headers({
       Authorization:
         "Basic " +
         btoa(
-          `${environment.backendAuthUser}:${environment.backendAuthPassword}`,
+          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
         ),
     }),
   })

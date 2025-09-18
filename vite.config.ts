@@ -7,14 +7,6 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  build: {
-    rollupOptions: {
-      input: {
-        main: 'index.html',
-        sw: 'src/serviceworker/firebase-messaging-sw.ts'
-      }
-    }
-  },
   plugins: [
     vue(),
     vueDevTools(),

@@ -25,5 +25,9 @@ import { IonicVue } from "@ionic/vue";
 const app = createApp(App).use(createPinia()).use(router).use(IonicVue);
 
 router.isReady().then(() => {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/firebase-messaging-sw.js");
+  }
+
   app.mount("#app");
 });

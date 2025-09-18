@@ -32,6 +32,9 @@ jobs:
           echo "Creating environment file..."
           echo "${{ secrets.ENVIRONMENT_VARIABLES }}" | base64 -d >> .env
 
+      - name: Replace Firebase env vars
+        run: node ./scripts/firebase-replace-env.js
+
       - name: Run npm install
         run: npm i
 

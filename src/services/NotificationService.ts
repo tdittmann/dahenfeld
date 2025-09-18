@@ -1,3 +1,5 @@
+import { BackendClient } from "@/plugins/BackendClient.ts";
+
 export interface NotificationJson {
   os: string;
   registration_id: string;
@@ -54,59 +56,31 @@ const fromNotification = (notification: Notification): NotificationJson => {
 const createNotificationSettings = (
   createNotificationRequest: CreateNotification,
 ): Promise<Response> => {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/notifications`, {
-    method: "POST",
-    headers: new Headers({
-      "Content-Type": "application/json",
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-    body: JSON.stringify(createNotificationRequest),
-  });
+  return BackendClient.fetchData(
+    "/notifications",
+    "POST",
+    createNotificationRequest,
+  );
 };
 
 const updateNotificationSettings = (
   notification: Notification,
 ): Promise<Response> => {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/notifications`, {
-    method: "PUT",
-    headers: new Headers({
-      "Content-Type": "application/json",
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-    body: JSON.stringify(fromNotification(notification)),
-  });
+  return BackendClient.fetchData(
+    "/notifications",
+    "PUT",
+    fromNotification(notification),
+  );
 };
 
 const loadNotificationSettings = (
   registrationId: string,
 ): Promise<Notification | undefined> => {
-  return fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/notifications?registration_id=${registrationId}`,
-    {
-      headers: new Headers({
-        Authorization:
-          "Basic " +
-          btoa(
-            `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-          ),
-      }),
-    },
-  )
-    .then((response) => response.json())
-    .then((value) => {
-      if (value) {
-        return toNotification(value);
-      }
-      return value;
-    });
+  return BackendClient.fetchData<NotificationJson>(
+    `/notifications?registration_id=${registrationId}`,
+  ).then((value) => {
+    return toNotification(value);
+  });
 };
 
 export const NotificationService = {

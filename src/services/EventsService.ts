@@ -1,3 +1,5 @@
+import { BackendClient } from "@/plugins/BackendClient.ts";
+
 export interface EventJson {
   id: number;
   title: string;
@@ -31,22 +33,9 @@ const toEvent = (json: EventJson): Event => {
 };
 
 const loadEvents = (): Promise<Event[]> => {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/events`, {
-    headers: new Headers({
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-  })
-    .then((response) => response.json())
-    .then((value) => {
-      if (value) {
-        return value.map(toEvent);
-      }
-      return value;
-    });
+  return BackendClient.fetchData<EventJson[]>("/events").then((value) => {
+    return value.map(toEvent);
+  });
 };
 
 export const EventService = {

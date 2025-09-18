@@ -1,3 +1,5 @@
+import { BackendClient } from "@/plugins/BackendClient.ts";
+
 export interface GelweBlaettleJson {
   name: string;
   publish_date: string;
@@ -19,22 +21,11 @@ const toGelweBlaettle = (json: GelweBlaettleJson): GelweBlaettle => {
 };
 
 const loadGelweBlaettle = (): Promise<GelweBlaettle[]> => {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/gelwe-blaettle`, {
-    headers: new Headers({
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-  })
-    .then((response) => response.json())
-    .then((value) => {
-      if (value) {
-        return value.map(toGelweBlaettle);
-      }
-      return value;
-    });
+  return BackendClient.fetchData<GelweBlaettleJson[]>("/gelwe-blaettle").then(
+    (value) => {
+      return value.map(toGelweBlaettle);
+    },
+  );
 };
 
 export const GelweBlaettleService = {

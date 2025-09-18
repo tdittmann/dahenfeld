@@ -1,4 +1,5 @@
 import { useNavigationStore } from "@/stores/navigation.ts";
+import { BackendClient } from "@/plugins/BackendClient.ts";
 
 export interface NavigationJson {
   title: string;
@@ -32,24 +33,13 @@ const toNavigation = (json: NavigationJson): Navigation => {
 const loadNavigation = (): Promise<Navigation[]> => {
   const navigationStore = useNavigationStore();
 
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/navigation`, {
-    headers: new Headers({
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-  })
-    .then((response) => response.json())
-    .then((value) => {
-      if (value) {
-        const items = value.map(toNavigation);
-        navigationStore.setNavigationItems(items);
-        return items;
-      }
-      return value;
-    });
+  return BackendClient.fetchData<NavigationJson[]>("/navigation").then(
+    (value) => {
+      const items = value.map(toNavigation);
+      navigationStore.setNavigationItems(items);
+      return items;
+    },
+  );
 };
 
 export const NavigationService = {

@@ -1,3 +1,5 @@
+import { BackendClient } from "@/plugins/BackendClient.ts";
+
 export interface VirtualTourStationJson {
   id: number;
   position_x: number;
@@ -42,43 +44,21 @@ const toVirtualTourStation = (
 };
 
 const loadStations = (): Promise<VirtualTourStation[]> => {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/virtual-tour`, {
-    headers: new Headers({
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-  })
-    .then((response) => response.json())
-    .then((value) => {
-      if (value) {
-        return value.map(toVirtualTourStation);
-      }
-      return value;
-    });
+  return BackendClient.fetchData<VirtualTourStationJson[]>(
+    "/virtual-tour",
+  ).then((value) => {
+    return value.map(toVirtualTourStation);
+  });
 };
 
 const loadStationById = (
   id: number,
 ): Promise<VirtualTourStation | undefined> => {
-  return fetch(`${import.meta.env.VITE_BACKEND_URL}/virtual-tour?id=${id}`, {
-    headers: new Headers({
-      Authorization:
-        "Basic " +
-        btoa(
-          `${import.meta.env.VITE_BACKEND_AUTH_USER}:${import.meta.env.VITE_BACKEND_AUTH_PASSWORD}`,
-        ),
-    }),
-  })
-    .then((response) => response.json())
-    .then((value) => {
-      if (value) {
-        return toVirtualTourStation(value);
-      }
-      return value;
-    });
+  return BackendClient.fetchData<VirtualTourStationJson>(
+    `/virtual-tour?id=${id}`,
+  ).then((value) => {
+    return toVirtualTourStation(value);
+  });
 };
 
 export const VirtualTourService = {

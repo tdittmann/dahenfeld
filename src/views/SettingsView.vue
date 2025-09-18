@@ -18,7 +18,7 @@ import {
   NotificationService,
 } from "@/services/NotificationService.ts";
 import { Capacitor } from "@capacitor/core";
-import { messaging } from "@/plugins/firebase";
+import { messaging } from "@/plugins/Firebase";
 import { getToken } from "firebase/messaging";
 
 /***********************************/

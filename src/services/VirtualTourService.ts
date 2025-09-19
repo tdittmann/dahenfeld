@@ -45,7 +45,7 @@ const toVirtualTourStation = (
 
 const loadStations = (): Promise<VirtualTourStation[]> => {
   return BackendClient.fetchData<VirtualTourStationJson[]>(
-    "/virtual-tour",
+    "/virtual-tour.php",
   ).then((value) => {
     return value.map(toVirtualTourStation);
   });
@@ -55,7 +55,7 @@ const loadStationById = (
   id: number,
 ): Promise<VirtualTourStation | undefined> => {
   return BackendClient.fetchData<VirtualTourStationJson>(
-    `/virtual-tour?id=${id}`,
+    `/virtual-tour.php?id=${id}`,
   ).then((value) => {
     return toVirtualTourStation(value);
   });

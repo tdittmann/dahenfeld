@@ -57,7 +57,7 @@ const createNotificationSettings = (
   createNotificationRequest: CreateNotification,
 ): Promise<void> => {
   return BackendClient.fetchDataAndIgnoreResponse(
-    "/notifications",
+    "/notifications.php",
     "POST",
     createNotificationRequest,
   );
@@ -67,7 +67,7 @@ const updateNotificationSettings = (
   notification: Notification,
 ): Promise<void> => {
   return BackendClient.fetchDataAndIgnoreResponse(
-    "/notifications",
+    "/notifications.php",
     "PUT",
     fromNotification(notification),
   );
@@ -77,7 +77,7 @@ const loadNotificationSettings = (
   registrationId: string,
 ): Promise<Notification | undefined> => {
   return BackendClient.fetchData<NotificationJson>(
-    `/notifications?registration_id=${registrationId}`,
+    `/notifications.php?registration_id=${registrationId}`,
   ).then((value) => {
     return toNotification(value);
   });

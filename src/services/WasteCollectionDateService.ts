@@ -33,7 +33,7 @@ const toWasteCollectionDate = (
 
 const loadWasteCollectionDates = (): Promise<WasteCollectionDate[]> => {
   return BackendClient.fetchData<WasteCollectionDateJson[]>(
-    "/waste-collection-dates",
+    "/waste-collection-dates.php",
   ).then((value) => {
     return value.map(toWasteCollectionDate);
   });

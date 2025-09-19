@@ -33,7 +33,7 @@ const toEvent = (json: EventJson): Event => {
 };
 
 const loadEvents = (): Promise<Event[]> => {
-  return BackendClient.fetchData<EventJson[]>("/events").then((value) => {
+  return BackendClient.fetchData<EventJson[]>("/events.php").then((value) => {
     return value.map(toEvent);
   });
 };

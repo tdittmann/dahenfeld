@@ -21,7 +21,7 @@ const toGelweBlaettle = (json: GelweBlaettleJson): GelweBlaettle => {
 };
 
 const loadGelweBlaettle = (): Promise<GelweBlaettle[]> => {
-  return BackendClient.fetchData<GelweBlaettleJson[]>("/gelwe-blaettle").then(
+  return BackendClient.fetchData<GelweBlaettleJson[]>("/gelwe-blaettle.php").then(
     (value) => {
       return value.map(toGelweBlaettle);
     },

@@ -51,7 +51,7 @@ const loadAssociations = (): Promise<Association[]> => {
 
 const loadAssociationById = (id: number): Promise<Association | undefined> => {
   return BackendClient.fetchData<AssociationJson>(
-    `/associations?id=${id}`,
+    `/associations.php?id=${id}`,
   ).then((value) => {
     return toAssociation(value);
   });

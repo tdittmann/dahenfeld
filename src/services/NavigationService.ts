@@ -33,7 +33,7 @@ const toNavigation = (json: NavigationJson): Navigation => {
 const loadNavigation = (): Promise<Navigation[]> => {
   const navigationStore = useNavigationStore();
 
-  return BackendClient.fetchData<NavigationJson[]>("/navigation").then(
+  return BackendClient.fetchData<NavigationJson[]>("/navigation.php").then(
     (value) => {
       const items = value.map(toNavigation);
       navigationStore.setNavigationItems(items);

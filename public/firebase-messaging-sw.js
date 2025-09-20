@@ -19,10 +19,7 @@ const messaging = firebase.messaging();
 
 const typeToUrl = new Map([
   ["GelweBlaettle", "/gelwe-blaettle"],
-  ["WasteResidual", "/muelltermine"],
-  ["WasteOrganic", "/muelltermine"],
-  ["WastePaper", "/muelltermine"],
-  ["WastePollutants", "/muelltermine"],
+  ["WasteCollectionDate", "/muelltermine"],
   ["Event", "/veranstaltungen"],
 ]);
 

@@ -250,6 +250,7 @@ const handleWebNotifications = async () => {
             @ionChange="handleNotificationWasteToggle"
           >
             <ion-label>Mülltermine</ion-label>
+            <ion-note>Benachrichtigung kommt einen Tag vorher</ion-note>
           </ion-toggle>
         </IonItem>
         <IonItem v-if="notificationWaste">
@@ -298,6 +299,7 @@ const handleWebNotifications = async () => {
             @ionChange="(evt) => handleNotificationToggle('push_events', evt)"
           >
             <ion-label>Veranstaltungen</ion-label>
+            <ion-note>Benachrichtigung kommt 7 Tage vorher</ion-note>
           </ion-toggle>
         </IonItem>
       </IonList>

@@ -193,8 +193,12 @@ const handleWebNotifications = async () => {
         <IonLabel>Allgemein</IonLabel>
       </IonItemDivider>
       <IonList>
-        <IonItem :button="true" @click="openContent(1)"><IonLabel>Datenschutz</IonLabel> </IonItem>
-        <IonItem :button="true" @click="openContent(2)"><IonLabel>Impressum</IonLabel> </IonItem>
+        <IonItem :button="true" @click="openContent(1)"
+          ><IonLabel>Datenschutz</IonLabel>
+        </IonItem>
+        <IonItem :button="true" @click="openContent(2)"
+          ><IonLabel>Impressum</IonLabel>
+        </IonItem>
       </IonList>
     </IonItemGroup>
 

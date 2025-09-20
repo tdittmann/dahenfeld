@@ -54,6 +54,11 @@ const router = createRouter({
       name: "einstellungen",
       component: () => import("../views/SettingsView.vue"),
     },
+    {
+      path: "/beitrag/:id",
+      name: "beitrag-detail",
+      component: () => import("../views/ContentView.vue"),
+    },
   ],
 });
 

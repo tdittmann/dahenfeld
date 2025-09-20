@@ -20,6 +20,9 @@ import {
 import { Capacitor } from "@capacitor/core";
 import { messaging } from "@/plugins/Firebase";
 import { getToken } from "firebase/messaging";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 /***********************************/
 /* General logic                   */
@@ -78,6 +81,10 @@ const createNotificationSettings = () => {
 
 const updateNotificationSettings = () => {
   NotificationService.updateNotificationSettings(notificationSettings.value);
+};
+
+const openContent = (id: number) => {
+  router.push(`/beitrag/${id}`);
 };
 
 onMounted(() => {
@@ -186,8 +193,12 @@ const handleWebNotifications = async () => {
         <IonLabel>Allgemein</IonLabel>
       </IonItemDivider>
       <IonList>
-        <IonItem :button="true"><IonLabel>Datenschutz</IonLabel> </IonItem>
-        <IonItem :button="true"><IonLabel>Impressum</IonLabel> </IonItem>
+        <IonItem :button="true" @click="openContent(1)"
+          ><IonLabel>Datenschutz</IonLabel>
+        </IonItem>
+        <IonItem :button="true" @click="openContent(2)"
+          ><IonLabel>Impressum</IonLabel>
+        </IonItem>
       </IonList>
     </IonItemGroup>
 

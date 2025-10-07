@@ -26,7 +26,7 @@ const toEvent = (json: EventJson): Event => {
     title: json.title,
     description: json.description,
     startDate: new Date(json.start_date),
-    endDate: json.end_date === undefined ? undefined : new Date(json.end_date),
+    endDate: json.end_date ? new Date(json.end_date) : undefined,
     organizer: json.organizer,
     location: json.location,
   };

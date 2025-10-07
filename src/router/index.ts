@@ -15,8 +15,8 @@ const router = createRouter({
       component: () => import("../views/VirtualTourView.vue"),
     },
     {
-      path: "/virtual-tour-1",
-      name: "virtual-tour-1",
+      path: "/google-virtual-tour",
+      name: "google-virtual-tour",
       component: () => import("../views/VirtualTourGoogleMapsView.vue"),
     },
     {

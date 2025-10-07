@@ -59,7 +59,7 @@ const formatEventTime = (event: Event) => {
     minute: "2-digit",
   });
   if (event.endDate) {
-    const endTime = event.startDate.toLocaleTimeString("de-DE", {
+    const endTime = event.endDate.toLocaleTimeString("de-DE", {
       hour: "2-digit",
       minute: "2-digit",
     });

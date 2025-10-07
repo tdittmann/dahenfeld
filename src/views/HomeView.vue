@@ -77,7 +77,7 @@ const iconMapping: Record<string, any> = {
       <div class="grid">
         <SquareCardComponent
           v-for="item of navigationStore.navigationItems"
-          :key="item.title"
+          :key="item.path"
           :title="item.title"
           :backgroundColor="item.backgroundColor"
           :icon="iconMapping[item.icon]"

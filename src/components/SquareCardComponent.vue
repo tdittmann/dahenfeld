@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IonCard, IonIcon, IonCardTitle } from "@ionic/vue";
+import { IonCard, IonCardTitle, IonIcon } from "@ionic/vue";
 import { computed } from "vue";
 
 type Props = {
@@ -18,10 +18,7 @@ const squareBackgroundColor = computed<string>(() => {
 </script>
 
 <template>
-  <IonCard
-    class="square square__background-red-light"
-    :class="squareBackgroundColor"
-  >
+  <IonCard class="square" :class="squareBackgroundColor">
     <div v-if="props.icon" class="square__icon">
       <IonIcon style="font-size: 64px" :icon="props.icon"></IonIcon>
     </div>

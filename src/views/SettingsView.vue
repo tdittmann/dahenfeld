@@ -160,7 +160,6 @@ const loadWebNotificationToken = async () => {
     notificationSettings.value.registration_id = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
     });
-    console.log('Token:', notificationSettings.value.registration_id);
   } catch (err) {
     console.error("Could not fetch web notification token:", err);
   }

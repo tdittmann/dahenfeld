@@ -22,32 +22,12 @@ import App from "./App.vue";
 import router from "./router";
 import { IonicVue } from "@ionic/vue";
 
-function detectPWA(): boolean {
-  const urlFlag = new URLSearchParams(window.location.search).get('source') === 'pwa';
-  const displayMode = window.matchMedia('(display-mode: standalone)').matches;
-  const iosStandalone = (window.navigator as any).standalone === true;
-
-  // Heuristik: kleines Browser-UI (approx.)
-  const noToolbar = Math.abs(window.outerHeight - window.innerHeight) < 80 &&
-    Math.abs(window.outerWidth  - window.innerWidth)  < 160;
-
-  const installedFlag = localStorage.getItem('pwa_installed') === 'true';
-
-  return displayMode || iosStandalone || urlFlag || (installedFlag && noToolbar);
-}
-
-// Installations-Events festhalten
-window.addEventListener('appinstalled', () => localStorage.setItem('pwa_installed', 'true'));
-
 const app = createApp(App).use(createPinia()).use(router).use(IonicVue);
 
-router.isReady().then(() => {
-  app.mount("#app");
-
+router.isReady().then(async () => {
   if ("serviceWorker" in navigator) {
-    const isPWA = detectPWA();
-    console.log("main.ts: ", isPWA);
-    const swPath = isPWA ? '/pwa-firebase-messaging-sw.js' : '/firebase-messaging-sw.js';
-    navigator.serviceWorker.register(swPath);
+    navigator.serviceWorker.register("/firebase-messaging-sw.js");
   }
+
+  app.mount("#app");
 });

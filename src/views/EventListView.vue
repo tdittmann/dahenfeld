@@ -108,7 +108,9 @@ onMounted(() => {
                 {{ value.location }}
               </p>
             </ion-label>
-            <ion-note slot="end" class="event_time">{{ formatEventTime(value) }}</ion-note>
+            <ion-note slot="end" class="event_time">
+              {{ formatEventTime(value) }}
+            </ion-note>
           </ion-item>
         </ion-list>
       </template>

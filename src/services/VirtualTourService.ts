@@ -11,6 +11,7 @@ export interface VirtualTourStationJson {
   category: string;
   description: string;
   image: string;
+  author: string;
 }
 
 export interface VirtualTourStation {
@@ -24,6 +25,7 @@ export interface VirtualTourStation {
   category: string;
   description: string;
   image: string;
+  author: string;
 }
 
 const toVirtualTourStation = (
@@ -40,6 +42,7 @@ const toVirtualTourStation = (
     category: json.category,
     description: json.description,
     image: json.image,
+    author: json.author,
   };
 };
 

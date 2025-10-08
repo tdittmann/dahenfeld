@@ -157,9 +157,11 @@ const askForNotificationPermission = async () => {
 
 const loadWebNotificationToken = async () => {
   try {
+    const isPWA = new URLSearchParams(window.location.search).get('source') === 'pwa';
     notificationSettings.value.registration_id = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
     });
+    console.log(isPWA ? 'PWA Token:' : 'Web Token:', notificationSettings.value.registration_id);
   } catch (err) {
     console.error("Could not fetch web notification token:", err);
   }
@@ -249,7 +251,7 @@ const handleWebNotifications = async () => {
             :checked="notificationWaste"
             @ionChange="handleNotificationWasteToggle"
           >
-            <ion-label>Mülltermine</ion-label>
+            <ion-label>Abfalltermine</ion-label>
             <ion-note>Benachrichtigung kommt einen Tag vorher</ion-note>
           </ion-toggle>
         </IonItem>

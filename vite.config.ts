@@ -17,6 +17,7 @@ export default defineConfig({
         name: "Dahenfeld",
         short_name: "Dahenfeld",
         description: "Mit dieser App erhalten Sie einen schnellen und einfachen Zugriff auf aktuelle Meldungen der Gemeinde Dahenfeld.",
+        start_url: "/?source=pwa",
         icons: [
           {src: '/app-icons/icon-48x48.png', sizes: '48x48', type: 'image/png'},
           {src: '/app-icons/icon-72x72.png', sizes: '72x72', type: 'image/png'},

@@ -25,9 +25,12 @@ import { IonicVue } from "@ionic/vue";
 const app = createApp(App).use(createPinia()).use(router).use(IonicVue);
 
 router.isReady().then(() => {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/firebase-messaging-sw.js");
-  }
-
   app.mount("#app");
+
+  if ("serviceWorker" in navigator) {
+    const isPWA = new URLSearchParams(window.location.search).get('source') === 'pwa';
+    console.log("isPWA", isPWA);
+    const swPath = isPWA ? '/pwa-firebase-messaging-sw.js' : '/firebase-messaging-sw.js';
+    navigator.serviceWorker.register(swPath);
+  }
 });

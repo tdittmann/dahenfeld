@@ -108,7 +108,7 @@ onMounted(() => {
                 {{ value.location }}
               </p>
             </ion-label>
-            <ion-note slot="end">{{ formatEventTime(value) }}</ion-note>
+            <ion-note slot="end" class="event_time">{{ formatEventTime(value) }}</ion-note>
           </ion-item>
         </ion-list>
       </template>
@@ -144,5 +144,10 @@ onMounted(() => {
     color: #fff;
     font-size: 16px;
   }
+}
+
+.event_time {
+  font-size: 0.9rem;
+  padding-top: 2px;
 }
 </style>

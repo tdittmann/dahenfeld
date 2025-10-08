@@ -3,13 +3,22 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
-import { IonContent, type ScrollDetail } from "@ionic/vue";
+import {
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  type ScrollDetail,
+} from "@ionic/vue";
 import {
   VirtualTourService,
   type VirtualTourStation,
 } from "@/services/VirtualTourService.ts";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import HeaderBannerComponent from "@/components/HeaderBannerComponent.vue";
+import { navigateCircleOutline } from "ionicons/icons";
 
 const route = useRoute();
 const router = useRouter();
@@ -37,6 +46,13 @@ const opacityToolbar = ref<boolean>(false);
 const handleScroll = (evt: IonContentCustomEvent<ScrollDetail>) => {
   const scrollTop = evt.detail.scrollTop;
   opacityToolbar.value = scrollTop > 194;
+};
+
+const openGoogleMapsLink = (latitude: number, longitude: number) => {
+  window.open(
+    `https://www.google.com/maps/place/${latitude},${longitude}`,
+    "_blank",
+  );
 };
 
 onMounted(() => {
@@ -73,17 +89,50 @@ onMounted(() => {
         </div>
       </HeaderBannerComponent>
 
-      <div class="container">
+      <div class="container text-container">
         <div
           class="virtual-tour-station-description"
           v-html="virtualTourStation.description"
         />
+        <div
+          v-if="virtualTourStation.author"
+          class="virtual-tour-station-author"
+        >
+          Geschrieben von: {{ virtualTourStation.author }}
+        </div>
+
+        <div class="virtual-tour-station-links">
+          <ion-list mode="ios">
+            <ion-list-header>
+              <ion-label>Links</ion-label>
+            </ion-list-header>
+
+            <ion-item
+              class="virtual-tour-station-links__item"
+              :button="true"
+              v-if="virtualTourStation.longitude"
+              @click="
+                openGoogleMapsLink(
+                  virtualTourStation.latitude,
+                  virtualTourStation.longitude,
+                )
+              "
+            >
+              <ion-icon :icon="navigateCircleOutline" slot="start"></ion-icon>
+              <ion-label>In Google Maps anzeigen</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
       </div>
     </template>
   </IonContent>
 </template>
 
 <style scoped lang="scss">
+.text-container {
+  margin-bottom: 32px;
+}
+
 .header {
   position: absolute;
 }
@@ -119,6 +168,18 @@ onMounted(() => {
 
 .virtual-tour-station-description {
   margin-top: 8px;
-  margin-bottom: 32px;
+}
+
+.virtual-tour-station-author {
+  font-size: 0.8em;
+  text-align: right;
+}
+
+.virtual-tour-station-links {
+  margin-top: 16px;
+
+  &__item {
+    --inner-padding-start: 8px;
+  }
 }
 </style>

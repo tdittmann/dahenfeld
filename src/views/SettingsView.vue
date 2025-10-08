@@ -249,7 +249,7 @@ const handleWebNotifications = async () => {
             :checked="notificationWaste"
             @ionChange="handleNotificationWasteToggle"
           >
-            <ion-label>Mülltermine</ion-label>
+            <ion-label>Abfalltermine</ion-label>
             <ion-note>Benachrichtigung kommt einen Tag vorher</ion-note>
           </ion-toggle>
         </IonItem>

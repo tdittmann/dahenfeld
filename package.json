@@ -21,7 +21,7 @@
   "dependencies": {
     "@capacitor/core": "^7.4.3",
     "@ionic/vue": "^8.7.3",
-    "@ionic/vue-router": "^8.7.3",
+    "@ionic/vue-router": "^8.7.4",
     "dotenv": "^17.2.2",
     "firebase": "^12.2.1",
     "ol": "^10.6.1",

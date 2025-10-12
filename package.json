@@ -23,7 +23,7 @@
     "@ionic/vue": "^8.7.3",
     "@ionic/vue-router": "^8.7.3",
     "dotenv": "^17.2.2",
-    "firebase": "^12.2.1",
+    "firebase": "^12.3.0",
     "ol": "^10.6.1",
     "ol-contextmenu": "^5.5.0",
     "ol-ext": "^4.0.35",

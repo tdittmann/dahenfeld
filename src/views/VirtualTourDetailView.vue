@@ -98,7 +98,7 @@ onMounted(() => {
           v-if="virtualTourStation.author"
           class="virtual-tour-station-author"
         >
-          Geschrieben von: {{ virtualTourStation.author }}
+          {{ virtualTourStation.author }}
         </div>
 
         <div class="virtual-tour-station-links">

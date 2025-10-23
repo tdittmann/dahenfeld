@@ -5,20 +5,32 @@ import { computed } from "vue";
 type Props = {
   title: string;
   icon?: string;
-  backgroundColor: undefined | string;
+  backgroundColor: string | undefined;
+  image: string | undefined;
 };
 const props = defineProps<Props>();
 
 const squareBackgroundColor = computed<string>(() => {
-  if (props.backgroundColor) {
+  if (!props.image && props.backgroundColor) {
     return `square__background-${props.backgroundColor}`;
   }
   return "";
 });
+
+const imageStyles = computed(() => {
+  if(!props.image) {
+    return {};
+  }
+
+  return {
+   backgroundImage: `url(${props.image})`,
+  };
+})
 </script>
 
 <template>
-  <IonCard class="square" :class="squareBackgroundColor">
+  <IonCard class="square" :class="squareBackgroundColor" :style="imageStyles">
+    <div class="square__shadow"></div>
     <div v-if="props.icon" class="square__icon">
       <IonIcon style="font-size: 64px" :icon="props.icon"></IonIcon>
     </div>
@@ -36,11 +48,8 @@ const squareBackgroundColor = computed<string>(() => {
   aspect-ratio: 1 / 1;
   border-radius: 16px;
   cursor: pointer;
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.5) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background-size: cover;
+  background-position: center;
   color: #fff;
 
   &__background-red-dark {
@@ -73,6 +82,17 @@ const squareBackgroundColor = computed<string>(() => {
 
   &__background-yellow-light {
     background-color: rgb(250, 242, 107);
+  }
+
+  &__shadow {
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    width: 100%;
+    height: 100%;
+    position: absolute;
   }
 
   &__title {

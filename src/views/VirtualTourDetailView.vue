@@ -80,8 +80,8 @@ onMounted(() => {
         style="display: flex; align-items: end"
       >
         <div class="container">
-          <div class="virtual-tour-station-info">
-            <div class="virtual-tour-station-info__name">
+          <div class="virtual-tour-station__info">
+            <div class="virtual-tour-station__info__name">
               <h1>{{ virtualTourStation.title }}</h1>
               <h2>{{ virtualTourStation.subTitle }}</h2>
             </div>
@@ -91,24 +91,26 @@ onMounted(() => {
 
       <div class="container text-container">
         <div
-          class="virtual-tour-station-description"
+          class="virtual-tour-station__description"
           v-html="virtualTourStation.description"
         />
         <div
           v-if="virtualTourStation.author"
-          class="virtual-tour-station-author"
+          class="virtual-tour-station__author"
         >
           {{ virtualTourStation.author }}
         </div>
 
-        <div class="virtual-tour-station-links">
+        <audio v-if="virtualTourStation.audio" class="virtual-tour-station__audio" :src="virtualTourStation.audio" controls></audio>
+
+        <div class="virtual-tour-station__links">
           <ion-list mode="ios">
             <ion-list-header>
               <ion-label>Links</ion-label>
             </ion-list-header>
 
             <ion-item
-              class="virtual-tour-station-links__item"
+              class="virtual-tour-station__links__item"
               :button="true"
               v-if="virtualTourStation.longitude"
               @click="
@@ -141,45 +143,52 @@ onMounted(() => {
   z-index: 2;
 }
 
-.virtual-tour-station-info {
-  display: flex;
-  align-items: center;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.25rem;
-  gap: 16px;
-  margin-left: 8px;
-  margin-bottom: 8px;
+.virtual-tour-station {
+  &__info {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.25rem;
+    gap: 16px;
+    margin-left: 8px;
+    margin-bottom: 8px;
 
-  &__name {
-    h1 {
-      font-size: 1.25rem;
-      font-weight: bold;
-      margin: 0;
-    }
+    &__name {
+      h1 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin: 0;
+      }
 
-    h2 {
-      margin: 0;
-      font-weight: normal;
-      font-size: 1rem;
+      h2 {
+        margin: 0;
+        font-weight: normal;
+        font-size: 1rem;
+      }
     }
   }
-}
 
-.virtual-tour-station-description {
-  margin-top: 8px;
-}
+  &__description {
+    margin-top: 8px;
+  }
 
-.virtual-tour-station-author {
-  font-size: 0.8em;
-  text-align: right;
-}
+  &__author {
+    font-size: 0.8em;
+    text-align: right;
+  }
 
-.virtual-tour-station-links {
-  margin-top: 16px;
+  &__audio {
+    width: 100%;
+    margin-top: 24px;
+  }
 
-  &__item {
-    --inner-padding-start: 8px;
+  &__links {
+    margin-top: 16px;
+
+    &__item {
+      --inner-padding-start: 8px;
+    }
   }
 }
 </style>

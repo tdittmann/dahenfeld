@@ -101,7 +101,12 @@ onMounted(() => {
           {{ virtualTourStation.author }}
         </div>
 
-        <audio v-if="virtualTourStation.audio" class="virtual-tour-station__audio" :src="virtualTourStation.audio" controls></audio>
+        <audio
+          v-if="virtualTourStation.audio"
+          class="virtual-tour-station__audio"
+          :src="virtualTourStation.audio"
+          controls
+        ></audio>
 
         <div class="virtual-tour-station__links">
           <ion-list mode="ios">

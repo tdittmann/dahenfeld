@@ -18,14 +18,14 @@ const squareBackgroundColor = computed<string>(() => {
 });
 
 const imageStyles = computed(() => {
-  if(!props.image) {
+  if (!props.image) {
     return {};
   }
 
   return {
-   backgroundImage: `url(${props.image})`,
+    backgroundImage: `url(${props.image})`,
   };
-})
+});
 </script>
 
 <template>
@@ -86,9 +86,9 @@ const imageStyles = computed(() => {
 
   &__shadow {
     background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.5) 0%,
-        rgba(255, 255, 255, 0) 100%
+      0deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(255, 255, 255, 0) 100%
     );
     width: 100%;
     height: 100%;

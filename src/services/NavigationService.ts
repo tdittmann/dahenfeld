@@ -6,6 +6,7 @@ export interface NavigationJson {
   devMode: boolean;
   description: string;
   background_color: string;
+  image: string | undefined;
   icon: string;
   path: string;
 }
@@ -15,6 +16,7 @@ export interface Navigation {
   devMode: boolean;
   description: string;
   backgroundColor: string;
+  image: string | undefined;
   icon: string;
   path: string;
 }
@@ -25,6 +27,7 @@ const toNavigation = (json: NavigationJson): Navigation => {
     devMode: json.devMode,
     description: json.description,
     backgroundColor: json.background_color,
+    image: json.image,
     icon: json.icon,
     path: json.path,
   };

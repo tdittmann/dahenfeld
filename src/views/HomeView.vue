@@ -80,6 +80,7 @@ const iconMapping: Record<string, any> = {
           :key="item.path"
           :title="item.title"
           :backgroundColor="item.backgroundColor"
+          :image="item.image"
           :icon="iconMapping[item.icon]"
           @click="openPage(item.path)"
         />

@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import SquareCardComponent from "@/components/SquareCardComponent.vue";
-import { IonContent, IonIcon, type ScrollDetail } from "@ionic/vue";
+import {
+  IonContent,
+  IonIcon,
+  IonPage,
+  type ScrollDetail,
+  useIonRouter,
+} from "@ionic/vue";
 import { ref } from "vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
-import { useRouter } from "vue-router";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import HeaderBannerComponent from "@/components/HeaderBannerComponent.vue";
 import { useNavigationStore } from "@/stores/navigation.ts";
@@ -16,7 +21,7 @@ import {
   trashBinOutline,
 } from "ionicons/icons";
 
-const router = useRouter();
+const router = useIonRouter();
 const navigationStore = useNavigationStore();
 
 const currentDate = new Date().toLocaleDateString("de-DE", {
@@ -46,47 +51,49 @@ const iconMapping: Record<string, any> = {
 </script>
 
 <template>
-  <HeaderComponent
-    class="header"
-    title="Dahenfeld"
-    :hidden="!showToolbar"
-    :hideBackButton="true"
-  />
+  <IonPage>
+    <HeaderComponent
+      class="header"
+      title="Dahenfeld"
+      :hidden="!showToolbar"
+      :hideBackButton="true"
+    />
 
-  <IonIcon
-    :icon="settingsOutline"
-    class="settings"
-    :class="{ settings__white: showToolbar }"
-    @click="openPage('/einstellungen')"
-  />
+    <IonIcon
+      :icon="settingsOutline"
+      class="settings"
+      :class="{ settings__white: showToolbar }"
+      @click="openPage('/einstellungen')"
+    />
 
-  <IonContent @ionScroll="handleScroll" :scrollEvents="true">
-    <HeaderBannerComponent backgroundImageUrl="/imgs/background8.jpg">
-      <div class="container info-container">
-        <div class="info-container__title">
-          <h1>Dahenfeld</h1>
-          <h2>Eine starke Dorfgemeinschaft</h2>
+    <IonContent @ionScroll="handleScroll" :scrollEvents="true">
+      <HeaderBannerComponent backgroundImageUrl="/imgs/background8.jpg">
+        <div class="container info-container">
+          <div class="info-container__title">
+            <h1>Dahenfeld</h1>
+            <h2>Eine starke Dorfgemeinschaft</h2>
+          </div>
+          <div class="info-container__current-date">
+            {{ currentDate }}
+          </div>
         </div>
-        <div class="info-container__current-date">
-          {{ currentDate }}
+      </HeaderBannerComponent>
+
+      <div class="ion-padding container">
+        <div class="grid">
+          <SquareCardComponent
+            v-for="item of navigationStore.navigationItems"
+            :key="item.path"
+            :title="item.title"
+            :backgroundColor="item.backgroundColor"
+            :image="item.image"
+            :icon="iconMapping[item.icon]"
+            @click="openPage(item.path)"
+          />
         </div>
       </div>
-    </HeaderBannerComponent>
-
-    <div class="ion-padding container">
-      <div class="grid">
-        <SquareCardComponent
-          v-for="item of navigationStore.navigationItems"
-          :key="item.path"
-          :title="item.title"
-          :backgroundColor="item.backgroundColor"
-          :image="item.image"
-          :icon="iconMapping[item.icon]"
-          @click="openPage(item.path)"
-        />
-      </div>
-    </div>
-  </IonContent>
+    </IonContent>
+  </IonPage>
 </template>
 
 <style lang="scss" scoped>

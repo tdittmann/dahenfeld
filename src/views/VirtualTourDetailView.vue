@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import {
   IonContent,
   IonIcon,
+  IonPage,
   IonItem,
   IonLabel,
   IonList,
   IonListHeader,
   type ScrollDetail,
+  useIonRouter,
 } from "@ionic/vue";
 import {
   VirtualTourService,
@@ -21,7 +23,7 @@ import HeaderBannerComponent from "@/components/HeaderBannerComponent.vue";
 import { navigateCircleOutline } from "ionicons/icons";
 
 const route = useRoute();
-const router = useRouter();
+const router = useIonRouter();
 
 const loading = ref<boolean>(true);
 const virtualTourStation = ref<VirtualTourStation | undefined>(undefined);
@@ -65,74 +67,76 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderComponent
-    class="header"
-    :title="opacityToolbar ? virtualTourStation?.title : ''"
-    :transparentBackground="!opacityToolbar"
-  />
+  <IonPage>
+    <HeaderComponent
+      class="header"
+      :title="opacityToolbar ? virtualTourStation?.title : ''"
+      :transparentBackground="!opacityToolbar"
+    />
 
-  <IonContent @ionScroll="handleScroll" :scrollEvents="true">
-    <LoadingComponent :loading="loading" />
+    <IonContent @ionScroll="handleScroll" :scrollEvents="true">
+      <LoadingComponent :loading="loading" />
 
-    <template v-if="virtualTourStation">
-      <HeaderBannerComponent
-        :backgroundImageUrl="virtualTourStation.image"
-        style="display: flex; align-items: end"
-      >
-        <div class="container">
-          <div class="virtual-tour-station__info">
-            <div class="virtual-tour-station__info__name">
-              <h1>{{ virtualTourStation.title }}</h1>
-              <h2>{{ virtualTourStation.subTitle }}</h2>
+      <template v-if="virtualTourStation">
+        <HeaderBannerComponent
+          :backgroundImageUrl="virtualTourStation.image"
+          style="display: flex; align-items: end"
+        >
+          <div class="container">
+            <div class="virtual-tour-station__info">
+              <div class="virtual-tour-station__info__name">
+                <h1>{{ virtualTourStation.title }}</h1>
+                <h2>{{ virtualTourStation.subTitle }}</h2>
+              </div>
             </div>
           </div>
+        </HeaderBannerComponent>
+
+        <div class="container text-container">
+          <div
+            class="virtual-tour-station__description"
+            v-html="virtualTourStation.description"
+          />
+          <div
+            v-if="virtualTourStation.author"
+            class="virtual-tour-station__author"
+          >
+            {{ virtualTourStation.author }}
+          </div>
+
+          <audio
+            v-if="virtualTourStation.audio"
+            class="virtual-tour-station__audio"
+            :src="virtualTourStation.audio"
+            controls
+          ></audio>
+
+          <div class="virtual-tour-station__links">
+            <ion-list mode="ios">
+              <ion-list-header>
+                <ion-label>Links</ion-label>
+              </ion-list-header>
+
+              <ion-item
+                class="virtual-tour-station__links__item"
+                :button="true"
+                v-if="virtualTourStation.longitude"
+                @click="
+                  openGoogleMapsLink(
+                    virtualTourStation.latitude,
+                    virtualTourStation.longitude,
+                  )
+                "
+              >
+                <ion-icon :icon="navigateCircleOutline" slot="start"></ion-icon>
+                <ion-label>In Google Maps anzeigen</ion-label>
+              </ion-item>
+            </ion-list>
+          </div>
         </div>
-      </HeaderBannerComponent>
-
-      <div class="container text-container">
-        <div
-          class="virtual-tour-station__description"
-          v-html="virtualTourStation.description"
-        />
-        <div
-          v-if="virtualTourStation.author"
-          class="virtual-tour-station__author"
-        >
-          {{ virtualTourStation.author }}
-        </div>
-
-        <audio
-          v-if="virtualTourStation.audio"
-          class="virtual-tour-station__audio"
-          :src="virtualTourStation.audio"
-          controls
-        ></audio>
-
-        <div class="virtual-tour-station__links">
-          <ion-list mode="ios">
-            <ion-list-header>
-              <ion-label>Links</ion-label>
-            </ion-list-header>
-
-            <ion-item
-              class="virtual-tour-station__links__item"
-              :button="true"
-              v-if="virtualTourStation.longitude"
-              @click="
-                openGoogleMapsLink(
-                  virtualTourStation.latitude,
-                  virtualTourStation.longitude,
-                )
-              "
-            >
-              <ion-icon :icon="navigateCircleOutline" slot="start"></ion-icon>
-              <ion-label>In Google Maps anzeigen</ion-label>
-            </ion-item>
-          </ion-list>
-        </div>
-      </div>
-    </template>
-  </IonContent>
+      </template>
+    </IonContent>
+  </IonPage>
 </template>
 
 <style scoped lang="scss">

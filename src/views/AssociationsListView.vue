@@ -11,7 +11,9 @@ import {
   IonContent,
   IonGrid,
   IonIcon,
+  IonPage,
   IonRow,
+  useIonRouter,
 } from "@ionic/vue";
 import { onMounted, ref } from "vue";
 import LoadingComponent from "@/components/LoadingComponent.vue";
@@ -26,10 +28,9 @@ import {
   logoInstagram,
   logoWhatsapp,
 } from "ionicons/icons";
-import { useRouter } from "vue-router";
 import { useNavigationStore } from "@/stores/navigation.ts";
 
-const router = useRouter();
+const router = useIonRouter();
 const navigationStore = useNavigationStore();
 
 const loading = ref<boolean>(true);
@@ -61,94 +62,99 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderComponent :title="navigationStore.currentItem?.title" />
+  <IonPage>
+    <HeaderComponent :title="navigationStore.currentItem?.title" />
 
-  <IonContent>
-    <LoadingComponent :loading="loading" />
+    <IonContent>
+      <LoadingComponent :loading="loading" />
 
-    <div class="container" v-if="!loading">
-      <p
-        v-if="navigationStore.currentItem?.description"
-        style="margin-top: 16px; margin-bottom: 16px"
-      >
-        {{ navigationStore.currentItem?.description }}
-      </p>
+      <div class="container" v-if="!loading">
+        <p
+          v-if="navigationStore.currentItem?.description"
+          style="margin-top: 16px; margin-bottom: 16px"
+        >
+          {{ navigationStore.currentItem?.description }}
+        </p>
 
-      <ion-grid>
-        <ion-row>
-          <template v-for="association of associations" :key="association.name">
-            <ion-col size="12" sizeMd="6" sizeLg="4">
-              <ion-card
-                class="card"
-                @click="openAssociationDetail(association.id)"
-              >
-                <ion-card-header class="card__header">
-                  <ion-avatar v-if="association.logo">
-                    <img :alt="association.name" :src="association.logo" />
-                  </ion-avatar>
+        <ion-grid>
+          <ion-row>
+            <template
+              v-for="association of associations"
+              :key="association.name"
+            >
+              <ion-col size="12" sizeMd="6" sizeLg="4">
+                <ion-card
+                  class="card"
+                  @click="openAssociationDetail(association.id)"
+                >
+                  <ion-card-header class="card__header">
+                    <ion-avatar v-if="association.logo">
+                      <img :alt="association.name" :src="association.logo" />
+                    </ion-avatar>
 
-                  <div class="card__header__title">
-                    <ion-card-title>{{ association.name }}</ion-card-title>
-                    <ion-card-subtitle v-if="association.subTitle">
-                      {{ association.subTitle }}
-                    </ion-card-subtitle>
-                  </div>
-                </ion-card-header>
-
-                <ion-card-content>
-                  <div
-                    class="card__description"
-                    v-html="association.description"
-                  ></div>
-
-                  <div class="card__footer">
-                    <div class="card__footer__left">
-                      <ion-button
-                        v-if="association.homepage"
-                        fill="clear"
-                        @click="openLink(association.homepage)"
-                      >
-                        <ion-icon
-                          slot="icon-only"
-                          :icon="linkOutline"
-                        ></ion-icon>
-                      </ion-button>
+                    <div class="card__header__title">
+                      <ion-card-title>{{ association.name }}</ion-card-title>
+                      <ion-card-subtitle v-if="association.subTitle">
+                        {{ association.subTitle }}
+                      </ion-card-subtitle>
                     </div>
+                  </ion-card-header>
 
-                    <div class="card__footer__right">
-                      <ion-button
-                        v-if="association.whatsapp"
-                        fill="clear"
-                        @click="openLink(association.whatsapp)"
-                      >
-                        <ion-icon :icon="logoWhatsapp"></ion-icon>
-                      </ion-button>
+                  <ion-card-content>
+                    <div
+                      class="card__description"
+                      v-html="association.description"
+                    ></div>
 
-                      <ion-button
-                        v-if="association.facebook"
-                        fill="clear"
-                        @click="openLink(association.facebook)"
-                      >
-                        <ion-icon :icon="logoFacebook"></ion-icon>
-                      </ion-button>
+                    <div class="card__footer">
+                      <div class="card__footer__left">
+                        <ion-button
+                          v-if="association.homepage"
+                          fill="clear"
+                          @click="openLink(association.homepage)"
+                        >
+                          <ion-icon
+                            slot="icon-only"
+                            :icon="linkOutline"
+                          ></ion-icon>
+                        </ion-button>
+                      </div>
 
-                      <ion-button
-                        v-if="association.instagram"
-                        fill="clear"
-                        @click="openLink(association.instagram)"
-                      >
-                        <ion-icon :icon="logoInstagram"></ion-icon>
-                      </ion-button>
+                      <div class="card__footer__right">
+                        <ion-button
+                          v-if="association.whatsapp"
+                          fill="clear"
+                          @click="openLink(association.whatsapp)"
+                        >
+                          <ion-icon :icon="logoWhatsapp"></ion-icon>
+                        </ion-button>
+
+                        <ion-button
+                          v-if="association.facebook"
+                          fill="clear"
+                          @click="openLink(association.facebook)"
+                        >
+                          <ion-icon :icon="logoFacebook"></ion-icon>
+                        </ion-button>
+
+                        <ion-button
+                          v-if="association.instagram"
+                          fill="clear"
+                          @click="openLink(association.instagram)"
+                        >
+                          <ion-icon :icon="logoInstagram"></ion-icon>
+                        </ion-button>
+                      </div>
                     </div>
-                  </div>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          </template>
-        </ion-row>
-      </ion-grid>
-    </div>
-  </IonContent>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            </template>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </IonContent>
+  </IonPage>
 </template>
 
 <style scoped lang="scss">

@@ -7,7 +7,9 @@ import {
   IonLabel,
   IonList,
   IonListHeader,
+  IonPage,
   type ScrollDetail,
+  useIonRouter,
 } from "@ionic/vue";
 import { onMounted, ref } from "vue";
 import LoadingComponent from "@/components/LoadingComponent.vue";
@@ -22,12 +24,12 @@ import {
   logoInstagram,
   logoWhatsapp,
 } from "ionicons/icons";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import HeaderBannerComponent from "@/components/HeaderBannerComponent.vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 
 const route = useRoute();
-const router = useRouter();
+const router = useIonRouter();
 
 const loading = ref<boolean>(true);
 const association = ref<Association | undefined>(undefined);
@@ -68,86 +70,91 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderComponent
-    class="header"
-    :title="opacityToolbar ? association?.name : ''"
-    :transparentBackground="!opacityToolbar"
-  />
+  <IonPage>
+    <HeaderComponent
+      class="header"
+      :title="opacityToolbar ? association?.name : ''"
+      :transparentBackground="!opacityToolbar"
+    />
 
-  <IonContent @ionScroll="handleScroll" :scrollEvents="true">
-    <LoadingComponent :loading="loading" />
+    <IonContent @ionScroll="handleScroll" :scrollEvents="true">
+      <LoadingComponent :loading="loading" />
 
-    <template v-if="association">
-      <HeaderBannerComponent
-        :backgroundImageUrl="association.image"
-        style="display: flex; align-items: end"
-      >
-        <div class="container">
-          <div class="association-info">
-            <ion-avatar v-if="association.logo">
-              <img :alt="association.name" :src="association.logo" />
-            </ion-avatar>
-            <div class="association-info__name">
-              <h1>{{ association.name }}</h1>
-              <h2>{{ association.subTitle }}</h2>
+      <template v-if="association">
+        <HeaderBannerComponent
+          :backgroundImageUrl="association.image"
+          style="display: flex; align-items: end"
+        >
+          <div class="container">
+            <div class="association-info">
+              <ion-avatar v-if="association.logo">
+                <img :alt="association.name" :src="association.logo" />
+              </ion-avatar>
+              <div class="association-info__name">
+                <h1>{{ association.name }}</h1>
+                <h2>{{ association.subTitle }}</h2>
+              </div>
             </div>
           </div>
+        </HeaderBannerComponent>
+
+        <div class="container">
+          <div
+            class="association-description"
+            v-html="association.description"
+          />
+
+          <div class="association-links">
+            <ion-list mode="ios">
+              <ion-list-header>
+                <ion-label>Links</ion-label>
+              </ion-list-header>
+
+              <ion-item
+                class="association-links__item"
+                :button="true"
+                v-if="association.homepage"
+                @click="openLink(association.homepage)"
+              >
+                <ion-icon :icon="linkOutline" slot="start"></ion-icon>
+                <ion-label>Homepage</ion-label>
+              </ion-item>
+
+              <ion-item
+                class="association-links__item"
+                :button="true"
+                v-if="association.whatsapp"
+                @click="openLink(association.whatsapp)"
+              >
+                <ion-icon :icon="logoWhatsapp" slot="start"></ion-icon>
+                <ion-label>WhatsApp</ion-label>
+              </ion-item>
+
+              <ion-item
+                class="association-links__item"
+                :button="true"
+                v-if="association.facebook"
+                @click="openLink(association.facebook)"
+              >
+                <ion-icon :icon="logoFacebook" slot="start"></ion-icon>
+                <ion-label>Facebook</ion-label>
+              </ion-item>
+
+              <ion-item
+                class="association-links__item"
+                :button="true"
+                v-if="association.instagram"
+                @click="openLink(association.instagram)"
+              >
+                <ion-icon :icon="logoInstagram" slot="start"></ion-icon>
+                <ion-label>Instagram</ion-label>
+              </ion-item>
+            </ion-list>
+          </div>
         </div>
-      </HeaderBannerComponent>
-
-      <div class="container">
-        <div class="association-description" v-html="association.description" />
-
-        <div class="association-links">
-          <ion-list mode="ios">
-            <ion-list-header>
-              <ion-label>Links</ion-label>
-            </ion-list-header>
-
-            <ion-item
-              class="association-links__item"
-              :button="true"
-              v-if="association.homepage"
-              @click="openLink(association.homepage)"
-            >
-              <ion-icon :icon="linkOutline" slot="start"></ion-icon>
-              <ion-label>Homepage</ion-label>
-            </ion-item>
-
-            <ion-item
-              class="association-links__item"
-              :button="true"
-              v-if="association.whatsapp"
-              @click="openLink(association.whatsapp)"
-            >
-              <ion-icon :icon="logoWhatsapp" slot="start"></ion-icon>
-              <ion-label>WhatsApp</ion-label>
-            </ion-item>
-
-            <ion-item
-              class="association-links__item"
-              :button="true"
-              v-if="association.facebook"
-              @click="openLink(association.facebook)"
-            >
-              <ion-icon :icon="logoFacebook" slot="start"></ion-icon>
-              <ion-label>Facebook</ion-label>
-            </ion-item>
-
-            <ion-item
-              class="association-links__item"
-              :button="true"
-              v-if="association.instagram"
-              @click="openLink(association.instagram)"
-            >
-              <ion-icon :icon="logoInstagram" slot="start"></ion-icon>
-              <ion-label>Instagram</ion-label>
-            </ion-item>
-          </ion-list>
-        </div>
-      </div>
-    </template>
-  </IonContent>
+      </template>
+    </IonContent>
+  </IonPage>
 </template>
 
 <style scoped lang="scss">

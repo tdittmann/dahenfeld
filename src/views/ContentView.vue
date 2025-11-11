@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { IonContent } from "@ionic/vue";
+import { IonContent, IonPage, useIonRouter } from "@ionic/vue";
 import { onMounted, ref } from "vue";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { type Content, ContentService } from "@/services/ContentService.ts";
 
 const route = useRoute();
-const router = useRouter();
+const router = useIonRouter();
 
 const loading = ref<boolean>(true);
 const content = ref<Content | undefined>(undefined);
@@ -38,17 +38,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderComponent class="header" :title="content?.title" />
+  <IonPage>
+    <HeaderComponent class="header" :title="content?.title" />
 
-  <IonContent>
-    <LoadingComponent :loading="loading" />
+    <IonContent>
+      <LoadingComponent :loading="loading" />
 
-    <template v-if="content">
-      <div class="container">
-        <div class="content-text" v-html="content.text" />
-      </div>
-    </template>
-  </IonContent>
+      <template v-if="content">
+        <div class="container">
+          <div class="content-text" v-html="content.text" />
+        </div>
+      </template>
+    </IonContent>
+  </IonPage>
 </template>
 
 <style scoped lang="scss">

@@ -8,6 +8,7 @@ import {
   IonLabel,
   IonList,
   IonNote,
+  IonPage,
 } from "@ionic/vue";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import { type Event, EventService } from "@/services/EventsService.ts";
@@ -74,48 +75,54 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderComponent :title="navigationStore.currentItem?.title" />
+  <IonPage>
+    <HeaderComponent :title="navigationStore.currentItem?.title" />
 
-  <IonContent>
-    <LoadingComponent :loading="loading" />
+    <IonContent>
+      <LoadingComponent :loading="loading" />
 
-    <div class="container" v-if="!loading">
-      <p
-        v-if="navigationStore.currentItem?.description"
-        style="margin-top: 16px; margin-bottom: 16px"
-      >
-        {{ navigationStore.currentItem?.description }}
-      </p>
+      <div class="container" v-if="!loading">
+        <p
+          v-if="navigationStore.currentItem?.description"
+          style="margin-top: 16px; margin-bottom: 16px"
+        >
+          {{ navigationStore.currentItem?.description }}
+        </p>
 
-      <template v-for="[key, values] of eventsByMonth" :key="key">
-        <h2>{{ key }}</h2>
+        <template v-for="[key, values] of eventsByMonth" :key="key">
+          <h2>{{ key }}</h2>
 
-        <ion-list lines="none">
-          <ion-item v-for="value in values" :key="value.id" class="event_item">
-            <div class="event_start_date" slot="start">
-              <div class="event_start_date__day">
-                {{ formatStartDateDay(value.startDate) }}
+          <ion-list lines="none">
+            <ion-item
+              v-for="value in values"
+              :key="value.id"
+              class="event_item"
+            >
+              <div class="event_start_date" slot="start">
+                <div class="event_start_date__day">
+                  {{ formatStartDateDay(value.startDate) }}
+                </div>
+                <div class="event_start_date__weekday">
+                  {{ formatStartDateWeekday(value.startDate) }}
+                </div>
               </div>
-              <div class="event_start_date__weekday">
-                {{ formatStartDateWeekday(value.startDate) }}
-              </div>
-            </div>
-            <ion-label class="waste_type_label">
-              {{ value.title }}
-              <p v-if="value.organizer">{{ value.organizer }}</p>
-              <p v-if="value.location">
-                <ion-icon :icon="locationOutline"></ion-icon>
-                {{ value.location }}
-              </p>
-            </ion-label>
-            <ion-note slot="end" class="event_time">
-              {{ formatEventTime(value) }}
-            </ion-note>
-          </ion-item>
-        </ion-list>
-      </template>
-    </div>
-  </IonContent>
+              <ion-label class="waste_type_label">
+                {{ value.title }}
+                <p v-if="value.organizer">{{ value.organizer }}</p>
+                <p v-if="value.location">
+                  <ion-icon :icon="locationOutline"></ion-icon>
+                  {{ value.location }}
+                </p>
+              </ion-label>
+              <ion-note slot="end" class="event_time">
+                {{ formatEventTime(value) }}
+              </ion-note>
+            </ion-item>
+          </ion-list>
+        </template>
+      </div>
+    </IonContent>
+  </IonPage>
 </template>
 
 <style scoped lang="scss">

@@ -5,7 +5,14 @@ import {
   WasteCollectionDateService,
 } from "@/services/WasteCollectionDateService.ts";
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import { IonContent, IonIcon, IonItem, IonLabel, IonList } from "@ionic/vue";
+import {
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+} from "@ionic/vue";
 import { trashBin, trashSharp } from "ionicons/icons";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import { useNavigationStore } from "@/stores/navigation.ts";
@@ -92,45 +99,50 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderComponent :title="navigationStore.currentItem?.title" />
+  <IonPage>
+    <HeaderComponent :title="navigationStore.currentItem?.title" />
 
-  <IonContent>
-    <LoadingComponent :loading="loading" />
+    <IonContent>
+      <LoadingComponent :loading="loading" />
 
-    <div class="container" v-if="!loading">
-      <p
-        v-if="navigationStore.currentItem?.description"
-        style="margin-top: 16px; margin-bottom: 16px"
-      >
-        {{ navigationStore.currentItem?.description }}
-      </p>
+      <div class="container" v-if="!loading">
+        <p
+          v-if="navigationStore.currentItem?.description"
+          style="margin-top: 16px; margin-bottom: 16px"
+        >
+          {{ navigationStore.currentItem?.description }}
+        </p>
 
-      <template v-for="[key, values] of wasteCollectionDatesByMonth" :key="key">
-        <h2>{{ key }}</h2>
+        <template
+          v-for="[key, values] of wasteCollectionDatesByMonth"
+          :key="key"
+        >
+          <h2>{{ key }}</h2>
 
-        <ion-list>
-          <ion-item v-for="value in values" :key="value.id">
-            <div style="display: flex" slot="start">
-              <ion-icon
-                class="waste_type_icon"
-                :class="getWasteIconColor(value)"
-                :icon="getWasteIcon(value)"
-              ></ion-icon>
-              <div class="waste_type_date">
-                {{ formatCollectionDate(value.collectionDate) }}
+          <ion-list>
+            <ion-item v-for="value in values" :key="value.id">
+              <div style="display: flex" slot="start">
+                <ion-icon
+                  class="waste_type_icon"
+                  :class="getWasteIconColor(value)"
+                  :icon="getWasteIcon(value)"
+                ></ion-icon>
+                <div class="waste_type_date">
+                  {{ formatCollectionDate(value.collectionDate) }}
+                </div>
               </div>
-            </div>
-            <ion-label class="waste_type_label">
-              {{ value.type }}
-              <p v-if="value.location">
-                {{ getTimeRangeAndLocation(value) }}
-              </p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </template>
-    </div>
-  </IonContent>
+              <ion-label class="waste_type_label">
+                {{ value.type }}
+                <p v-if="value.location">
+                  {{ getTimeRangeAndLocation(value) }}
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </template>
+      </div>
+    </IonContent>
+  </IonPage>
 </template>
 
 <style scoped lang="scss">

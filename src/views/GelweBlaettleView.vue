@@ -4,6 +4,7 @@ import {
   IonItem,
   IonItemDivider,
   IonItemGroup,
+  IonPage,
   IonLabel,
   IonList,
 } from "@ionic/vue";
@@ -50,38 +51,40 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderComponent :title="navigationStore.currentItem?.title" />
+  <IonPage>
+    <HeaderComponent :title="navigationStore.currentItem?.title" />
 
-  <IonContent>
-    <LoadingComponent :loading="loading" />
+    <IonContent>
+      <LoadingComponent :loading="loading" />
 
-    <div class="container" v-if="!loading">
-      <p
-        v-if="navigationStore.currentItem?.description"
-        style="margin-top: 16px; margin-bottom: 16px"
-      >
-        {{ navigationStore.currentItem?.description }}
-      </p>
+      <div class="container" v-if="!loading">
+        <p
+          v-if="navigationStore.currentItem?.description"
+          style="margin-top: 16px; margin-bottom: 16px"
+        >
+          {{ navigationStore.currentItem?.description }}
+        </p>
 
-      <template v-for="[key, values] of gelweBlaettleMap" :key="key">
-        <IonItemGroup mode="ios" style="margin-top: 32px">
-          <IonItemDivider class="item-divider-padding">
-            <IonLabel>{{ key }}</IonLabel>
-          </IonItemDivider>
+        <template v-for="[key, values] of gelweBlaettleMap" :key="key">
+          <IonItemGroup mode="ios" style="margin-top: 32px">
+            <IonItemDivider class="item-divider-padding">
+              <IonLabel>{{ key }}</IonLabel>
+            </IonItemDivider>
 
-          <IonList>
-            <template v-for="blaettle of values" :key="blaettle.name">
-              <IonItem :button="true" @click="openBlaettle(blaettle.link)">
-                <IonLabel>
-                  <strong>{{ blaettle.name }}</strong>
-                </IonLabel>
-              </IonItem>
-            </template>
-          </IonList>
-        </IonItemGroup>
-      </template>
-    </div>
-  </IonContent>
+            <IonList>
+              <template v-for="blaettle of values" :key="blaettle.name">
+                <IonItem :button="true" @click="openBlaettle(blaettle.link)">
+                  <IonLabel>
+                    <strong>{{ blaettle.name }}</strong>
+                  </IonLabel>
+                </IonItem>
+              </template>
+            </IonList>
+          </IonItemGroup>
+        </template>
+      </div>
+    </IonContent>
+  </IonPage>
 </template>
 
 <style scoped lang="scss">

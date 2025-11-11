@@ -5,13 +5,12 @@ import {
   VirtualTourService,
   type VirtualTourStation,
 } from "@/services/VirtualTourService.ts";
-import { IonButton, IonIcon } from "@ionic/vue";
+import { IonButton, IonPage, IonIcon, useIonRouter } from "@ionic/vue";
 import { closeOutline } from "ionicons/icons";
-import { useRouter } from "vue-router";
 import { AdvancedMarker, GoogleMap } from "vue3-google-map";
 import { useNavigationStore } from "@/stores/navigation.ts";
 
-const router = useRouter();
+const router = useIonRouter();
 const navigationStore = useNavigationStore();
 const apiKey = import.meta.env.VITE_VIRTUAL_TOUR_API_KEY;
 const mapId = import.meta.env.VITE_VIRTUAL_TOUR_MAP_ID;
@@ -61,63 +60,65 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderComponent :title="navigationStore.currentItem?.title" />
+  <IonPage>
+    <HeaderComponent :title="navigationStore.currentItem?.title" />
 
-  <GoogleMap
-    :api-key="apiKey"
-    :mapId="mapId"
-    style="width: 100%; height: 100%"
-    :center="center"
-    :zoom="minZoom"
-    :disable-default-ui="true"
-    mapTypeId="satellite"
-    :min-zoom="minZoom"
-    :restriction="restriction"
-  >
-    <template v-for="station of virtualTourStations" :key="station.id">
-      <AdvancedMarker
-        :options="{
-          position: { lat: station.latitude, lng: station.longitude },
-          title: station.title,
-        }"
-        @click="openDialog(station)"
-      >
-        <template #content>
-          <div
-            class="overlay-content"
-            :class="[`overlay-content__${station.category}`]"
-            @click="openDialog(station)"
-          >
-            {{ station.id }}
+    <GoogleMap
+      :api-key="apiKey"
+      :mapId="mapId"
+      style="width: 100%; height: 100%"
+      :center="center"
+      :zoom="minZoom"
+      :disable-default-ui="true"
+      mapTypeId="satellite"
+      :min-zoom="minZoom"
+      :restriction="restriction"
+    >
+      <template v-for="station of virtualTourStations" :key="station.id">
+        <AdvancedMarker
+          :options="{
+            position: { lat: station.latitude, lng: station.longitude },
+            title: station.title,
+          }"
+          @click="openDialog(station)"
+        >
+          <template #content>
+            <div
+              class="overlay-content"
+              :class="[`overlay-content__${station.category}`]"
+              @click="openDialog(station)"
+            >
+              {{ station.id }}
+            </div>
+          </template>
+        </AdvancedMarker>
+      </template>
+    </GoogleMap>
+
+    <template v-if="selectedStation">
+      <div class="speech-bubble">
+        <div class="speech-bubble__content">
+          <h2>{{ selectedStation.title }}</h2>
+          <h3>{{ selectedStation.subTitle }}</h3>
+
+          <div class="speech-bubble__read-more">
+            <ion-button @click="openStationDetail(selectedStation.id)"
+              >Mehr erfahren</ion-button
+            >
           </div>
-        </template>
-      </AdvancedMarker>
-    </template>
-  </GoogleMap>
-
-  <template v-if="selectedStation">
-    <div class="speech-bubble">
-      <div class="speech-bubble__content">
-        <h2>{{ selectedStation.title }}</h2>
-        <h3>{{ selectedStation.subTitle }}</h3>
-
-        <div class="speech-bubble__read-more">
-          <ion-button @click="openStationDetail(selectedStation.id)"
-            >Mehr erfahren</ion-button
-          >
         </div>
+
+        <div class="speech-bubble__close">
+          <IonIcon :icon="closeOutline" @click="closeDialog"></IonIcon>
+        </div>
+        <div class="speech-bubble__arrow"></div>
       </div>
 
-      <div class="speech-bubble__close">
-        <IonIcon :icon="closeOutline" @click="closeDialog"></IonIcon>
+      <div class="remichele">
+        <img src="/imgs/virtual-tour/remichele.png" alt="Remichele" />
       </div>
-      <div class="speech-bubble__arrow"></div>
-    </div>
-
-    <div class="remichele">
-      <img src="/imgs/virtual-tour/remichele.png" alt="Remichele" />
-    </div>
-  </template>
+    </template>
+  </IonPage>
 </template>
 
 <style scoped lang="scss">

@@ -37,6 +37,10 @@ const toolbarBackgroundColor = computed<string>(() => {
       <IonTitle v-if="props.title && !props.hidden" class="toolbar-title">
         {{ props.title }}
       </IonTitle>
+
+      <ion-buttons slot="end">
+        <slot name="buttons"></slot>
+      </ion-buttons>
     </IonToolbar>
   </IonHeader>
 </template>

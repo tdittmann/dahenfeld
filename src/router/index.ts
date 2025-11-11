@@ -20,11 +20,6 @@ const router = createRouter({
       component: () => import("../views/VirtualTourGoogleMapsView.vue"),
     },
     {
-      path: "/virtual-tour-list",
-      name: "virtual-tour-list",
-      component: () => import("../views/VirtualTourListView.vue"),
-    },
-    {
       path: "/virtual-tour/:id",
       name: "virtual-tour-detail",
       component: () => import("../views/VirtualTourDetailView.vue"),

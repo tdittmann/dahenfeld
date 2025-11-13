@@ -1,4 +1,5 @@
 @import "./base.css";
+@import "@globalhive/vuejs-tour/dist/style.css";
 
 .item-divider-padding {
   padding-top: 8px;
@@ -43,4 +44,18 @@
   .container {
     max-width: 1320px;
   }
+}
+
+/* Custom Style for VueTour */
+#vjt-tooltip {
+  background-color: var(--ion-color-secondary);
+}
+#vjt-arrow::before {
+  background-color: var(--ion-color-secondary);
+}
+.vjt-actions button {
+  background-color: var(--ion-color-primary);
+}
+.vjt-actions button:hover {
+  background-color: var(--ion-color-primary);
 }

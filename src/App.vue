@@ -50,6 +50,30 @@ const handlePushNotification = async () => {
       }
     });
 
+    PushNotifications.addListener(
+      "pushNotificationActionPerformed",
+      (notification) => {
+        const data = notification.notification.data;
+
+        // Navigate to a specific page depending on the type
+        if (data && data.type) {
+          switch (data.type) {
+            case "Event":
+              router.push("/veranstaltungen");
+              break;
+            case "WasteResidual":
+            case "WasteOrganic":
+            case "WastePaper":
+            case "WastePollutants":
+              router.push("/muelltermine");
+              break;
+            case "GelweBlaettle":
+              router.push("/gelwe-blaettle");
+          }
+        }
+      },
+    );
+
     PushNotifications.addListener("registrationError", (error: any) => {
       console.error("Error on registration: " + JSON.stringify(error));
     });

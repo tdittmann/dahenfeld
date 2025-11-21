@@ -34,7 +34,36 @@ const toEvent = (json: EventJson): Event => {
 
 const loadEvents = (): Promise<Event[]> => {
   return BackendClient.fetchData<EventJson[]>("/events.php").then((value) => {
-    return value.map(toEvent);
+    const events = value.map(toEvent);
+
+    // Expands multi-day events into one event per calendar day.
+    const expandedEvents: Event[] = [];
+
+    for (const event of events) {
+      const start = new Date(event.startDate);
+      if (event.endDate) {
+        // It can be a multi-day event
+        const end = event.endDate
+          ? new Date(event.endDate)
+          : new Date(event.startDate);
+        const current = new Date(start);
+
+        while (current <= end) {
+          expandedEvents.push({
+            ...event,
+            startDate: new Date(current),
+            endDate: new Date(current),
+          });
+
+          // Move to next day
+          current.setDate(current.getDate() + 1);
+        }
+      } else {
+        expandedEvents.push(event);
+      }
+    }
+
+    return expandedEvents;
   });
 };
 

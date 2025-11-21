@@ -46,7 +46,7 @@ const loadEvents = (): Promise<Event[]> => {
         const end = event.endDate
           ? new Date(event.endDate)
           : new Date(event.startDate);
-        let current = new Date(start);
+        const current = new Date(start);
 
         while (current <= end) {
           expandedEvents.push({

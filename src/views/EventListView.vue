@@ -56,7 +56,7 @@ const formatStartDateWeekday = (date: Date) => {
 
 const formatEventTime = (event: Event) => {
   // If start time is 00:00, don't show it
-  if(event.startDate.getHours() === 0 && event.startDate.getMinutes() === 0) {
+  if (event.startDate.getHours() === 0 && event.startDate.getMinutes() === 0) {
     return "";
   }
 

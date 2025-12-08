@@ -88,6 +88,9 @@ const getWasteIconColor = (date: WasteCollectionDate) => {
       return "waste_type_icon_paper";
     case "Schadstoffe":
       return "waste_type_icon_pollutants";
+    case "Gelbe Tonne":
+    case "Gelbe Tonne (ab 01.01.2026)":
+      return "waste_type_icon_plastic";
     default:
       return "";
   }
@@ -169,6 +172,10 @@ onMounted(() => {
 
 .waste_type_icon_pollutants {
   color: #f59103;
+}
+
+.waste_type_icon_plastic {
+  color: #ffdc00;
 }
 
 .container {

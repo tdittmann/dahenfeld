@@ -2,7 +2,13 @@ import { BackendClient } from "@/plugins/BackendClient.ts";
 
 export interface WasteCollectionDateJson {
   id: number;
-  type: "Restmüll" | "Bioabfall" | "Papiertonne" | "Schadstoffe";
+  type:
+    | "Restmüll"
+    | "Bioabfall"
+    | "Papiertonne"
+    | "Schadstoffe"
+    | "Gelbe Tonne"
+    | "Gelbe Tonne (ab 01.01.2026)";
   collection_date: string;
   start_time: string | undefined;
   end_time: string | undefined;
@@ -11,7 +17,13 @@ export interface WasteCollectionDateJson {
 
 export interface WasteCollectionDate {
   id: number;
-  type: "Restmüll" | "Bioabfall" | "Papiertonne" | "Schadstoffe";
+  type:
+    | "Restmüll"
+    | "Bioabfall"
+    | "Papiertonne"
+    | "Schadstoffe"
+    | "Gelbe Tonne"
+    | "Gelbe Tonne (ab 01.01.2026)";
   collectionDate: Date;
   startTime: string | undefined;
   endTime: string | undefined;

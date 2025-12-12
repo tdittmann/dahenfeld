@@ -3,7 +3,7 @@ import { BackendClient } from "@/plugins/BackendClient.ts";
 export interface WasteCollectionDateJson {
   id: number;
   type:
-    | "Restmüll"
+    | "Restabfall"
     | "Bioabfall"
     | "Papiertonne"
     | "Schadstoffe"
@@ -18,7 +18,7 @@ export interface WasteCollectionDateJson {
 export interface WasteCollectionDate {
   id: number;
   type:
-    | "Restmüll"
+    | "Restabfall"
     | "Bioabfall"
     | "Papiertonne"
     | "Schadstoffe"

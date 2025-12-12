@@ -325,7 +325,7 @@ const handleWebNotifications = async () => {
                 (evt) => handleNotificationToggle('push_waste_residual', evt)
               "
             >
-              <ion-label class="second-layer">Restmüll</ion-label>
+              <ion-label class="second-layer">Restabfall</ion-label>
             </ion-toggle>
           </IonItem>
           <IonItem v-if="notificationWaste">

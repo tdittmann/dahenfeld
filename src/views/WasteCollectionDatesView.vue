@@ -80,7 +80,7 @@ const getWasteIcon = (date: WasteCollectionDate) => {
 
 const getWasteIconColor = (date: WasteCollectionDate) => {
   switch (date.type) {
-    case "Restmüll":
+    case "Restabfall":
       return "waste_type_icon_residual";
     case "Bioabfall":
       return "waste_type_icon_organic";

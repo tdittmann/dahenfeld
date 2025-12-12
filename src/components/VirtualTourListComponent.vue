@@ -21,7 +21,7 @@ const openStationDetail = (id: number) => {
       <ion-row>
         <template
           v-for="station of props.virtualTourStations"
-          :key="station.name"
+          :key="station.id"
         >
           <ion-col size="12">
             <HeaderBannerComponent

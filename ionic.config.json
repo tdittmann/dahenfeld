@@ -1,0 +1,7 @@
+{
+  "name": "Dahenfeld",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}

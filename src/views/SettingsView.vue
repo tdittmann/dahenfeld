@@ -39,6 +39,7 @@ const notificationSettings = ref<Notification>({
   push_waste_residual: true,
   push_waste_organic: true,
   push_waste_paper: true,
+  push_waste_plastic: true,
   push_waste_pollutants: true,
   push_events: true,
 });
@@ -52,11 +53,13 @@ const handleNotificationWasteToggle = (
     notificationSettings.value.push_waste_residual = true;
     notificationSettings.value.push_waste_organic = true;
     notificationSettings.value.push_waste_paper = true;
+    notificationSettings.value.push_waste_plastic = true;
     notificationSettings.value.push_waste_pollutants = true;
   } else {
     notificationSettings.value.push_waste_residual = false;
     notificationSettings.value.push_waste_organic = false;
     notificationSettings.value.push_waste_paper = false;
+    notificationSettings.value.push_waste_plastic = false;
     notificationSettings.value.push_waste_pollutants = false;
   }
   updateNotificationSettings();
@@ -346,6 +349,16 @@ const handleWebNotifications = async () => {
               "
             >
               <ion-label class="second-layer">Papiertonne</ion-label>
+            </ion-toggle>
+          </IonItem>
+          <IonItem v-if="notificationWaste">
+            <ion-toggle
+              :checked="notificationSettings.push_waste_plastic"
+              @ionChange="
+                (evt) => handleNotificationToggle('push_waste_plastic', evt)
+              "
+            >
+              <ion-label class="second-layer">Gelbe Tonne</ion-label>
             </ion-toggle>
           </IonItem>
           <IonItem v-if="notificationWaste">

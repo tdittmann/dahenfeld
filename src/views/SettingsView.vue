@@ -20,8 +20,6 @@ import {
   NotificationService,
 } from "@/services/NotificationService.ts";
 import { Capacitor } from "@capacitor/core";
-import { messaging } from "@/plugins/Firebase";
-import { getToken } from "firebase/messaging";
 import { PushNotifications, type Token } from "@capacitor/push-notifications";
 
 const router = useIonRouter();
@@ -127,9 +125,10 @@ const askForNotificationPermission = async () => {
       await askForWebNotificationPermission();
       break;
     case "ios":
+      await askForSmartphoneNotificationPermission();
       break;
     case "android":
-      await askForAndroidNotificationPermission();
+      await askForSmartphoneNotificationPermission();
       break;
   }
 };
@@ -141,27 +140,28 @@ onMounted(() => {
       notificationSettings.value.os = "web";
       break;
     case "ios":
+      handleSmartphoneNotifications();
       notificationSettings.value.os = "ios";
       break;
     case "android":
-      handleAndroidNotifications();
+      handleSmartphoneNotifications();
       notificationSettings.value.os = "android";
       break;
   }
 });
 
 /***********************************/
-/* ANDROID Notifications           */
+/* ANDROID & iOS Notifications           */
 /***********************************/
-const handleAndroidNotifications = async () => {
+const handleSmartphoneNotifications = async () => {
   if (Capacitor.isPluginAvailable("PushNotifications")) {
     const permStatus = await PushNotifications.checkPermissions();
-
+    console.log("Permission status: ", permStatus);
     switch (permStatus.receive) {
       case "granted":
         // Notifications are already enabled
         notificationState.value = NotificationState.GRANTED;
-        await loadAndroidNotificationToken();
+        await loadSmartphoneNotificationToken();
         await loadSettings();
         break;
       case "denied":
@@ -175,7 +175,7 @@ const handleAndroidNotifications = async () => {
   }
 };
 
-const askForAndroidNotificationPermission = async () => {
+const askForSmartphoneNotificationPermission = async () => {
   if (Capacitor.isPluginAvailable("PushNotifications")) {
     const status = await PushNotifications.requestPermissions();
 
@@ -193,7 +193,7 @@ const askForAndroidNotificationPermission = async () => {
   }
 };
 
-const loadAndroidNotificationToken = async () => {
+const loadSmartphoneNotificationToken = async () => {
   const token = localStorage.getItem("notificationToken");
   if (token) {
     notificationSettings.value.registration_id = token;
@@ -207,6 +207,10 @@ const loadAndroidNotificationToken = async () => {
 /***********************************/
 const loadWebNotificationToken = async () => {
   try {
+    // We need to use dynamic imports, otherwise iOS will fail
+    const { getToken } = await import("firebase/messaging");
+    const { messaging } = await import("@/plugins/Firebase");
+
     notificationSettings.value.registration_id = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
     });

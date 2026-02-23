@@ -114,16 +114,22 @@ const openStationDetail = (id: number) => {
   align-items: center;
   cursor: pointer;
 
-  &__historic {
-    background: #874618;
-    color: #fff;
-    border: 1px solid #6a340d;
+  &__tour-1 {
+    background: #f4e405;
+    color: #000;
+    border: 1px solid #aea202;
   }
 
-  &__virtual {
-    background: #871885;
+  &__tour-2 {
+    background: #c50404;
     color: #fff;
-    border: 1px solid #6a0d69;
+    border: 1px solid #9a0303;
+  }
+
+  &__other {
+    background: #5a5a5a;
+    color: #fff;
+    border: 1px solid #3e3e3e;
   }
 }
 

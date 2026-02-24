@@ -108,6 +108,7 @@ const iconMapping: Record<string, any> = {
   right: 12px;
   z-index: 999;
   color: #000;
+  padding-top: env(safe-area-inset-top);
 
   &__white {
     color: #fff;
@@ -121,6 +122,7 @@ const iconMapping: Record<string, any> = {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  padding-top: env(safe-area-inset-top);
 
   &__title {
     h1 {

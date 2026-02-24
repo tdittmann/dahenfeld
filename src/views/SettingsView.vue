@@ -20,8 +20,6 @@ import {
   NotificationService,
 } from "@/services/NotificationService.ts";
 import { Capacitor } from "@capacitor/core";
-import { messaging } from "@/plugins/Firebase";
-import { getToken } from "firebase/messaging";
 import { PushNotifications, type Token } from "@capacitor/push-notifications";
 
 const router = useIonRouter();
@@ -39,6 +37,7 @@ const notificationSettings = ref<Notification>({
   push_waste_residual: true,
   push_waste_organic: true,
   push_waste_paper: true,
+  push_waste_plastic: true,
   push_waste_pollutants: true,
   push_events: true,
 });
@@ -52,11 +51,13 @@ const handleNotificationWasteToggle = (
     notificationSettings.value.push_waste_residual = true;
     notificationSettings.value.push_waste_organic = true;
     notificationSettings.value.push_waste_paper = true;
+    notificationSettings.value.push_waste_plastic = true;
     notificationSettings.value.push_waste_pollutants = true;
   } else {
     notificationSettings.value.push_waste_residual = false;
     notificationSettings.value.push_waste_organic = false;
     notificationSettings.value.push_waste_paper = false;
+    notificationSettings.value.push_waste_plastic = false;
     notificationSettings.value.push_waste_pollutants = false;
   }
   updateNotificationSettings();
@@ -124,9 +125,10 @@ const askForNotificationPermission = async () => {
       await askForWebNotificationPermission();
       break;
     case "ios":
+      await askForSmartphoneNotificationPermission();
       break;
     case "android":
-      await askForAndroidNotificationPermission();
+      await askForSmartphoneNotificationPermission();
       break;
   }
 };
@@ -138,27 +140,28 @@ onMounted(() => {
       notificationSettings.value.os = "web";
       break;
     case "ios":
+      handleSmartphoneNotifications();
       notificationSettings.value.os = "ios";
       break;
     case "android":
-      handleAndroidNotifications();
+      handleSmartphoneNotifications();
       notificationSettings.value.os = "android";
       break;
   }
 });
 
 /***********************************/
-/* ANDROID Notifications           */
+/* ANDROID & iOS Notifications           */
 /***********************************/
-const handleAndroidNotifications = async () => {
+const handleSmartphoneNotifications = async () => {
   if (Capacitor.isPluginAvailable("PushNotifications")) {
     const permStatus = await PushNotifications.checkPermissions();
-
+    console.log("Permission status: ", permStatus);
     switch (permStatus.receive) {
       case "granted":
         // Notifications are already enabled
         notificationState.value = NotificationState.GRANTED;
-        await loadAndroidNotificationToken();
+        await loadSmartphoneNotificationToken();
         await loadSettings();
         break;
       case "denied":
@@ -172,7 +175,7 @@ const handleAndroidNotifications = async () => {
   }
 };
 
-const askForAndroidNotificationPermission = async () => {
+const askForSmartphoneNotificationPermission = async () => {
   if (Capacitor.isPluginAvailable("PushNotifications")) {
     const status = await PushNotifications.requestPermissions();
 
@@ -190,7 +193,7 @@ const askForAndroidNotificationPermission = async () => {
   }
 };
 
-const loadAndroidNotificationToken = async () => {
+const loadSmartphoneNotificationToken = async () => {
   const token = localStorage.getItem("notificationToken");
   if (token) {
     notificationSettings.value.registration_id = token;
@@ -204,6 +207,10 @@ const loadAndroidNotificationToken = async () => {
 /***********************************/
 const loadWebNotificationToken = async () => {
   try {
+    // We need to use dynamic imports, otherwise iOS will fail
+    const { getToken } = await import("firebase/messaging");
+    const { messaging } = await import("@/plugins/Firebase");
+
     notificationSettings.value.registration_id = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
     });
@@ -346,6 +353,16 @@ const handleWebNotifications = async () => {
               "
             >
               <ion-label class="second-layer">Papiertonne</ion-label>
+            </ion-toggle>
+          </IonItem>
+          <IonItem v-if="notificationWaste">
+            <ion-toggle
+              :checked="notificationSettings.push_waste_plastic"
+              @ionChange="
+                (evt) => handleNotificationToggle('push_waste_plastic', evt)
+              "
+            >
+              <ion-label class="second-layer">Gelbe Tonne</ion-label>
             </ion-toggle>
           </IonItem>
           <IonItem v-if="notificationWaste">

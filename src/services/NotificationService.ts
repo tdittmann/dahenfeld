@@ -7,6 +7,7 @@ export interface NotificationJson {
   push_waste_residual: boolean;
   push_waste_organic: boolean;
   push_waste_paper: boolean;
+  push_waste_plastic: boolean;
   push_waste_pollutants: boolean;
   push_events: boolean;
 }
@@ -18,6 +19,7 @@ export interface Notification {
   push_waste_residual: boolean;
   push_waste_organic: boolean;
   push_waste_paper: boolean;
+  push_waste_plastic: boolean;
   push_waste_pollutants: boolean;
   push_events: boolean;
 }
@@ -35,6 +37,7 @@ const toNotification = (json: NotificationJson): Notification => {
     push_waste_residual: json.push_waste_residual,
     push_waste_organic: json.push_waste_organic,
     push_waste_paper: json.push_waste_paper,
+    push_waste_plastic: json.push_waste_plastic,
     push_waste_pollutants: json.push_waste_pollutants,
     push_events: json.push_events,
   };
@@ -48,6 +51,7 @@ const fromNotification = (notification: Notification): NotificationJson => {
     push_waste_residual: notification.push_waste_residual,
     push_waste_organic: notification.push_waste_organic,
     push_waste_paper: notification.push_waste_paper,
+    push_waste_plastic: notification.push_waste_plastic,
     push_waste_pollutants: notification.push_waste_pollutants,
     push_events: notification.push_events,
   };

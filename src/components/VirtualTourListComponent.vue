@@ -29,7 +29,10 @@ const openStationDetail = (id: number) => {
               class="virtual-tour-station"
               @click="openStationDetail(station.id)"
             >
-              <div class="virtual-tour-station__id-container">
+              <div
+                class="virtual-tour-station__id-container"
+                :class="[`station-category__${station.category}`]"
+              >
                 {{ station.id }}
               </div>
               <div class="container">
@@ -70,10 +73,7 @@ const openStationDetail = (id: number) => {
     left: calc(var(--bs-gutter-x) * 0.5);
     width: 35px;
     height: 35px;
-    border: 1px solid var(--ion-color-secondary);
     border-radius: 20px;
-    background: var(--ion-color-primary);
-    color: #fff;
     text-align: center;
     font-size: 18px;
     font-weight: bolder;

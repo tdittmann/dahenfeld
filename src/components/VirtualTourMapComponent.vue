@@ -70,7 +70,7 @@ const openStationDetail = (id: number) => {
       <Map.OlOverlay :position="[station.positionX, station.positionY]">
         <div
           class="overlay-content"
-          :class="[`overlay-content__${station.category}`]"
+          :class="[`station-category__${station.category}`]"
           @click="openDialog(station)"
         >
           {{ station.id }}
@@ -85,13 +85,28 @@ const openStationDetail = (id: number) => {
         <h2>{{ selectedStation.title }}</h2>
         <h3>{{ selectedStation.subTitle }}</h3>
 
+        <p
+          v-html="
+            selectedStation.description.split(' ').slice(0, 35).join(' ') +
+            '...'
+          "
+        ></p>
+
         <div class="speech-bubble__read-more">
           <ion-button @click="openStationDetail(selectedStation.id)">
-            Mehr erfahren
+            Weiterlesen
           </ion-button>
         </div>
       </div>
 
+      <div class="speech-bubble__station-id">
+        <div
+          class="overlay-content"
+          :class="[`station-category__${selectedStation.category}`]"
+        >
+          {{ selectedStation.id }}
+        </div>
+      </div>
       <div class="speech-bubble__close">
         <IonIcon :icon="closeOutline" @click="closeDialog"></IonIcon>
       </div>
@@ -113,24 +128,13 @@ const openStationDetail = (id: number) => {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-
-  &__historic {
-    background: #874618;
-    color: #fff;
-    border: 1px solid #6a340d;
-  }
-
-  &__virtual {
-    background: #871885;
-    color: #fff;
-    border: 1px solid #6a0d69;
-  }
 }
 
 .speech-bubble {
   position: absolute;
   bottom: 210px;
   left: 50px;
+  right: 50px;
   max-width: 750px;
   background: white;
   border-radius: 20px;
@@ -163,7 +167,7 @@ const openStationDetail = (id: number) => {
   &__arrow {
     position: absolute;
     bottom: -19px;
-    left: 50px;
+    left: 42px;
     width: 0;
     height: 0;
     border-left: 20px solid transparent;
@@ -171,6 +175,12 @@ const openStationDetail = (id: number) => {
     border-top: 20px solid white;
     z-index: 1;
     filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
+  }
+
+  &__station-id {
+    position: absolute;
+    top: 16px;
+    left: 16px;
   }
 
   &__close {
@@ -184,15 +194,15 @@ const openStationDetail = (id: number) => {
 
 .remichele {
   position: fixed;
-  bottom: 60px;
-  left: 20px;
+  bottom: 50px;
+  left: 50px;
   z-index: 3;
 }
 
 .remichele img {
   background: #fff;
-  width: 200px;
-  height: auto;
+  width: auto;
+  height: 125px;
   border-radius: 50%;
   border: 2px solid #ccc;
 }

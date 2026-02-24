@@ -50,12 +50,34 @@
 #vjt-tooltip {
   background-color: var(--ion-color-secondary);
 }
+
 #vjt-arrow::before {
   background-color: var(--ion-color-secondary);
 }
+
 .vjt-actions button {
   background-color: var(--ion-color-primary);
 }
+
 .vjt-actions button:hover {
   background-color: var(--ion-color-primary);
+}
+
+/* Tour-Styles of Virtual Tour */
+.station-category__tour-1 {
+  background: #f4e405;
+  color: #000;
+  border: 1px solid #aea202;
+}
+
+.station-category__tour-2 {
+  background: #c50404;
+  color: #fff;
+  border: 1px solid #9a0303;
+}
+
+.station-category__other {
+  background: #5a5a5a;
+  color: #fff;
+  border: 1px solid #3e3e3e;
 }

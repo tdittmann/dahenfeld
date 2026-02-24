@@ -85,7 +85,12 @@ const openStationDetail = (id: number) => {
         <h2>{{ selectedStation.title }}</h2>
         <h3>{{ selectedStation.subTitle }}</h3>
 
-        <p v-html="selectedStation.description.split(' ').slice(0, 35).join(' ') + '...'"></p>
+        <p
+          v-html="
+            selectedStation.description.split(' ').slice(0, 35).join(' ') +
+            '...'
+          "
+        ></p>
 
         <div class="speech-bubble__read-more">
           <ion-button @click="openStationDetail(selectedStation.id)">

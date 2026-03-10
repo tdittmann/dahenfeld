@@ -45,7 +45,7 @@ const openStationDetail = (id: number) => {
                     v-if="station.images[0]?.copyright"
                     class="virtual-tour-station__info__image-copyright"
                   >
-                    Bild: {{ station.images[0].copyright }}
+                    Foto: {{ station.images[0].copyright }}
                   </div>
                 </div>
               </div>

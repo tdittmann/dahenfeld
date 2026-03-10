@@ -92,7 +92,7 @@ onMounted(() => {
                 v-if="virtualTourStation.images[0]?.copyright"
                 class="virtual-tour-station__info__image-copyright"
               >
-                Bild: {{ virtualTourStation.images[0].copyright }}
+                Foto: {{ virtualTourStation.images[0].copyright }}
               </div>
             </div>
           </div>

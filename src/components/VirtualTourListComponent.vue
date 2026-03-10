@@ -114,7 +114,7 @@ const openStationDetail = (id: number) => {
 
     &__image-copyright {
       font-size: 0.7rem;
-      min-width: 180px;
+      min-width: 100px;
       text-align: right;
     }
   }

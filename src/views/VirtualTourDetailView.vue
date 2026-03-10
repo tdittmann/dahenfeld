@@ -79,7 +79,7 @@ onMounted(() => {
 
       <template v-if="virtualTourStation">
         <HeaderBannerComponent
-          :backgroundImageUrl="virtualTourStation.image"
+          :backgroundImageUrl="virtualTourStation.images[0]?.image ?? ''"
           style="display: flex; align-items: end"
         >
           <div class="container">
@@ -87,6 +87,12 @@ onMounted(() => {
               <div class="virtual-tour-station__info__name">
                 <h1>{{ virtualTourStation.title }}</h1>
                 <h2>{{ virtualTourStation.subTitle }}</h2>
+              </div>
+              <div
+                v-if="virtualTourStation.images[0]?.copyright"
+                class="virtual-tour-station__info__image-copyright"
+              >
+                Bild: {{ virtualTourStation.images[0].copyright }}
               </div>
             </div>
           </div>
@@ -155,7 +161,8 @@ onMounted(() => {
 .virtual-tour-station {
   &__info {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: space-between;
     color: #fff;
     font-weight: bold;
     font-size: 1.25rem;
@@ -175,6 +182,12 @@ onMounted(() => {
         font-weight: normal;
         font-size: 1rem;
       }
+    }
+
+    &__image-copyright {
+      font-size: 0.7rem;
+      min-width: 180px;
+      text-align: right;
     }
   }
 

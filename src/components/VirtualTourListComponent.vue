@@ -25,7 +25,7 @@ const openStationDetail = (id: number) => {
         >
           <ion-col size="12">
             <HeaderBannerComponent
-              :backgroundImageUrl="station.image"
+              :backgroundImageUrl="station.images[0]?.image ?? ''"
               class="virtual-tour-station"
               @click="openStationDetail(station.id)"
             >
@@ -40,6 +40,12 @@ const openStationDetail = (id: number) => {
                   <div class="virtual-tour-station__info__name">
                     <h1>{{ station.title }}</h1>
                     <h2>{{ station.subTitle }}</h2>
+                  </div>
+                  <div
+                    v-if="station.images[0]?.copyright"
+                    class="virtual-tour-station__info__image-copyright"
+                  >
+                    Bild: {{ station.images[0].copyright }}
                   </div>
                 </div>
               </div>
@@ -66,6 +72,7 @@ const openStationDetail = (id: number) => {
 .virtual-tour-station {
   display: flex;
   align-items: end;
+  cursor: pointer;
 
   &__id-container {
     position: absolute;
@@ -82,7 +89,8 @@ const openStationDetail = (id: number) => {
 
   &__info {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: space-between;
     color: #fff;
     font-weight: bold;
     font-size: 1.25rem;
@@ -102,6 +110,12 @@ const openStationDetail = (id: number) => {
         font-weight: normal;
         font-size: 1rem;
       }
+    }
+
+    &__image-copyright {
+      font-size: 0.7rem;
+      min-width: 180px;
+      text-align: right;
     }
   }
 }

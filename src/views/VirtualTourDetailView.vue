@@ -6,11 +6,11 @@ import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import {
   IonContent,
   IonIcon,
-  IonPage,
   IonItem,
   IonLabel,
   IonList,
   IonListHeader,
+  IonPage,
   type ScrollDetail,
   useIonRouter,
 } from "@ionic/vue";
@@ -79,7 +79,7 @@ onMounted(() => {
 
       <template v-if="virtualTourStation">
         <HeaderBannerComponent
-          :backgroundImageUrl="virtualTourStation.image"
+          :backgroundImageUrl="virtualTourStation.images[0]?.image ?? ''"
           style="display: flex; align-items: end"
         >
           <div class="container">
@@ -88,22 +88,32 @@ onMounted(() => {
                 <h1>{{ virtualTourStation.title }}</h1>
                 <h2>{{ virtualTourStation.subTitle }}</h2>
               </div>
+              <div
+                v-if="virtualTourStation.images[0]?.copyright"
+                class="virtual-tour-station__info__image-copyright"
+              >
+                Foto: {{ virtualTourStation.images[0].copyright }}
+              </div>
             </div>
           </div>
         </HeaderBannerComponent>
 
-        <div class="container text-container">
-          <div
-            class="virtual-tour-station__description"
-            v-html="virtualTourStation.description"
-          />
-          <div
-            v-if="virtualTourStation.author"
-            class="virtual-tour-station__author"
-          >
-            {{ virtualTourStation.author }}
+        <div class="historic-background">
+          <div class="container">
+            <div
+              class="virtual-tour-station__description"
+              v-html="virtualTourStation.description"
+            />
+            <div
+              v-if="virtualTourStation.author"
+              class="virtual-tour-station__author"
+            >
+              {{ virtualTourStation.author }}
+            </div>
           </div>
+        </div>
 
+        <div class="container text-container">
           <audio
             v-if="virtualTourStation.audio"
             class="virtual-tour-station__audio"
@@ -140,6 +150,11 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.historic-background {
+  background: url("/imgs/virtual-tour/Dorfbuch.png") no-repeat center;
+  background-size: cover;
+}
+
 .text-container {
   margin-bottom: 32px;
 }
@@ -155,12 +170,12 @@ onMounted(() => {
 .virtual-tour-station {
   &__info {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: space-between;
     color: #fff;
     font-weight: bold;
     font-size: 1.25rem;
     gap: 16px;
-    margin-left: 8px;
     margin-bottom: 8px;
 
     &__name {
@@ -176,14 +191,22 @@ onMounted(() => {
         font-size: 1rem;
       }
     }
+
+    &__image-copyright {
+      font-size: 0.7rem;
+      min-width: 100px;
+      text-align: right;
+    }
   }
 
   &__description {
-    margin-top: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   &__author {
     font-size: 0.8em;
+    padding-bottom: 12px;
     text-align: right;
   }
 

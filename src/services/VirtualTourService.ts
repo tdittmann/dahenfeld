@@ -10,9 +10,14 @@ export interface VirtualTourStationJson {
   subTitle: string;
   category: string;
   description: string;
-  image: string;
+  images: VirtualTourStationImageJson[];
   audio: string | undefined;
   author: string;
+}
+
+export interface VirtualTourStationImageJson {
+  image: string;
+  copyright: string;
 }
 
 export interface VirtualTourStation {
@@ -25,9 +30,14 @@ export interface VirtualTourStation {
   subTitle: string;
   category: string;
   description: string;
-  image: string;
+  images: VirtualTourStationImage[];
   audio: string | undefined;
   author: string;
+}
+
+export interface VirtualTourStationImage {
+  image: string;
+  copyright: string;
 }
 
 const toVirtualTourStation = (
@@ -43,10 +53,21 @@ const toVirtualTourStation = (
     subTitle: json.subTitle,
     category: json.category,
     description: json.description,
-    image: json.image,
+    images: toVirtualTourStationImages(json.images),
     audio: json.audio,
     author: json.author,
   };
+};
+
+const toVirtualTourStationImages = (
+  json: VirtualTourStationImageJson[],
+): VirtualTourStationImage[] => {
+  return json.map((value) => {
+    return {
+      image: value.image,
+      copyright: value.copyright,
+    };
+  });
 };
 
 const loadStations = (): Promise<VirtualTourStation[]> => {

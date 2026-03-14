@@ -6,11 +6,11 @@ import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import {
   IonContent,
   IonIcon,
-  IonPage,
   IonItem,
   IonLabel,
   IonList,
   IonListHeader,
+  IonPage,
   type ScrollDetail,
   useIonRouter,
 } from "@ionic/vue";
@@ -98,18 +98,22 @@ onMounted(() => {
           </div>
         </HeaderBannerComponent>
 
-        <div class="container text-container">
-          <div
-            class="virtual-tour-station__description"
-            v-html="virtualTourStation.description"
-          />
-          <div
-            v-if="virtualTourStation.author"
-            class="virtual-tour-station__author"
-          >
-            {{ virtualTourStation.author }}
+        <div class="historic-background">
+          <div class="container">
+            <div
+              class="virtual-tour-station__description"
+              v-html="virtualTourStation.description"
+            />
+            <div
+              v-if="virtualTourStation.author"
+              class="virtual-tour-station__author"
+            >
+              {{ virtualTourStation.author }}
+            </div>
           </div>
+        </div>
 
+        <div class="container text-container">
           <audio
             v-if="virtualTourStation.audio"
             class="virtual-tour-station__audio"
@@ -146,6 +150,11 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.historic-background {
+  background: url("/imgs/virtual-tour/Dorfbuch.png") no-repeat center;
+  background-size: cover;
+}
+
 .text-container {
   margin-bottom: 32px;
 }
@@ -167,7 +176,6 @@ onMounted(() => {
     font-weight: bold;
     font-size: 1.25rem;
     gap: 16px;
-    margin-left: 8px;
     margin-bottom: 8px;
 
     &__name {
@@ -192,11 +200,13 @@ onMounted(() => {
   }
 
   &__description {
-    margin-top: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   &__author {
     font-size: 0.8em;
+    padding-bottom: 12px;
     text-align: right;
   }
 

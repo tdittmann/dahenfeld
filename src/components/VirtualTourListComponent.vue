@@ -95,7 +95,6 @@ const openStationDetail = (id: number) => {
     font-weight: bold;
     font-size: 1.25rem;
     gap: 16px;
-    margin-left: 8px;
     margin-bottom: 8px;
 
     &__name {

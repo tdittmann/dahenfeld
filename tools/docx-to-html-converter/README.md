@@ -12,5 +12,8 @@ Check that `phyton` and `pip` is installed.
 Use the following command to execute the script:
 
 ```
+python3 -m venv venv 
+source venv/bin/activate
+pip install python-docx
 python converter.py "PATH_TO_FILE"
 ```

@@ -1,9 +1,9 @@
 @import "./base.css";
 @import "@globalhive/vuejs-tour/dist/style.css";
 
-@import 'swiper/css';
-@import 'swiper/css/pagination';
-@import 'swiper/css/navigation';
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/navigation";
 
 .item-divider-padding {
   padding-top: 8px;

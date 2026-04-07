@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import { useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import {
   IonContent,
@@ -19,8 +19,13 @@ import {
   type VirtualTourStation,
 } from "@/services/VirtualTourService.ts";
 import LoadingComponent from "@/components/LoadingComponent.vue";
-import HeaderBannerComponent from "@/components/HeaderBannerComponent.vue";
 import { navigateCircleOutline } from "ionicons/icons";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation, Pagination } from "swiper/modules";
+import lightGallery from "lightgallery";
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import lgZoom from "lightgallery/plugins/zoom";
 
 const route = useRoute();
 const router = useIonRouter();
@@ -57,6 +62,44 @@ const openGoogleMapsLink = (latitude: number, longitude: number) => {
   );
 };
 
+let gallery: any;
+let galleryItems: any[] = [];
+
+watch(virtualTourStation, async (val) => {
+  if (val?.images?.length) {
+    await nextTick();
+
+    // Build the gallery items
+    galleryItems = val.images.map((img) => ({
+      src: img.image,
+      thumb: img.image,
+      subHtml: img.copyright ? `Foto: ${img.copyright}` : "",
+    }));
+
+    // Destroy previous gallery if exists
+    if (gallery) {
+      gallery.destroy();
+    }
+
+    // Initialize gallery with all items
+    gallery = lightGallery(document.createElement("div"), {
+      dynamic: true,
+      dynamicEl: galleryItems,
+      controls: true,
+      counter: false,
+      loop: false,
+      download: false,
+      plugins: [lgZoom],
+      speed: 300,
+    });
+  }
+});
+
+// Open at clicked index
+const openGalleryAtIndex = (index: number) => {
+  gallery.openGallery(index); // now arrows will appear
+};
+
 onMounted(() => {
   const parsedId = parseInt(<string>route.params.id, 10);
   if (!parsedId) {
@@ -78,28 +121,39 @@ onMounted(() => {
       <LoadingComponent :loading="loading" />
 
       <template v-if="virtualTourStation">
-        <HeaderBannerComponent
-          :backgroundImageUrl="virtualTourStation.images[0]?.image ?? ''"
-          style="display: flex; align-items: end"
-        >
-          <div class="container">
-            <div class="virtual-tour-station__info">
-              <div class="virtual-tour-station__info__name">
-                <h1>{{ virtualTourStation.title }}</h1>
-                <h2>{{ virtualTourStation.subTitle }}</h2>
-              </div>
-              <div
-                v-if="virtualTourStation.images[0]?.copyright"
-                class="virtual-tour-station__info__image-copyright"
-              >
-                Foto: {{ virtualTourStation.images[0].copyright }}
-              </div>
-            </div>
-          </div>
-        </HeaderBannerComponent>
+        <div id="lightgallery">
+          <swiper
+            :modules="[Pagination, Navigation]"
+            :pagination="{ clickable: true }"
+            :navigation="true"
+            :slides-per-view="1"
+          >
+            <swiper-slide
+              v-for="(image, index) in virtualTourStation.images"
+              :key="image.image"
+            >
+              <a @click.prevent="openGalleryAtIndex(index)">
+                <div
+                  class="swiper-container"
+                  :style="{ backgroundImage: `url(${image.image})` }"
+                >
+                  <div class="container slide-container">
+                    <div v-if="image?.copyright" class="image-copyright">
+                      Foto: {{ image.copyright }}
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </swiper-slide>
+          </swiper>
+        </div>
 
         <div class="historic-background">
           <div class="container">
+            <div class="virtual-tour-station__info__name">
+              <h1>{{ virtualTourStation.title }}</h1>
+              <h2>{{ virtualTourStation.subTitle }}</h2>
+            </div>
             <div
               class="virtual-tour-station__description"
               v-html="virtualTourStation.description"
@@ -150,6 +204,17 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.swiper {
+  height: 250px;
+  cursor: pointer;
+}
+
+.swiper-container {
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+}
+
 .historic-background {
   background: url("/imgs/virtual-tour/Dorfbuch.png") no-repeat center;
   background-size: cover;
@@ -165,6 +230,22 @@ onMounted(() => {
 
 .container {
   z-index: 2;
+}
+
+.slide-container {
+  position: relative;
+  height: 100%;
+}
+
+.image-copyright {
+  font-size: 0.7rem;
+  min-width: 100px;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  color: #fff;
+  width: 50%;
+  text-align: right;
 }
 
 .virtual-tour-station {
@@ -183,6 +264,7 @@ onMounted(() => {
         font-size: 1.25rem;
         font-weight: bold;
         margin: 0;
+        padding-top: 1rem;
       }
 
       h2 {
@@ -190,12 +272,6 @@ onMounted(() => {
         font-weight: normal;
         font-size: 1rem;
       }
-    }
-
-    &__image-copyright {
-      font-size: 0.7rem;
-      min-width: 100px;
-      text-align: right;
     }
   }
 

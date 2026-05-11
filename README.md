@@ -11,7 +11,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=tdittmann_dahenfeld&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=tdittmann_dahenfeld)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=tdittmann_dahenfeld&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=tdittmann_dahenfeld)
 
-Web application for Dahenfeld
+Web application for Dahenfeld.
 
 ## Project Setup
 

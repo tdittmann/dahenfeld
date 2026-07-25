@@ -81,9 +81,18 @@ const handlePushNotification = async () => {
   }
 };
 
+// Needed that the App is opened automatically when installed
+const handleAppUrlLink = () => {
+  App.addListener("appUrlOpen", (event) => {
+    const url = new URL(event.url);
+    router.push(url.pathname + url.search + url.hash);
+  });
+};
+
 onMounted(() => {
   NavigationService.loadNavigation();
   handlePushNotification();
+  handleAppUrlLink();
 });
 </script>
 

@@ -88,7 +88,7 @@ onMounted(() => {
                   @click="openAssociationDetail(association.id)"
                 >
                   <ion-card-header class="card__header">
-                    <ion-avatar v-if="association.logo">
+                    <ion-avatar v-if="association.logo" class="card__header__logo">
                       <img :alt="association.name" :src="association.logo" />
                     </ion-avatar>
 
@@ -166,8 +166,8 @@ onMounted(() => {
     flex-direction: row;
     align-items: center;
 
-    &__title {
-      margin-left: 16px;
+    &__logo {
+      margin-right: 16px;
     }
   }
 

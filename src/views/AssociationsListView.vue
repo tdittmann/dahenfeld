@@ -88,7 +88,10 @@ onMounted(() => {
                   @click="openAssociationDetail(association.id)"
                 >
                   <ion-card-header class="card__header">
-                    <ion-avatar v-if="association.logo" class="card__header__logo">
+                    <ion-avatar
+                      v-if="association.logo"
+                      class="card__header__logo"
+                    >
                       <img :alt="association.name" :src="association.logo" />
                     </ion-avatar>
 

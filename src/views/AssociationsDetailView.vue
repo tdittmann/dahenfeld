@@ -104,7 +104,15 @@ onMounted(() => {
             v-html="association.description"
           />
 
-          <div class="association-links">
+          <div
+            class="association-links"
+            v-if="
+              association.homepage ||
+              association.whatsapp ||
+              association.instagram ||
+              association.facebook
+            "
+          >
             <ion-list mode="ios">
               <ion-list-header>
                 <ion-label>Links</ion-label>

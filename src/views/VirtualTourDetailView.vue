@@ -138,6 +138,15 @@ onMounted(() => {
                   :style="{ backgroundImage: `url(${image.image})` }"
                 >
                   <div class="container slide-container">
+                    <div
+                      class="image-category-id"
+                      :class="[
+                        `station-category__${virtualTourStation.category}`,
+                      ]"
+                    >
+                      {{ virtualTourStation.id }}
+                    </div>
+
                     <div v-if="image?.copyright" class="image-copyright">
                       Foto: {{ image.copyright }}
                     </div>
@@ -235,6 +244,19 @@ onMounted(() => {
 .slide-container {
   position: relative;
   height: 100%;
+}
+
+.image-category-id {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 35px;
+  height: 35px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bolder;
+  padding-top: 2px;
 }
 
 .image-copyright {

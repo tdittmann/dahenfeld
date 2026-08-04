@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {
+  IonAccordion,
+  IonAccordionGroup,
   IonContent,
   IonItem,
-  IonItemDivider,
-  IonItemGroup,
-  IonPage,
   IonLabel,
   IonList,
+  IonPage,
 } from "@ionic/vue";
 import { onMounted, ref } from "vue";
 import {
@@ -20,6 +20,7 @@ import { useNavigationStore } from "@/stores/navigation.ts";
 const navigationStore = useNavigationStore();
 
 const loading = ref<boolean>(true);
+const selectedAccordion = ref<string>();
 const gelweBlaettleMap = ref<Map<number, GelweBlaettle[]>>(new Map());
 const loadGelweBlaettle = () => {
   loading.value = true;
@@ -34,6 +35,10 @@ const loadGelweBlaettle = () => {
         } else {
           gelweBlaettleMap.value.set(key, [blaettle]);
         }
+      }
+      const firstKey = gelweBlaettleMap.value.keys().next().value;
+      if (firstKey !== undefined) {
+        selectedAccordion.value = firstKey.toString(10);
       }
     })
     .finally(() => {
@@ -65,23 +70,32 @@ onMounted(() => {
           {{ navigationStore.currentItem?.description }}
         </p>
 
-        <template v-for="[key, values] of gelweBlaettleMap" :key="key">
-          <IonItemGroup mode="ios" style="margin-top: 32px">
-            <IonItemDivider class="item-divider-padding">
+        <IonAccordionGroup :value="selectedAccordion">
+          <IonAccordion
+            v-for="[key, values] of gelweBlaettleMap"
+            :key="key"
+            :value="key.toString(10)"
+          >
+            <IonItem slot="header" color="light">
               <IonLabel>{{ key }}</IonLabel>
-            </IonItemDivider>
-
-            <IonList>
-              <template v-for="blaettle of values" :key="blaettle.name">
-                <IonItem :button="true" @click="openBlaettle(blaettle.link)">
-                  <IonLabel>
-                    <strong>{{ blaettle.name }}</strong>
-                  </IonLabel>
-                </IonItem>
-              </template>
-            </IonList>
-          </IonItemGroup>
-        </template>
+            </IonItem>
+            <div slot="content">
+              <IonList>
+                <template v-for="blaettle of values" :key="blaettle.name">
+                  <IonItem
+                    :button="true"
+                    :detail="true"
+                    @click="openBlaettle(blaettle.link)"
+                  >
+                    <IonLabel>
+                      <strong>{{ blaettle.name }}</strong>
+                    </IonLabel>
+                  </IonItem>
+                </template>
+              </IonList>
+            </div>
+          </IonAccordion>
+        </IonAccordionGroup>
       </div>
     </IonContent>
   </IonPage>

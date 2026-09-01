@@ -16,6 +16,6 @@
     </style>
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">#003220</item>
+        <item name="windowSplashScreenBackground">#111c45</item>
     </style>
 </resources>

@@ -69,15 +69,15 @@
 
 /* Tour-Styles of Virtual Tour */
 .station-category__tour-1 {
-  background: #f4e405;
-  color: #000;
-  border: 1px solid #aea202;
+  background: var(--ion-color-tertiary);
+  color: #fff;
+  border: 1px solid var(--ion-color-tertiary-shade);
 }
 
 .station-category__tour-2 {
-  background: #c50404;
+  background: var(--ion-color-secondary);
   color: #fff;
-  border: 1px solid #9a0303;
+  border: 1px solid var(--ion-color-secondary-shade);
 }
 
 .station-category__other {

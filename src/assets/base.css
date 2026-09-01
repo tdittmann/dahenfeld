@@ -1,25 +1,25 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  --ion-color-primary: #003220;
-  --ion-color-primary-rgb: 0, 50, 32;
+  --ion-color-primary: #111c45;
+  --ion-color-primary-rgb: 17, 28, 69;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #002c1c;
-  --ion-color-primary-tint: #1a4736;
+  --ion-color-primary-shade: #0f193d;
+  --ion-color-primary-tint: #293358;
 
-  --ion-color-secondary: #01744a;
-  --ion-color-secondary-rgb: 1, 116, 74;
+  --ion-color-secondary: #2b4c7e;
+  --ion-color-secondary-rgb: 43, 76, 126;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #016641;
-  --ion-color-secondary-tint: #1a825c;
+  --ion-color-secondary-shade: #26436f;
+  --ion-color-secondary-tint: #405e8b;
 
-  --ion-color-tertiary: #21ba82;
-  --ion-color-tertiary-rgb: 33, 186, 130;
-  --ion-color-tertiary-contrast: #000000;
-  --ion-color-tertiary-contrast-rgb: 0, 0, 0;
-  --ion-color-tertiary-shade: #1da472;
-  --ion-color-tertiary-tint: #37c18f;
+  --ion-color-tertiary: #4880c8;
+  --ion-color-tertiary-rgb: 72, 128, 200;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #3f71b0;
+  --ion-color-tertiary-tint: #5a8dce;
 
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;

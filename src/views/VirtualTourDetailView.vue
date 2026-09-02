@@ -144,7 +144,7 @@ const navigateTo = (id: number | undefined) => {
       audioElement.pause();
     }
     isPlaying.value = false;
-    router.push(`/virtual-tour/${id}`);
+    router.navigate(`/virtual-tour/${id}`, "forward", "replace");
   }
 };
 

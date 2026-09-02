@@ -34,7 +34,7 @@
 
                 <data
                   android:scheme="https"
-                  android:host="dahenfeld.timo-dittmann.de" />
+                  android:host="app.dahenfeld.de" />
             </intent-filter>
 
         </activity>

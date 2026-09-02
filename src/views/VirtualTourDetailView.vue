@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import { useRoute } from "vue-router";
-import { nextTick, onMounted, ref, watch } from "vue";
+import { nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import {
   IonContent,
@@ -19,7 +19,15 @@ import {
   type VirtualTourStation,
 } from "@/services/VirtualTourService.ts";
 import LoadingComponent from "@/components/LoadingComponent.vue";
-import { navigateCircleOutline } from "ionicons/icons";
+import {
+  chevronBackOutline,
+  chevronForwardOutline,
+  locationOutline,
+  navigateCircleOutline,
+  pauseCircleOutline,
+  playCircleOutline,
+  volumeHighOutline,
+} from "ionicons/icons";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Pagination } from "swiper/modules";
 import lightGallery from "lightgallery";
@@ -32,9 +40,14 @@ const router = useIonRouter();
 
 const loading = ref<boolean>(true);
 const virtualTourStation = ref<VirtualTourStation | undefined>(undefined);
+const maxIdOfVirtualStation = ref<number>(0);
 const loadVirtualTourStation = (id: number) => {
   loading.value = true;
   virtualTourStation.value = undefined;
+
+  VirtualTourService.loadStations().then((value) => {
+    maxIdOfVirtualStation.value = value.length;
+  });
 
   VirtualTourService.loadStationById(id)
     .then((data: VirtualTourStation | undefined) => {
@@ -100,12 +113,53 @@ const openGalleryAtIndex = (index: number) => {
   gallery.openGallery(index); // now arrows will appear
 };
 
+// ==========================================
+// AUDIO LOGIK
+// ==========================================
+const isPlaying = ref(false);
+let audioElement: HTMLAudioElement | null = null;
+
+const toggleAudio = () => {
+  if (virtualTourStation.value?.audio) {
+    if (!audioElement) {
+      audioElement = new Audio(virtualTourStation.value.audio);
+      audioElement.onended = () => {
+        isPlaying.value = false;
+      };
+    }
+    if (isPlaying.value) {
+      audioElement.pause();
+      isPlaying.value = false;
+    } else {
+      audioElement.play();
+      isPlaying.value = true;
+    }
+    return;
+  }
+};
+
+const navigateTo = (id: number | undefined) => {
+  if (id) {
+    if (audioElement) {
+      audioElement.pause();
+    }
+    isPlaying.value = false;
+    router.navigate(`/virtual-tour/${id}`, "forward", "replace");
+  }
+};
+
 onMounted(() => {
   const parsedId = parseInt(<string>route.params.id, 10);
   if (!parsedId) {
     router.push("/virtual-tour");
   }
   loadVirtualTourStation(parsedId);
+});
+
+onUnmounted(() => {
+  if (audioElement) {
+    audioElement.pause();
+  }
 });
 </script>
 
@@ -138,15 +192,6 @@ onMounted(() => {
                   :style="{ backgroundImage: `url(${image.image})` }"
                 >
                   <div class="container slide-container">
-                    <div
-                      class="image-category-id"
-                      :class="[
-                        `station-category__${virtualTourStation.category}`,
-                      ]"
-                    >
-                      {{ virtualTourStation.id }}
-                    </div>
-
                     <div v-if="image?.copyright" class="image-copyright">
                       Foto: {{ image.copyright }}
                     </div>
@@ -157,12 +202,52 @@ onMounted(() => {
           </swiper>
         </div>
 
+        <div class="container">
+          <div class="header-section">
+            <div
+              class="category-id"
+              :class="[`station-category__${virtualTourStation.category}`]"
+            >
+              {{ virtualTourStation.id }}
+            </div>
+
+            <h1>{{ virtualTourStation.title }}</h1>
+            <p class="address-text">
+              <ion-icon :icon="locationOutline"></ion-icon>
+              {{ virtualTourStation.subTitle }}
+            </p>
+          </div>
+
+          <ion-card class="audio-card" v-if="virtualTourStation.audio">
+            <ion-card-content class="audio-container">
+              <div class="audio-info">
+                <ion-icon
+                  :icon="volumeHighOutline"
+                  class="audio-icon"
+                ></ion-icon>
+                <div>
+                  <strong>Audio-Guide</strong>
+                  <p class="audio-subtitle">
+                    {{
+                      isPlaying
+                        ? "Spielt ab..."
+                        : "Beschreibung vorlesen lassen"
+                    }}
+                  </p>
+                </div>
+              </div>
+              <ion-button fill="clear" size="large" @click="toggleAudio">
+                <ion-icon
+                  :icon="isPlaying ? pauseCircleOutline : playCircleOutline"
+                  color="primary"
+                ></ion-icon>
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </div>
+
         <div class="historic-background">
           <div class="container">
-            <div class="virtual-tour-station__info__name">
-              <h1>{{ virtualTourStation.title }}</h1>
-              <h2>{{ virtualTourStation.subTitle }}</h2>
-            </div>
             <div
               class="virtual-tour-station__description"
               v-html="virtualTourStation.description"
@@ -177,13 +262,6 @@ onMounted(() => {
         </div>
 
         <div class="container text-container">
-          <audio
-            v-if="virtualTourStation.audio"
-            class="virtual-tour-station__audio"
-            :src="virtualTourStation.audio"
-            controls
-          ></audio>
-
           <div class="virtual-tour-station__links">
             <ion-list mode="ios">
               <ion-list-header>
@@ -209,12 +287,48 @@ onMounted(() => {
         </div>
       </template>
     </IonContent>
+
+    <ion-footer v-if="virtualTourStation">
+      <ion-toolbar class="station-navigation">
+        <ion-buttons slot="start" v-if="!loading && virtualTourStation.id > 1">
+          <ion-button
+            @click="navigateTo(Number(virtualTourStation.id) - 1)"
+            class="text"
+          >
+            <ion-icon
+              class="text"
+              slot="start"
+              :icon="chevronBackOutline"
+            ></ion-icon>
+            Vorherige Station
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons
+          slot="end"
+          v-if="
+            !loading && Number(virtualTourStation.id) !== maxIdOfVirtualStation
+          "
+        >
+          <ion-button
+            class="text"
+            @click="navigateTo(Number(virtualTourStation.id) + 1)"
+          >
+            Nächste Station
+            <ion-icon
+              class="text"
+              slot="end"
+              :icon="chevronForwardOutline"
+            ></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
   </IonPage>
 </template>
 
 <style scoped lang="scss">
 .swiper {
-  height: 250px;
+  height: 325px;
   cursor: pointer;
 }
 
@@ -227,6 +341,7 @@ onMounted(() => {
 .historic-background {
   background: url("/imgs/virtual-tour/Dorfbuch.png") no-repeat center;
   background-size: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .text-container {
@@ -246,57 +361,55 @@ onMounted(() => {
   height: 100%;
 }
 
-.image-category-id {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  width: 35px;
-  height: 35px;
-  border-radius: 20px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bolder;
-  padding-top: 2px;
-}
-
 .image-copyright {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
   min-width: 100px;
   position: absolute;
-  bottom: 8px;
-  right: 8px;
+  bottom: 0;
+  right: 0;
   color: #fff;
-  width: 50%;
-  text-align: right;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 3px 8px;
+  border-radius: 4px;
+  max-width: 35%;
+}
+
+.header-section {
+  margin: 16px 4px;
+  position: relative;
+
+  h1 {
+    font-weight: bold;
+    width: 95%;
+  }
+
+  .address-text {
+    color: var(--ion-color-medium);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .category-id {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bolder;
+    padding-top: 2px;
+  }
 }
 
 .virtual-tour-station {
-  &__info {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.25rem;
-    gap: 16px;
-    margin-bottom: 8px;
-
-    &__name {
-      h1 {
-        font-size: 1.25rem;
-        font-weight: bold;
-        margin: 0;
-        padding-top: 1rem;
-      }
-
-      h2 {
-        margin: 0;
-        font-weight: normal;
-        font-size: 1rem;
-      }
-    }
-  }
-
   &__description {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -308,17 +421,50 @@ onMounted(() => {
     text-align: right;
   }
 
-  &__audio {
-    width: 100%;
-    margin-top: 24px;
-  }
-
   &__links {
     margin-top: 16px;
 
     &__item {
       --inner-padding-start: 8px;
     }
+  }
+}
+
+.audio-card {
+  margin: 16px 0;
+  border-left: 4px solid var(--ion-color-primary);
+}
+
+.audio-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+}
+
+.audio-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.audio-icon {
+  font-size: 1.8rem;
+  color: var(--ion-color-primary);
+}
+
+.audio-subtitle {
+  margin: 2px 0 0 0;
+  font-size: 0.85rem;
+  color: var(--ion-color-medium);
+}
+
+.station-navigation {
+  --background: var(--ion-color-primary);
+
+  .text {
+    color: #fff;
+    --color: #fff;
   }
 }
 </style>

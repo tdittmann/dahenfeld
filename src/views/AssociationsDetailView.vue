@@ -1,19 +1,12 @@
 <script setup lang="ts">
 import {
-  IonAvatar,
   IonContent,
   IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
   IonPage,
   type ScrollDetail,
   useIonRouter,
 } from "@ionic/vue";
 import { onMounted, ref } from "vue";
-import LoadingComponent from "@/components/LoadingComponent.vue";
-import HeaderComponent from "@/components/HeaderComponent.vue";
 import {
   type Association,
   AssociationsService,
@@ -25,8 +18,9 @@ import {
   logoWhatsapp,
 } from "ionicons/icons";
 import { useRoute } from "vue-router";
-import HeaderBannerComponent from "@/components/HeaderBannerComponent.vue";
 import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import LoadingComponent from "@/components/LoadingComponent.vue";
 
 const route = useRoute();
 const router = useIonRouter();
@@ -77,91 +71,73 @@ onMounted(() => {
       :transparentBackground="!opacityToolbar"
     />
 
-    <IonContent @ionScroll="handleScroll" :scrollEvents="true">
+    <ion-content @ionScroll="handleScroll" :scrollEvents="true">
       <LoadingComponent :loading="loading" />
-
       <template v-if="association">
-        <HeaderBannerComponent
-          :backgroundImageUrl="association.image"
-          style="display: flex; align-items: end"
-        >
-          <div class="container">
-            <div class="association-info">
-              <ion-avatar v-if="association.logo">
-                <img :alt="association.name" :src="association.logo" />
-              </ion-avatar>
-              <div class="association-info__name">
-                <h1>{{ association.name }}</h1>
-                <h2>{{ association.subTitle }}</h2>
-              </div>
-            </div>
+        <div class="club-hero">
+          <img
+            v-if="association.image"
+            class="club-background"
+            :src="association.image"
+            alt=""
+          />
+          <div
+            v-if="!association.image"
+            class="club-background club-background-color"
+          ></div>
+
+          <div class="club-logo" v-if="association.logo">
+            <img :src="association.logo" :alt="association.name" />
           </div>
-        </HeaderBannerComponent>
+        </div>
 
         <div class="container">
-          <div
-            class="association-description"
-            v-html="association.description"
-          />
+          <div class="club-header">
+            <h1>{{ association.name }}</h1>
 
-          <div
-            class="association-links"
-            v-if="
-              association.homepage ||
-              association.whatsapp ||
-              association.instagram ||
-              association.facebook
-            "
-          >
-            <ion-list mode="ios">
-              <ion-list-header>
-                <ion-label>Links</ion-label>
-              </ion-list-header>
+            <p class="slogan" v-if="association.subTitle">
+              {{ association.subTitle }}
+            </p>
 
-              <ion-item
-                class="association-links__item"
-                :button="true"
+            <div class="club-links">
+              <ion-button
+                fill="clear"
                 v-if="association.homepage"
                 @click="openLink(association.homepage)"
               >
-                <ion-icon :icon="linkOutline" slot="start"></ion-icon>
-                <ion-label>Homepage</ion-label>
-              </ion-item>
+                <ion-icon slot="icon-only" :icon="linkOutline" />
+              </ion-button>
 
-              <ion-item
-                class="association-links__item"
-                :button="true"
-                v-if="association.whatsapp"
-                @click="openLink(association.whatsapp)"
-              >
-                <ion-icon :icon="logoWhatsapp" slot="start"></ion-icon>
-                <ion-label>WhatsApp</ion-label>
-              </ion-item>
-
-              <ion-item
-                class="association-links__item"
-                :button="true"
+              <ion-button
+                fill="clear"
                 v-if="association.facebook"
                 @click="openLink(association.facebook)"
               >
-                <ion-icon :icon="logoFacebook" slot="start"></ion-icon>
-                <ion-label>Facebook</ion-label>
-              </ion-item>
+                <ion-icon slot="icon-only" :icon="logoFacebook" />
+              </ion-button>
 
-              <ion-item
-                class="association-links__item"
-                :button="true"
+              <ion-button
+                fill="clear"
                 v-if="association.instagram"
                 @click="openLink(association.instagram)"
               >
-                <ion-icon :icon="logoInstagram" slot="start"></ion-icon>
-                <ion-label>Instagram</ion-label>
-              </ion-item>
-            </ion-list>
+                <ion-icon slot="icon-only" :icon="logoInstagram" />
+              </ion-button>
+
+              <ion-button
+                fill="clear"
+                v-if="association.whatsapp"
+                @click="openLink(association.whatsapp)"
+              >
+                <ion-icon slot="icon-only" :icon="logoWhatsapp" />
+              </ion-button>
+            </div>
           </div>
+
+          <div class="club-description" v-html="association.description"></div>
         </div>
       </template>
-    </IonContent>
+    </ion-content>
   </IonPage>
 </template>
 
@@ -170,45 +146,77 @@ onMounted(() => {
   position: absolute;
 }
 
-.container {
-  z-index: 2;
+.club-hero {
+  position: relative;
+  height: 190px;
 }
 
-.association-info {
+.club-background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.club-background-color {
+  background: var(--ion-color-primary);
+}
+
+.club-logo {
+  position: absolute;
+  left: 50%;
+  bottom: -48px;
+  transform: translateX(-50%);
+
+  width: 96px;
+  height: 96px;
+
+  padding: 8px;
+  border-radius: 20px;
+
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+
   display: flex;
   align-items: center;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.25rem;
+  justify-content: center;
+}
+
+.club-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.club-header {
+  padding: 64px 20px 20px;
+  text-align: center;
+}
+
+.club-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.slogan {
+  margin: 8px 0 16px;
+  color: var(--ion-color-medium);
+  font-size: 16px;
+}
+
+.club-links {
+  display: flex;
+  justify-content: center;
   gap: 16px;
-  margin-left: 8px;
-  margin-bottom: 8px;
-
-  &__name {
-    h1 {
-      font-size: 1.25rem;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    h2 {
-      margin: 0;
-      font-weight: normal;
-      font-size: 1rem;
-    }
-  }
 }
 
-.association-description {
-  margin-top: 8px;
-  margin-bottom: 8px;
+.club-links ion-button {
+  --border-radius: 50%;
+  --padding-start: 10px;
+  --padding-end: 10px;
 }
 
-.association-links {
-  margin-bottom: 32px;
-
-  &__item {
-    --inner-padding-start: 8px;
-  }
+.club-description {
+  margin-bottom: 16px;
 }
 </style>

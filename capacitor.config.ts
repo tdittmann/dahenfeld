@@ -7,10 +7,10 @@ const config: CapacitorConfig = {
   plugins: {
     StatusBar: {
       style: "DARK",
-      backgroundColor: "#003220",
+      backgroundColor: "#111c45",
     },
     EdgeToEdge: {
-      backgroundColor: "#003220",
+      backgroundColor: "#111c45",
     },
   },
 };

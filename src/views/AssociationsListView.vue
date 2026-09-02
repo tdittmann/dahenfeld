@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import {
-  IonButton,
   IonCard,
   IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonCol,
   IonContent,
   IonGrid,

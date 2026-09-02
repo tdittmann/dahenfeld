@@ -56,7 +56,7 @@ const upcomingCollectionDates = computed<WasteCollectionDate[]>(() => {
 });
 
 const calculateDaysUntilDate = (collectionDate: Date) => {
-  var diff = Math.abs(new Date().getTime() - collectionDate.getTime());
+  const diff = Math.abs(new Date().getTime() - collectionDate.getTime());
   return Math.ceil(diff / (1000 * 3600 * 24));
 };
 

@@ -31,29 +31,6 @@ npm run dev
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI
-environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
@@ -84,3 +61,56 @@ VITE_FIREBASE_APP_ID=""
 VITE_FIREBASE_MEASUREMENT_ID=""
 VITE_FIREBASE_VAPID_KEY=""
 ```
+
+For Azure Action you need to pass this as a base64 encoded string to `ENVIRONMENT_VARIABLE`. Use
+e.g. `openssl base64 -in .env | tr -d '\n' | pbcopy` on MacOS in the root directory.
+
+## Release Guide
+
+Before releasing the apps to the stores you need to update the following files and increment to the correct version:
+
+* config.xml
+* package.json
+* imprint.page.ts
+
+After that you need to build the project and copy files:
+
+```
+ionic build --prod
+npx cap copy
+```
+
+### Android
+
+Open Android Studio with the following command
+
+```
+npx cap open android
+```
+
+Change version code & version name and generate a signed apk or bundle: Build -> Generate signed APK / Bundle. Select
+keystore, set password
+and alias and click "next". After that the apk or bundle should be created. Locate the file, upload it
+on https://play.google.com/apps/publish
+with a new release.
+
+#### Push-Notifications
+
+In order to use push notificiations you need an `google-services.json` in the directory `android/app/`. The file can be
+found in [Google Firebase](https://firebase.google.com/).
+
+### iOS
+
+Open the project in XCode with
+
+```
+npx cap open ios
+```
+
+change version. Select "Generic iOS Device" in dropdown at the top. Then use Product -> Archive to upload the file.
+After that you can continue the release
+process on https://itunesconnect.apple.com/.
+
+#### Push-Notifications
+
+You need to enable the push notifications in XCode. Add them as Capability, then you are ready to go.

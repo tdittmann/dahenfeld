@@ -41,7 +41,7 @@ const router = useIonRouter();
 const loading = ref<boolean>(true);
 const virtualTourStation = ref<VirtualTourStation | undefined>(undefined);
 const maxIdOfVirtualStation = ref<number>(0);
-const loadVirtualTourStation = (id: number) => {
+const loadVirtualTourStation = (identifier: string) => {
   loading.value = true;
   virtualTourStation.value = undefined;
 
@@ -49,7 +49,7 @@ const loadVirtualTourStation = (id: number) => {
     maxIdOfVirtualStation.value = value.length;
   });
 
-  VirtualTourService.loadStationById(id)
+  VirtualTourService.loadStationById(identifier)
     .then((data: VirtualTourStation | undefined) => {
       if (data) {
         virtualTourStation.value = data;
@@ -149,11 +149,10 @@ const navigateTo = (id: number | undefined) => {
 };
 
 onMounted(() => {
-  const parsedId = parseInt(<string>route.params.id, 10);
-  if (!parsedId) {
+  if (!route.params.id) {
     router.push("/virtual-tour");
   }
-  loadVirtualTourStation(parsedId);
+  loadVirtualTourStation(<string>route.params.id);
 });
 
 onUnmounted(() => {

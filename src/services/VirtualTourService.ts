@@ -79,7 +79,7 @@ const loadStations = (): Promise<VirtualTourStation[]> => {
 };
 
 const loadStationById = (
-  id: number,
+  id: string,
 ): Promise<VirtualTourStation | undefined> => {
   return BackendClient.fetchData<VirtualTourStationJson>(
     `/virtual-tour.php?id=${id}`,

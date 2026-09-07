@@ -2,7 +2,6 @@
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import { useRoute } from "vue-router";
 import { nextTick, onMounted, onUnmounted, ref, watch } from "vue";
-import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import {
   IonContent,
   IonIcon,
@@ -11,7 +10,7 @@ import {
   IonList,
   IonListHeader,
   IonPage,
-  type ScrollDetail,
+  type ScrollCustomEvent,
   useIonRouter,
 } from "@ionic/vue";
 import {
@@ -41,7 +40,7 @@ const router = useIonRouter();
 const loading = ref<boolean>(true);
 const virtualTourStation = ref<VirtualTourStation | undefined>(undefined);
 const maxIdOfVirtualStation = ref<number>(0);
-const loadVirtualTourStation = (id: number) => {
+const loadVirtualTourStation = (identifier: string) => {
   loading.value = true;
   virtualTourStation.value = undefined;
 
@@ -49,7 +48,7 @@ const loadVirtualTourStation = (id: number) => {
     maxIdOfVirtualStation.value = value.length;
   });
 
-  VirtualTourService.loadStationById(id)
+  VirtualTourService.loadStationById(identifier)
     .then((data: VirtualTourStation | undefined) => {
       if (data) {
         virtualTourStation.value = data;
@@ -63,7 +62,7 @@ const loadVirtualTourStation = (id: number) => {
 };
 
 const opacityToolbar = ref<boolean>(false);
-const handleScroll = (evt: IonContentCustomEvent<ScrollDetail>) => {
+const handleScroll = (evt: ScrollCustomEvent) => {
   const scrollTop = evt.detail.scrollTop;
   opacityToolbar.value = scrollTop > 194;
 };
@@ -149,11 +148,10 @@ const navigateTo = (id: number | undefined) => {
 };
 
 onMounted(() => {
-  const parsedId = parseInt(<string>route.params.id, 10);
-  if (!parsedId) {
+  if (!route.params.id) {
     router.push("/virtual-tour");
   }
-  loadVirtualTourStation(parsedId);
+  loadVirtualTourStation(<string>route.params.id);
 });
 
 onUnmounted(() => {

@@ -3,7 +3,7 @@ import {
   IonContent,
   IonIcon,
   IonPage,
-  type ScrollDetail,
+  type ScrollCustomEvent,
   useIonRouter,
 } from "@ionic/vue";
 import { onMounted, ref } from "vue";
@@ -18,7 +18,6 @@ import {
   logoWhatsapp,
 } from "ionicons/icons";
 import { useRoute } from "vue-router";
-import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 
@@ -45,7 +44,7 @@ const loadAssociation = (id: number) => {
 };
 
 const opacityToolbar = ref<boolean>(false);
-const handleScroll = (evt: IonContentCustomEvent<ScrollDetail>) => {
+const handleScroll = (evt: ScrollCustomEvent) => {
   const scrollTop = evt.detail.scrollTop;
   opacityToolbar.value = scrollTop > 194;
 };

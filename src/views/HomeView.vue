@@ -4,11 +4,10 @@ import {
   IonContent,
   IonIcon,
   IonPage,
-  type ScrollDetail,
+  type ScrollCustomEvent,
   useIonRouter,
 } from "@ionic/vue";
 import { ref } from "vue";
-import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import HeaderBannerComponent from "@/components/HeaderBannerComponent.vue";
 import { useNavigationStore } from "@/stores/navigation.ts";
@@ -32,7 +31,7 @@ const currentDate = new Date().toLocaleDateString("de-DE", {
 });
 
 const showToolbar = ref<boolean>(false);
-const handleScroll = (evt: IonContentCustomEvent<ScrollDetail>) => {
+const handleScroll = (evt: ScrollCustomEvent) => {
   const scrollTop = evt.detail.scrollTop;
   showToolbar.value = scrollTop > 25;
 };

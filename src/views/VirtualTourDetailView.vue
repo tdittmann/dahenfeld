@@ -11,7 +11,6 @@ import {
   IonListHeader,
   IonPage,
   type ScrollCustomEvent,
-  type ScrollDetail,
   useIonRouter,
 } from "@ionic/vue";
 import {

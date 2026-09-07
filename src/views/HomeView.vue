@@ -5,7 +5,6 @@ import {
   IonIcon,
   IonPage,
   type ScrollCustomEvent,
-  type ScrollDetail,
   useIonRouter,
 } from "@ionic/vue";
 import { ref } from "vue";

@@ -32,7 +32,7 @@ const currentDate = new Date().toLocaleDateString("de-DE", {
 });
 
 const showToolbar = ref<boolean>(false);
-const handleScroll = (evt: ScrollCustomEvent<ScrollDetail>) => {
+const handleScroll = (evt: ScrollCustomEvent) => {
   const scrollTop = evt.detail.scrollTop;
   showToolbar.value = scrollTop > 25;
 };

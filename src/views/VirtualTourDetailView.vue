@@ -63,7 +63,7 @@ const loadVirtualTourStation = (identifier: string) => {
 };
 
 const opacityToolbar = ref<boolean>(false);
-const handleScroll = (evt: ScrollCustomEvent) => {
+const handleScroll = (evt: ScrollCustomEvent ) => {
   const scrollTop = evt.detail.scrollTop;
   opacityToolbar.value = scrollTop > 194;
 };

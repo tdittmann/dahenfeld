@@ -2,7 +2,6 @@
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import { useRoute } from "vue-router";
 import { nextTick, onMounted, onUnmounted, ref, watch } from "vue";
-import type { IonContentCustomEvent } from "@ionic/core/dist/types/components";
 import {
   IonContent,
   IonIcon,
@@ -11,6 +10,7 @@ import {
   IonList,
   IonListHeader,
   IonPage,
+  type ScrollCustomEvent,
   type ScrollDetail,
   useIonRouter,
 } from "@ionic/vue";
@@ -63,7 +63,7 @@ const loadVirtualTourStation = (identifier: string) => {
 };
 
 const opacityToolbar = ref<boolean>(false);
-const handleScroll = (evt: IonContentCustomEvent<ScrollDetail>) => {
+const handleScroll = (evt: ScrollCustomEvent<ScrollDetail>) => {
   const scrollTop = evt.detail.scrollTop;
   opacityToolbar.value = scrollTop > 194;
 };

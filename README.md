@@ -69,9 +69,7 @@ e.g. `openssl base64 -in .env | tr -d '\n' | pbcopy` on MacOS in the root direct
 
 Before releasing the apps to the stores you need to update the following files and increment to the correct version:
 
-* config.xml
 * package.json
-* imprint.page.ts
 
 After that you need to build the project and copy files:
 

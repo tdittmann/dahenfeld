@@ -118,17 +118,18 @@ const formatDaysUntilDate = (collectionDate: Date) => {
 
 const getTimeRangeAndLocation = (date: WasteCollectionDate) => {
   const location = date.location;
+  const collectionDate = formatCollectionDate(date.collectionDate);
   if (date.startTime) {
     const startTime = date.startTime.split(":").slice(0, 2).join(":");
 
     if (date.endTime) {
       const endTime = date.endTime.split(":").slice(0, 2).join(":");
-      return `${startTime} - ${endTime} Uhr, ${location}`;
+      return `${collectionDate}, ${startTime} - ${endTime} Uhr, ${location}`;
     }
 
-    return `${startTime} Uhr, ${location}`;
+    return `${collectionDate}, ${startTime} Uhr, ${location}`;
   }
-  return location;
+  return `${collectionDate}, ${location}`;
 };
 
 const selectedFilter = ref("Alle");

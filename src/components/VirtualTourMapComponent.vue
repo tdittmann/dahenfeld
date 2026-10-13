@@ -26,7 +26,7 @@ const projection = new Projection({
   units: "pixels",
   extent: extent.value,
 });
-const imgUrl = ref<string>("/imgs/virtual-tour/LuftaufnahmeDahenfeld.jpg");
+const imgUrl = ref<string>("/imgs/virtual-tour/LuftaufnahmeDahenfeldKlein.jpg");
 
 const selectedStation = ref<VirtualTourStation | undefined>(undefined);
 const openDialog = (station: VirtualTourStation) => {

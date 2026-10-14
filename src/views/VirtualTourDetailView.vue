@@ -411,6 +411,10 @@ onUnmounted(() => {
   &__description {
     padding-top: 12px;
     padding-bottom: 12px;
+
+    :deep(p) {
+      margin-top: 0.75rem;
+    }
   }
 
   &__author {

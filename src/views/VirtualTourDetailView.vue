@@ -337,8 +337,8 @@ onUnmounted(() => {
 }
 
 .historic-background {
-  background: url("/imgs/virtual-tour/Dorfbuch.png") no-repeat center;
-  background-size: cover;
+  background: url("/imgs/virtual-tour/Dorfbuch.png");
+  background-size: contain;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 

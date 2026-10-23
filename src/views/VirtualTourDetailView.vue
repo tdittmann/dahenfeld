@@ -143,7 +143,7 @@ const navigateTo = (id: number | undefined) => {
       audioElement.pause();
     }
     isPlaying.value = false;
-    router.navigate(`/virtual-tour/${id}`, "forward", "replace");
+    router.navigate(`/historischer-rundgang/${id}`, "forward", "replace");
   }
 };
 

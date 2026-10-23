@@ -37,7 +37,7 @@ const closeDialog = () => {
 };
 
 const openStationDetail = (id: number) => {
-  router.push(`/virtual-tour/${id}`);
+  router.push(`/historischer-rundgang/${id}`);
 };
 </script>
 

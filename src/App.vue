@@ -66,7 +66,7 @@ const handlePushNotification = async () => {
             case "WastePaper":
             case "WastePollutants":
             case "WastePlastic":
-              router.push("/muelltermine");
+              router.push("/abfalltermine");
               break;
             case "GelweBlaettle":
               router.push("/gelwe-blaettle");

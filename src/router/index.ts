@@ -10,18 +10,18 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/virtual-tour",
-      name: "virtual-tour",
+      path: "/historischer-rundgang",
+      name: "historischer-rundgang",
       component: () => import("../views/VirtualTourView.vue"),
     },
     {
-      path: "/google-virtual-tour",
-      name: "google-virtual-tour",
+      path: "/google-historischer-rundgang",
+      name: "google-historischer-rundgang",
       component: () => import("../views/VirtualTourGoogleMapsView.vue"),
     },
     {
-      path: "/virtual-tour/:id",
-      name: "virtual-tour-detail",
+      path: "/historischer-rundgang/:id",
+      name: "historischer-rundgang-detail",
       component: () => import("../views/VirtualTourDetailView.vue"),
     },
     {
@@ -40,8 +40,8 @@ const router = createRouter({
       component: () => import("../views/AssociationsDetailView.vue"),
     },
     {
-      path: "/muelltermine",
-      name: "muelltermine",
+      path: "/abfalltermine",
+      name: "abfalltermine",
       component: () => import("../views/WasteCollectionDatesView.vue"),
     },
     {

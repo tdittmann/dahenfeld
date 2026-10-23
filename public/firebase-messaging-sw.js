@@ -17,10 +17,10 @@ const messaging = firebase.messaging();
 
 const typeToUrl = new Map([
   ["GelweBlaettle", "/gelwe-blaettle"],
-  ["WasteResidual", "/muelltermine"],
-  ["WasteOrganic", "/muelltermine"],
-  ["WastePaper", "/muelltermine"],
-  ["WastePollutants", "/muelltermine"],
+  ["WasteResidual", "/abfalltermine"],
+  ["WasteOrganic", "/abfalltermine"],
+  ["WastePaper", "/abfalltermine"],
+  ["WastePollutants", "/abfalltermine"],
   ["Event", "/veranstaltungen"],
 ]);
 

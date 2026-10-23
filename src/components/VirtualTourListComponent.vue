@@ -11,7 +11,7 @@ const props = defineProps<Props>();
 const router = useIonRouter();
 
 const openStationDetail = (id: number) => {
-  router.push(`/virtual-tour/${id}`);
+  router.push(`/historischer-rundgang/${id}`);
 };
 </script>
 
